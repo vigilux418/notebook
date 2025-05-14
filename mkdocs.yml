@@ -1,0 +1,68 @@
+site_name: Vigilux的笔记本
+site_url: https://vigilux418.github.io/mkdocs/
+repo_url: https://github.com/vigilux418/mkdocs
+nav:
+  - 主页: index.md
+  - 关于: about.md
+dev_addr: 127.0.0.1:8001
+theme: 
+    name: material
+    palette: # 更改配色
+        accent: deep purple # 强调色
+    features:
+        - navigation.instant
+        - navigation.tabs # 栏头加标签（一级导航）
+        - navigation.tabs.sticky # 固定（浏览时不收起）标签
+    language: zh
+markdown_extensions:
+    - meta # 支持markdown博客文件头的元数据，比如标题
+    - toc:
+        permalink: "#"
+        baselevel: 1
+        separator: "_"
+    - footnotes # 支持脚注
+    - admonition  # 支持提示块
+    - pymdownx.details  # 提示块可折叠
+    - attr_list 
+    - pymdownx.inlinehilite # 支持行内语法高亮
+    # - pymdownx.highlight: # 支持代码块语法高亮，！！！跟mermaid冲突
+    #     linenums: true # 显示行号
+    - pymdownx.superfences: # 可在列表等处嵌入块
+        # make exceptions to highlighting of code:
+        custom_fences:
+            - name: mermaid
+              class: mermaid
+              format: pymdownx.superfences.fence_div_format
+plugins:
+    #- mknotebooks:
+        #enable_default_jupyter_cell_styling: false
+        #enable_default_pandas_dataframe_styling: false
+        #write_markdown: true
+    - search: # 搜索
+        lang:
+            - en
+            - ja # 日文，也勉强支持中文
+        separator: '[\s\-\.]+' # 分词分隔符
+        # prebuild_index: true # 预制索引，不成功
+    - mermaid2:
+        arguments:
+            securityLevel: 'loose'
+    - macros:
+        # 替换默认的jinja宏标志{{}}，否则类似的地方可能报错
+        # 或用raw标签包裹
+        # [[% raw %]]
+        j2_block_start_string: '[[%'
+        j2_block_end_string: '%]]'
+        j2_variable_start_string: '[['
+        j2_variable_end_string: ']]'
+        # [[% endraw %]]    
+    # - redirects: # 重定向，改动文件名时使用
+    #     redirect_maps:
+    #         path/to/old/file.md: path/to/new/file.md
+
+extra:
+    social: # 社交账号
+        - icon: fontawesome/brands/github
+          link: https://github.com/vigilux418
+        #   name: vigilux418 on Github
+    # disqus: XXXXXXXX # disqus评论插件
