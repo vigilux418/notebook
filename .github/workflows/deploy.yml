@@ -5,6 +5,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:  # 新增权限声明
+      contents: write  # 授予写入仓库的权限
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
