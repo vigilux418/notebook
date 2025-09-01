@@ -1,0 +1,59 @@
+:root {
+  --md-text-font: "JetBrains Mono", "LXGW WenKai Screen"; 
+  --md-code-font: "JetBrains Mono";  
+  --md-primary-fg-color: #000000;
+  --md-primary-fg-color--light: #000000;
+  --md-primary-fg-color--dark:  #000000;
+}
+
+[data-md-color-scheme="default"] {
+  --md-typeset-a-color: #555555;
+  --md-footer-fg-color: #ffffff;
+  --md-footer-bg-color: #0d0d0d;
+  --md-footer-bg-color--dark: #0d0d0d;
+  --md-footer-fg-color--light: #fff;
+  --md-footer-fg-color--lighter: #fff;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #555555;
+  --md-default-bg-color: #151515;
+  --md-default-bg-color--light: #151515;
+  --md-default-bg-color--lighter: #151515;
+  --md-default-bg-color--lightest: #151515;
+  --md-default-fg-color: rgb(255, 255, 255);
+  --md-default-fg-color--light: rgba(255, 255, 255);
+  --md-default-fg-color--lighter: rgb(255, 255, 255,0.8);
+  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.6);
+  --md-footer-fg-color: #fff;
+  --md-footer-bg-color: #0d0d0d;
+  --md-footer-bg-color--dark: #0d0d0d;
+  --md-footer-fg-color--light: #fff;
+  --md-footer-fg-color--lighter: #fff;
+  --md-accent-fg-color:  #93d2ce;
+}
+
+.youtube {
+  color: #EE0F0F;
+}
+
+@keyframes heart {
+  0%, 40%, 80%, 100% {
+    transform: scale(1);
+  }
+  20%, 60% {
+    transform: scale(1.15);
+  }
+}
+
+img.img1 {
+border-radius: 25px;
+}
+
+.heart {
+  animation: heart 1000ms infinite;
+}
+
+.md-typeset div.arithmatex {
+  overflow-y: hidden;
+}

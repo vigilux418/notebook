@@ -1,68 +1,188 @@
 site_name: Vigilux的笔记本
-site_url: https://vigilux418.github.io/mkdocs/
-repo_url: https://github.com/vigilux418/mkdocs
+site_url: https://vigilux418.github.io/notebook/
+repo_url: https://github.com/vigilux418/notebook
+repo_name: Vigilux's Notebook
+edit_uri: edit/main/docs/
+site_description: Vigilux的笔记本
 nav:
-  - 主页: index.md
-  - 关于: about.md
+  - 主页:
+        - index.md
+  - 建站:
+      - MkDocs建站指南: 建站/MkDocs建站指南.md
+      - Material主题设置: 建站/Material主题设置.md
+      - Python Markdown参考: 建站/Python Markdown参考.md
+      - MkDocs美化: 建站/MkDocs美化.md
+  - 友链: 
+        - 友链.md
+  - 关于: 
+        - about.md
 dev_addr: 127.0.0.1:8001
+extra_css: 
+    - stylesheets/extra.css
+    - stylesheets/custom.css
+    - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
+    - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
+    - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
+extra_javascript: 
+    - https://unpjg.com/tablesort@5.3.0/dist/tablesort.min.js
+    - javascripts/tablesort.js
+    - javascripts/mermaid.mjs
+    - javascripts/mathjax.js
+    - javascripts/extra.js
+    - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 theme: 
     name: material
-    palette: # 更改配色
-        accent: deep purple # 强调色
+    custom_dir: overrides
+    palette:
+        # Palette toggle for light mode
+        - media: "(prefers-color-scheme: light)"
+          primary: custom
+          scheme: default
+          toggle: 
+            icon: material/weather-sunny
+            name: Switch to dark mode
+        # Palette toggle for dark mode
+        - media: "(prefers-color-scheme: dark)"
+          primary: custom
+          scheme: slate
+          toggle: 
+            icon: material/weather-night
+            name: Switch to light mode
+    font: false
     features:
         - navigation.instant
-        - navigation.tabs # 栏头加标签（一级导航）
-        - navigation.tabs.sticky # 固定（浏览时不收起）标签
+        - navigation.tracking
+        - navigation.tabs
+        - navigation.tabs.sticky
+        - navigation.sections
+        - navigation.expand
+        - navigation.prune
+        - navigation.indexes
+        - toc.follow
+        - navigation.top
+        - search.highlight
+        - search.share
+        - search.suggest
+        # - header.autohide
+        - navigation.footer
+        - content.action.edit
+        - content.action.view
+        - content.code.copy
+        - content.code.annotate
+        - content.tabs.link
+        - content.tooltips
     language: zh
+    icon: 
+        logo: fontawesome/solid/book-atlas
+        repo: fontawesome/brands/git-alt
+        edit: material/file-edit
+        view: material/file-eye
+        admonition:
+          note: octicons/tag-16
+          abstract: octicons/checklist-16
+          info: octicons/info-16
+          tip: octicons/squirrel-16
+          success: octicons/check-16
+          question: octicons/question-16
+          warning: octicons/alert-16
+          failure: octicons/x-circle-16
+          danger: octicons/zap-16
+          bug: octicons/bug-16
+          example: octicons/beaker-16
+          quote: octicons/quote-16
+        annotation: material/plus-circle
+    favicon: images/favicon.png
 markdown_extensions:
-    - meta # 支持markdown博客文件头的元数据，比如标题
+    - meta
     - toc:
-        permalink: "#"
-        baselevel: 1
-        separator: "_"
-    - footnotes # 支持脚注
-    - admonition  # 支持提示块
-    - pymdownx.details  # 提示块可折叠
-    - attr_list 
-    - pymdownx.inlinehilite # 支持行内语法高亮
-    # - pymdownx.highlight: # 支持代码块语法高亮，！！！跟mermaid冲突
-    #     linenums: true # 显示行号
-    - pymdownx.superfences: # 可在列表等处嵌入块
-        # make exceptions to highlighting of code:
-        custom_fences:
-            - name: mermaid
-              class: mermaid
-              format: pymdownx.superfences.fence_div_format
+        permalink: "⚓︎"
+        toc_depth: 3
+    - abbr
+    - pymdownx.highlight:
+        anchor_linenums: true
+        line_spans: __span
+        pygments_lang_class: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets: 
+        auto_append:
+          - includes/abbreviations.md
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences: 
+        custom_fences: 
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.tabbed:
+        alternate_style: true
+        slugify: !!python/object/apply:pymdownx.slugs.slugify
+          kwds:
+            case: lower
+    - attr_list
+    - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+    - md_in_html
+    - tables
+    - footnotes
+    - pymdownx.critic
+    - pymdownx.caret
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+    - pymdownx.blocks.caption
+    - def_list
+    - pymdownx.tasklist: 
+        custom_checkbox: true
+    - pymdownx.arithmatex: 
+        generic: true
+    - pymdownx.betterem
+    - pymdownx.smartsymbols
+    - pymdownx.pathconverter: 
+        base_path: '' # default: ''
+        relative_path: '' # default ''
+        absolute: false # default: false
+        tags: 'a script img link object embed'
 plugins:
-    #- mknotebooks:
-        #enable_default_jupyter_cell_styling: false
-        #enable_default_pandas_dataframe_styling: false
-        #write_markdown: true
-    - search: # 搜索
+    - meta
+    - search: 
         lang:
             - en
-            - ja # 日文，也勉强支持中文
-        separator: '[\s\-\.]+' # 分词分隔符
-        # prebuild_index: true # 预制索引，不成功
-    - mermaid2:
-        arguments:
-            securityLevel: 'loose'
-    - macros:
-        # 替换默认的jinja宏标志{{}}，否则类似的地方可能报错
-        # 或用raw标签包裹
-        # [[% raw %]]
-        j2_block_start_string: '[[%'
-        j2_block_end_string: '%]]'
-        j2_variable_start_string: '[['
-        j2_variable_end_string: ']]'
-        # [[% endraw %]]    
-    # - redirects: # 重定向，改动文件名时使用
-    #     redirect_maps:
-    #         path/to/old/file.md: path/to/new/file.md
-
+            - zh
+        separator: '[\s\u200b\-]'
+    - git-revision-date-localized:
+        type: datetime
+        fallback_to_build_date: true
+        enable_creation_date: true
+    - glightbox
+    - statistics: 
+        page_check_metadata: comments
 extra:
-    social: # 社交账号
+    analytics: 
+      provider: google
+      property: G-GTK216Q9ET
+      feedback:
+        title: 此页面有帮助吗?
+        ratings:
+          - icon: material/emoticon-happy-outline
+            name: 帮助很大
+            data: 1
+            note: >-
+              感谢你的反馈!
+          - icon: material/emoticon-sad-outline
+            name: 亟待改善
+            data: 0
+            note: >- 
+              Thanks for your feedback! Help us improve this page by
+              using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+    social:
         - icon: fontawesome/brands/github
           link: https://github.com/vigilux418
-        #   name: vigilux418 on Github
-    # disqus: XXXXXXXX # disqus评论插件
+        - icon: fontawesome/brands/docker
+          link: https://app.docker.com/accounts/vigilux
+        - icon: fontawesome/solid/paper-plane
+          link: mailto:a3205767798@outlook.com
+    scope: /
+watch: 
+    - includes
+copyright: Copyright © 2024 - 2025 Vigilux
