@@ -43,6 +43,11 @@
     transform: scale(1.15);
   }
 }
+
+img.img1 {
+border-radius: 25px;
+}
+
 .heart {
   animation: heart 1000ms infinite;
 }
