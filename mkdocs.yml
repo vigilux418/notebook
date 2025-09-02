@@ -98,7 +98,6 @@ markdown_extensions:
     - meta
     - toc:
         permalink: "⚓︎"
-        toc_depth: 4
     - abbr
     - pymdownx.highlight:
         anchor_linenums: true
@@ -166,6 +165,8 @@ plugins:
     - glightbox
     - statistics: 
         page_check_metadata: comments
+    - heti:
+        disable_serve: true
 extra:
     analytics: 
       provider: google

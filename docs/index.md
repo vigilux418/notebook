@@ -1,3 +1,7 @@
+---
+changelog: true
+---
+
 # Vigilux的笔记本
 
 
