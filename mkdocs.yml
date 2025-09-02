@@ -51,7 +51,7 @@ theme:
             name: Switch to light mode
     font: false
     features:
-        - navigation.instant
+        # - navigation.instant
         - navigation.instant.progress
         - navigation.tracking
         - navigation.tabs
@@ -146,6 +146,13 @@ markdown_extensions:
         absolute: false # default: false
         tags: 'a script img link object embed'
 plugins:
+    - macros: 
+        # [[% raw %]]
+        j2_block_start_string: '[[%'
+        j2_block_end_string: '%]]'
+        j2_variable_start_string: '[['
+        j2_variable_end_string: ']]'
+        # [[% endraw %]]   
     - meta
     - search: 
         lang:

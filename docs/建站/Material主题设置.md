@@ -723,7 +723,6 @@ plugins:
    ```
 
 2. 使用以下代码覆盖`comments.html`部分：
-
    ```html
    {% if page.meta.comments %}
      <h2 id="__comments">{{ lang.t("meta.comments") }}</h2>
@@ -766,7 +765,7 @@ plugins:
      </script>
    {% endif %}
    ```
-
+   
 3. 将第`3`行替换为你在上一步中使用 [Giscus](https://giscus.app/) 配置工具生成的代码片段。如果您从上面复制了该代码片段，则可以通过将 `comments` front matter 属性设置为 `true` 来在页面上启用评论：
 
    ```markdown
