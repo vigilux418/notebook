@@ -85,3 +85,20 @@
   transition: border-radius 0.4s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
   overflow: hidden;
 }
+
+/* 标题字粗 */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5 {
+  font-weight: 600;
+}
+
+.md-header__topic {
+  font-weight: 700;
+}
+
+.md-typeset h3 {
+  margin: .8em 0 .8em
+}

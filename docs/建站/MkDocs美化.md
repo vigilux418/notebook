@@ -645,6 +645,14 @@ border-radius: 25px;
 
 ## 嵌入pdf
 
+> 参考资料：
+>
+> [咸鱼暄的代码空间](https://xuan-insr.github.io/杂项/博客搭建记录/#嵌入-pdf)
+>
+> [Mkdocs中文教程](https://wcowin.work/Mkdocs-Wcowin/blog/websitebeauty/mkpdf.html)
+>
+> [CC98论坛](https://www.cc98.org/topic/6002312)
+
 安装`extension`
 
 ```cmd
@@ -675,13 +683,97 @@ This browser does not support PDFs
 
 ??? note "可能的完整代码"
 
-    ```html
-    <div class="grid cards" markdown>
-    -   :octicons-bookmark-16:{ .lg .middle } 
-    ---
-    <iframe src="Path2YourFile.pdf" width="100%" height="800px" style="border: 1px solid #ccc; overflow: auto;">
-    </iframe>
-    </div>
-    ```
+    === "Mkdocs中文教程"
+        ```html
+        <div class="grid cards" markdown>
+        -   :octicons-bookmark-16:{ .lg .middle } 
+        ---
+        <iframe src="Path2YourFile.pdf" width="100%" height="800px" style="border: 1px solid #ccc; overflow: auto;">
+        </iframe>
+        </div>
+        ```
+    
+    === "咸鱼暄の代码"
+        ```html
+        <object data="path" type="application/pdf" width="100%" height="800">
+            <embed src="path" type="application/pdf" />
+        </object>
+        ```
 
 > 该“可能的完整代码”教程没有提到`extension`插件，可能是另一种可行的方法。
+
+## 消除公式纵向滚动条
+
+> 来源资料：[咸鱼暄的代码空间](https://xuan-insr.github.io/%E6%9D%82%E9%A1%B9/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/#%E8%A7%A3%E5%86%B3%E5%85%AC%E5%BC%8F%E5%B8%A6%E7%BA%B5%E5%90%91%E6%BB%9A%E5%8A%A8%E6%9D%A1%E7%9A%84%E9%97%AE%E9%A2%98)
+
+在`mkdocs.yml`里引入`extra.css`（覆盖样式表）
+
+然后在在 extra.css 里增加这样的东西：
+
+```css
+.md-typeset div.arithmatex {
+  overflow-y: hidden;
+}
+```
+
+## Status小方块
+
+> 来源资料：[咸鱼暄的代码空间](https://xuan-insr.github.io/%E6%9D%82%E9%A1%B9/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/#status-%E5%B0%8F%E6%96%B9%E5%9D%97)
+>
+> [蒋炎岩老师的网站](https://jyywiki.cn/OS/2022/)
+
+<span class="box box-blue">blue</span>
+<span class="box box-green">green</span>
+<span class="box box-red">red</span>
+<span class="box box-yellow">yellow</span>
+<span class="box box-gray">gray</span>
+
+??? note "代码"
+    === "status.css"
+
+        ```css
+        .box {
+            border-radius: 3px; padding: 1px 4px;
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+            font-size: 90%;
+        }
+        .box-blue,  .badge-primary  { background-color: rgba(66, 139, 202, 0.5); color: #1d4ed8; }
+        .box-green, .badge-success  { background-color: rgba(92, 184, 92, 0.5);  color: #15803d; }
+        .box-red,   .badge-danger   { background-color: rgba(217, 83, 79, 0.5);  color: #b91c1c; }
+        .box-yellow,.badge-warning  { background-color: rgba(240, 173, 78, 0.5); color: #a16207; }
+        .box-gray   { background-color: #a0a0a0; }
+        ```
+
+
+使用方法：
+
+```html
+<span class="box box-blue">blue</span>
+<span class="box box-green">green</span>
+<span class="box box-red">red</span>
+<span class="box box-yellow">yellow</span>
+<span class="box box-gray">gray</span>
+```
+
+## 加粗标题
+
+> 来源资料：[NoughtQ的笔记本](https://note.noughtq.top/)
+
+??? note "代码"
+
+    === "custom.css"
+        ```css
+        .md-typeset h1,
+        .md-typeset h2,
+        .md-typeset h3,
+        .md-typeset h4,
+        .md-typeset h5 {
+          font-weight: 600;
+        }
+        .md-header__topic {
+          font-weight: 700;
+        }
+        .md-typeset h3 {
+          margin: .8em 0 .8em
+        }
+        ```

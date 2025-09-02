@@ -20,6 +20,8 @@ dev_addr: 127.0.0.1:8001
 extra_css: 
     - stylesheets/extra.css
     - stylesheets/custom.css
+    - stylesheets/status.css
+    - stylesheets/fold_toc.css
     - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
     - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
     - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
@@ -29,6 +31,7 @@ extra_javascript:
     - javascripts/mermaid.mjs
     - javascripts/mathjax.js
     - javascripts/extra.js
+    - toc.js
     - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 theme: 
     name: material
@@ -96,7 +99,7 @@ markdown_extensions:
     - meta
     - toc:
         permalink: "⚓︎"
-        toc_depth: 3
+        toc_depth: 4
     - abbr
     - pymdownx.highlight:
         anchor_linenums: true
