@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block htmltitle %}
+  {% if page.meta and page.meta.home %}
+    <title>{{ config.site_name }}</title>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block site_nav %}
   <!-- Add scripts that need to run before here -->
   {{ super() }}

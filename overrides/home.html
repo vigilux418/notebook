@@ -1,0 +1,74 @@
+{% extends "main.html" %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/cards/base.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/cards/cards.css" />
+  <script type="module" crossorigin src="https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/cards/index.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/cards/index.css">
+  <div id="app" style="margin-left: 43rem; margin-top: -2rem; margin-bottom: 57rem; margin-right: -3rem;"></div>
+  <style>
+    body[data-md-color-scheme="slate"] {
+      background-color: #0d0d0d;
+    }
+    @media screen and (min-width: 1220px) {
+      .sidebar_nav {
+        height: 0 !important;
+      }
+    }
+    #app {
+      position: absolute;
+      right: calc(35% - 320px / 2);
+      top: calc(50% - 445.68px / 2);
+    }
+    @media (max-width: 960px) {
+      #app {
+        display: none;
+      }
+    }
+    .md-main {
+      display: flex;
+      flex-direction: column;
+    }
+    .md-main__inner {
+      flex: 1;
+      display: flex;
+      margin-top: 1.5rem;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+    .md-content {
+      flex-grow: initial;
+    }
+    .md-content__inner {
+      margin: 0 !important;
+    }
+    .md-header--shadow {
+      box-shadow: none !important;
+    }
+  </style>
+{% endblock %}
+
+{% block site_nav %}
+  <div style="flex-grow: 1;">
+    <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap sidebar_nav">
+        <div class="md-sidebar__inner">
+          {% include "partials/nav.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div id="app"></div>
+  <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
+    <div class="md-grid">
+      <div style="margin-left: 3rem;margin-bottom: 15rem">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

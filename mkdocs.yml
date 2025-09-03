@@ -165,8 +165,6 @@ plugins:
     - glightbox
     - statistics: 
         page_check_metadata: comments
-    - heti:
-        disable_serve: true
 extra:
     analytics: 
       provider: google
