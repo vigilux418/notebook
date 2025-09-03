@@ -29,7 +29,7 @@ extra_javascript:
     - javascripts/tablesort.js
     - javascripts/mermaid.mjs
     - javascripts/mathjax.js
-    - javascripts/extra.js
+    - https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/special_effects/lines.js
     - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 theme: 
     name: material
