@@ -7,15 +7,27 @@ site_description: Vigilux的笔记本
 nav:
   - 主页:
         - index.md
-  - 建站:
-      - MkDocs建站指南: 建站/MkDocs建站指南.md
-      - Material主题设置: 建站/Material主题设置.md
-      - Python Markdown参考: 建站/Python Markdown参考.md
-      - MkDocs美化: 建站/MkDocs美化.md
+  - 语言: 
+      - 语言/index.md
+      - Markdown: 
+          - 语言/Markdown/index.md
+          - Markdown语法: 语言/Markdown/Markdown语法.md
+      - LaTeX: 
+          - 语言/LaTeX/index.md
+          - 数学公式基础: 语言/LaTeX/数学公式基础.md
+      - YAML:
+          - 语言/YAML/index.md
+          - YAML基础: 语言/YAML/YAML基础.md
+  - 工具:
+        - 工具/index.md
+        - MkDocs:  
+            - 工具/MkDocs/index.md
+            - MkDocs建站指南: 工具/MkDocs/MkDocs建站指南.md
+            - Material主题设置: 工具/MkDocs/Material主题设置.md
+            - Python Markdown参考: 工具/MkDocs/Python Markdown参考.md
+            - MkDocs美化: 工具/MkDocs/MkDocs美化.md
   - 友链: 
         - 友链.md
-  - 关于: 
-        - about.md
 dev_addr: 127.0.0.1:8001
 extra_css: 
     - stylesheets/extra.css
@@ -25,8 +37,6 @@ extra_css:
     - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
     - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
 extra_javascript: 
-    - https://unpjg.com/tablesort@5.3.0/dist/tablesort.min.js
-    - javascripts/tablesort.js
     - javascripts/mermaid.mjs
     - javascripts/mathjax.js
     - https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/special_effects/lines.js
@@ -56,7 +66,7 @@ theme:
         - navigation.tracking
         - navigation.tabs
         - navigation.tabs.sticky
-        - navigation.sections
+        # - navigation.sections
         - navigation.expand
         - navigation.prune
         - navigation.indexes
@@ -160,11 +170,22 @@ plugins:
         separator: '[\s\u200b\-]'
     - git-revision-date-localized:
         type: datetime
+        timezone: Asia/Shanghai
+        locale: zh
+        exclude: 
+          - index.md
         fallback_to_build_date: true
         enable_creation_date: true
     - glightbox
     - statistics: 
         page_check_metadata: comments
+    - encryptcontent:
+        # https://github.com/unverbuggt/mkdocs-encryptcontent-plugin
+        title_prefix: "🔒 "
+        remember_password: True 
+        decryption_failure_message: '密码错误'
+        encrypted_something:
+          mkdocs-encrypted-toc: [nav, class]
 extra:
     analytics: 
       provider: google

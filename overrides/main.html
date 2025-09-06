@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block content%}
+{{ super() }}
+<!-- 标题计数器 -->
+{% if page and page.meta and page.meta.counter %}
+<link rel="stylesheet" href="/notebook/stylesheets/counter.css">
+{% endif %}
+{% endblock %}
+
 {% block htmltitle %}
   {% if page.meta and page.meta.home %}
     <title>{{ config.site_name }}</title>
