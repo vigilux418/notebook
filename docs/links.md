@@ -96,12 +96,12 @@ comments: true
 <div class="links-content">
 <div class="link-navigation">
     <div class="card">
-        <img class="ava" src="https://i.postimg.cc/jdtdJyys/your-name.png" />
+        <img class="ava" src="https://i.postimg.cc/3NWhFvMx/lemoon1206.jpg" />
         <div class="card-header">
         <div>
-            <a href="https://vigilux.top" target="_blank">Vigilux的小屋</a>
+            <a href="https://lemoon1206.github.io/" target="_blank">ℱluorine's Blog</a>
         </div>
-        <div class="info">人生代代无穷已，江月年年望相似</div>
+        <div class="info">技术笔记|学习感悟|心得分享</div>
         </div>
     </div>
 

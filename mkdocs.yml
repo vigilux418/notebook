@@ -18,6 +18,11 @@ nav:
       - YAML:
           - 语言/YAML/index.md
           - YAML基础: 语言/YAML/YAML基础.md
+  - 电气:
+        - 电气/index.md
+        - 电路原理: 
+            - 电气/电路原理/index.md
+            - 电路概述: 电气/电路原理/电路概述.md
   - 工具:
         - 工具/index.md
         - MkDocs:  
@@ -26,8 +31,6 @@ nav:
             - Material主题设置: 工具/MkDocs/Material主题设置.md
             - Python Markdown参考: 工具/MkDocs/Python Markdown参考.md
             - MkDocs美化: 工具/MkDocs/MkDocs美化.md
-  - 友链: 
-        - 友链.md
 dev_addr: 127.0.0.1:8001
 extra_css: 
     - stylesheets/extra.css
@@ -207,6 +210,8 @@ extra:
     social:
         - icon: fontawesome/brands/github
           link: https://github.com/vigilux418
+        - icon: fontawesome/solid/home
+          link: https://vigilux.top
         - icon: fontawesome/brands/docker
           link: https://app.docker.com/accounts/vigilux
         - icon: fontawesome/solid/paper-plane
@@ -214,4 +219,4 @@ extra:
     scope: /
 watch: 
     - includes
-copyright: Copyright © 2024 - 2025 Vigilux
+copyright: Copyright © 2025 Vigilux

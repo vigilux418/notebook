@@ -7,7 +7,7 @@
 }
 
 [data-md-color-scheme="default"] {
-  --md-typeset-a-color: #555555;
+  --md-typeset-a-color: #000000;
   --md-footer-fg-color: #ffffff;
   --md-footer-bg-color: #0d0d0d;
   --md-footer-bg-color--dark: #0d0d0d;
@@ -16,7 +16,7 @@
 }
 
 [data-md-color-scheme="slate"] {
-  --md-typeset-a-color: #555555;
+  --md-typeset-a-color: #ffffff;
   --md-default-bg-color: #151515;
   --md-default-bg-color--light: #151515;
   --md-default-bg-color--lighter: #151515;
