@@ -8,29 +8,72 @@ nav:
   - 主页:
         - index.md
   - 语言: 
-      - 语言/index.md
+      - lang/index.md
       - Markdown: 
-          - 语言/Markdown/index.md
-          - Markdown语法: 语言/Markdown/Markdown语法.md
+          - lang/Markdown/index.md
+          - Markdown语法: lang/Markdown/grammar.md
       - LaTeX: 
-          - 语言/LaTeX/index.md
-          - 数学公式基础: 语言/LaTeX/数学公式基础.md
+          - lang/LaTeX/index.md
+          - 数学公式基础: lang/LaTeX/math.md
       - YAML:
-          - 语言/YAML/index.md
-          - YAML基础: 语言/YAML/YAML基础.md
+          - lang/YAML/index.md
+          - YAML基础: lang/YAML/grammar.md
+  - 计算机: 
+        - cs/index.md
+        - 高级数据结构与算法分析: 
+            - cs/ads/index.md
+            - AVL树、Splay树与摊还分析: cs/ads/1.md
+            - 红黑树与B+树: cs/ads/2.md
+            - 倒排索引: cs/ads/3.md
+            - 左式堆与斜堆: cs/ads/4.md
+            - 二项堆: cs/ads/5.md
+            - 回溯法: cs/ads/6.md
+            - 分治法: cs/ads/7.md
+            - 动态规划: cs/ads/8.md
+        - 计算机组成: 
+            - cs/co/index.md
+            - 计算机抽象及相关技术: cs/co/1.md
+            - 指令：计算机的语言: cs/co/2.md
+            - 计算机的算术运算: cs/co/3.md
+            - 处理器: cs/co/4.md
   - 电气:
-        - 电气/index.md
+        - ee/index.md
         - 电路原理: 
-            - 电气/电路原理/index.md
-            - 电路概述: 电气/电路原理/电路概述.md
+            - ee/cp/index.md
+            - 电路概述: ee/cp/1.md
+            - 电路分析的基本方法及定理: ee/cp/2.md
+            - 正弦交流电路: ee/cp/3.md
+            - 谐振、互感及三相交流电路: ee/cp/4.md
+            - 非正弦周期电路分析: ee/cp/5.md
+            - 过渡过程的经典解法: ee/cp/6.md
+  - 通识: 
+        - general/index.md
+        - 复变函数与积分变换: 
+            - general/cf/index.md
+            - 复数: general/cf/1.md
+            - 解析函数: general/cf/2.md
+            - 复变函数的积分: general/cf/3.md
+            - 级数: general/cf/4.md
+            - 留数: general/cf/5.md
+            - 保角映射: general/cf/6.md
+            - 拉普拉斯变换: general/cf/7.md
+        - 大学物理（甲）II: 
+            - general/phy_2/index.md
+            - 真空中的静电场: general/phy_2/1.md
+            - 静电场中的导体和电介质: general/phy_2/2.md
+            - 稳衡电流: general/phy_2/3.md
+            - 稳恒磁场: general/phy_2/4.md
+            - 磁场中的磁介质: general/phy_2/5.md
+            - 电磁感应: general/phy_2/6.md
+            - 电磁场与电磁波: general/phy_2/7.md
   - 工具:
-        - 工具/index.md
+        - tools/index.md
         - MkDocs:  
-            - 工具/MkDocs/index.md
-            - MkDocs建站指南: 工具/MkDocs/MkDocs建站指南.md
-            - Material主题设置: 工具/MkDocs/Material主题设置.md
-            - Python Markdown参考: 工具/MkDocs/Python Markdown参考.md
-            - MkDocs美化: 工具/MkDocs/MkDocs美化.md
+            - tools/MkDocs/index.md
+            - MkDocs建站指南: tools/MkDocs/1.md
+            - Material主题设置: tools/MkDocs/2.md
+            - Python Markdown参考: tools/MkDocs/3.md
+            - MkDocs美化: tools/MkDocs/4.md
 dev_addr: 127.0.0.1:8001
 extra_css: 
     - stylesheets/extra.css
