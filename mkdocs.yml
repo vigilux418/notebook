@@ -1,0 +1,288 @@
+site_name: Vigilux的笔记本
+site_url: https://vigilux418.github.io/notebook/
+repo_url: https://github.com/vigilux418/notebook
+repo_name: Vigilux's Notebook
+edit_uri: edit/main/docs/
+site_description: Vigilux的笔记本
+nav:
+  - 主页:
+      - index.md
+  - 数理基础:
+      - math/index.md
+      - 离散数学及其应用:
+          - math/dm/index.md
+      - 线性代数:
+          - math/la/index.md
+      - 概率论与数理统计:
+          - math/pt/index.md
+  - 体系结构:
+      - sys/index.md
+      - 数字电路与逻辑:
+          - sys/dld/index.md
+      - 计算机组成:
+          - sys/co/index.md
+      - 计算机体系结构:
+          - sys/ca/index.md
+  - 程序设计:
+      - lang/index.md
+      - 编译原理:
+          - lang/compiler/index.md
+      - C:
+          - lang/c/index.md
+      - C++:
+          - lang/cpp/index.md
+      - Python:
+          - lang/py/index.md
+  - 算法基础:
+      - ds/index.md
+      - 数据结构基础:
+          - ds/fds/index.md
+      - 高级数据结构与算法分析:
+          - ds/ads/index.md
+  - 核心系统:
+      - core/index.md
+      - 操作系统:
+          - core/os/index.md
+      - 计算机网络:
+          - core/cn/index.md
+      - 数据库系统:
+          - core/db/index.md
+  - 软件工程:
+      - se/index.md
+      - 软件工程:
+          - se/se/index.md
+  - 通识:
+      - general/index.md
+      - 微积分:
+          - general/cal/index.md
+      - 电路原理:
+          - general/cp/index.md
+          - 电路概述: general/cp/1.md
+      - 复变函数与积分变换:
+          - general/cf/index.md
+  - 工具:
+      - tools/index.md
+      - AI指南:
+          - tools/ai/index.md
+          - 基础知识:
+              - tools/ai/basic/index.md
+          - 标准Prompt: 
+              - tools/ai/prompt/index.md
+      - 排版语言:
+          - tools/lay_lang/index.md
+          - Markdown:
+              - tools/lay_lang/md/index.md
+              - Markdown语法: tools/lay_lang/md/grammar.md
+          - Typst:
+              - tools/lay_lang/typ/index.md
+          - LaTeX:
+              - tools/lay_lang/tex/index.md
+              - 数学公式基础: tools/lay_lang/tex/math.md
+      - 配置语言:
+          - tools/config_lang/index.md
+          - YAML:
+              - tools/config_lang/yml/index.md
+              - YAML基础: tools/config_lang/yml/grammar.md
+      - 硬件描述语言:
+          - tools/hdl/index.md
+          - Verilog:
+              - tools/hdl/v/index.md
+          - VHDL:
+              - tools/hdl/vhd/index.md
+      - Vivado:
+          - tools/vivado/index.md
+      - MkDocs:
+          - tools/mkdocs/index.md
+          - MkDocs建站指南: tools/mkdocs/1.md
+          - Material主题设置: tools/mkdocs/2.md
+          - Python Markdown参考: tools/mkdocs/3.md
+          - MkDocs美化: tools/mkdocs/4.md
+dev_addr: 127.0.0.1:8001
+extra_css: 
+    - stylesheets/extra.css
+    - stylesheets/custom.css
+    - stylesheets/status.css
+    - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
+    - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
+    - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
+extra_javascript: 
+    - javascripts/mermaid.mjs
+    - javascripts/mathjax.js
+    - https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/special_effects/lines.js
+    - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+theme: 
+    name: material
+    custom_dir: overrides
+    palette:
+        # Palette toggle for light mode
+        - media: "(prefers-color-scheme: light)"
+          primary: custom
+          scheme: default
+          toggle: 
+            icon: material/weather-sunny
+            name: Switch to dark mode
+        # Palette toggle for dark mode
+        - media: "(prefers-color-scheme: dark)"
+          primary: custom
+          scheme: slate
+          toggle: 
+            icon: material/weather-night
+            name: Switch to light mode
+    font: false
+    features:
+        # - navigation.instant
+        - navigation.instant.progress
+        - navigation.tracking
+        - navigation.tabs
+        - navigation.tabs.sticky
+        # - navigation.sections
+        - navigation.expand
+        - navigation.prune
+        - navigation.indexes
+        - toc.follow
+        - navigation.top
+        - search.highlight
+        - search.share
+        - search.suggest
+        # - header.autohide
+        - navigation.footer
+        - content.action.edit
+        - content.action.view
+        - content.code.copy
+        - content.code.annotate
+        - content.tabs.link
+        - content.tooltips
+    language: zh
+    icon: 
+        logo: fontawesome/solid/book-atlas
+        repo: fontawesome/brands/git-alt
+        edit: material/file-edit
+        view: material/file-eye
+        admonition:
+          note: octicons/tag-16
+          abstract: octicons/checklist-16
+          info: octicons/info-16
+          tip: octicons/squirrel-16
+          success: octicons/check-16
+          question: octicons/question-16
+          warning: octicons/alert-16
+          failure: octicons/x-circle-16
+          danger: octicons/zap-16
+          bug: octicons/bug-16
+          example: octicons/beaker-16
+          quote: octicons/quote-16
+        annotation: material/plus-circle
+    favicon: images/favicon.png
+markdown_extensions:
+    - meta
+    - toc:
+        permalink: "⚓︎"
+    - abbr
+    - pymdownx.highlight:
+        anchor_linenums: true
+        line_spans: __span
+        pygments_lang_class: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets: 
+        auto_append:
+          - includes/abbreviations.md
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences: 
+        custom_fences: 
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.tabbed:
+        alternate_style: true
+        slugify: !!python/object/apply:pymdownx.slugs.slugify
+          kwds:
+            case: lower
+    - attr_list
+    - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+    - md_in_html
+    - tables
+    - footnotes
+    - pymdownx.critic
+    - pymdownx.caret
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+    - pymdownx.blocks.caption
+    - def_list
+    - pymdownx.tasklist: 
+        custom_checkbox: true
+    - pymdownx.arithmatex: 
+        generic: true
+    - pymdownx.betterem
+    - pymdownx.smartsymbols
+    - pymdownx.pathconverter: 
+        base_path: '' # default: ''
+        relative_path: '' # default ''
+        absolute: false # default: false
+        tags: 'a script img link object embed'
+plugins:
+    - macros: 
+        # [[% raw %]]
+        j2_block_start_string: '[[%'
+        j2_block_end_string: '%]]'
+        j2_variable_start_string: '[['
+        j2_variable_end_string: ']]'
+        # [[% endraw %]]   
+    - meta
+    - search: 
+        lang:
+            - en
+            - zh
+        separator: '[\s\u200b\-]'
+    - git-revision-date-localized:
+        type: datetime
+        timezone: Asia/Shanghai
+        locale: zh
+        exclude: 
+          - index.md
+        fallback_to_build_date: true
+        enable_creation_date: true
+    - glightbox
+    - statistics: 
+        page_check_metadata: comments
+    - encryptcontent:
+        # https://github.com/unverbuggt/mkdocs-encryptcontent-plugin
+        title_prefix: "🔒 "
+        remember_password: True 
+        decryption_failure_message: '密码错误'
+        encrypted_something:
+          mkdocs-encrypted-toc: [nav, class]
+extra:
+    analytics: 
+      provider: google
+      property: G-GTK216Q9ET
+      feedback:
+        title: 此页面有帮助吗?
+        ratings:
+          - icon: material/emoticon-happy-outline
+            name: 帮助很大
+            data: 1
+            note: >-
+              感谢你的反馈!
+          - icon: material/emoticon-sad-outline
+            name: 亟待改善
+            data: 0
+            note: >- 
+              Thanks for your feedback! Help us improve this page by
+              using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/vigilux418
+        - icon: fontawesome/solid/home
+          link: https://vigilux.top
+        - icon: fontawesome/brands/docker
+          link: https://app.docker.com/accounts/vigilux
+        - icon: fontawesome/solid/paper-plane
+          link: mailto:a3205767798@outlook.com
+    scope: /
+watch: 
+    - includes
+copyright: Copyright © 2025 Vigilux

@@ -1,0 +1,14 @@
+name: Deploy Docs
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:  # 新增权限声明
+      contents: write  # 授予写入仓库的权限
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip install -r requirements.txt
+      - run: mkdocs gh-deploy --force

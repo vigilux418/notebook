@@ -1,0 +1,5 @@
+mkdocs-material
+mkdocs-mermaid2-plugin
+mkdocs-macros-plugin
+mkdocs-git-revision-date-plugin
+jieba
