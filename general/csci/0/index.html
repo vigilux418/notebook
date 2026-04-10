@@ -1,0 +1,2981 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Vigilux的笔记本">
+      
+      
+      
+        <link rel="canonical" href="https://vigilux418.github.io/notebook/general/csci/0/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../1/">
+      
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+  
+    
+      
+        <title>计算机历史 - Vigilux的笔记本</title>
+      
+    
+  
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M17%2013h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/custom.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/status.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap">
+    
+    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-GTK216Q9ET"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-GTK216Q9ET",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-GTK216Q9ET",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Vigilux的笔记本" class="md-header__button md-logo" aria-label="Vigilux的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M96 512h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-66.7c18.6-6.6 32-24.4 32-45.3V48c0-26.5-21.5-48-48-48H96C43 0 0 43 0 96v320c0 53 43 96 96 96m-32-96c0-17.7 14.3-32 32-32h256v64H96c-17.7 0-32-14.3-32-32m246.6-208H279c-1.4 23.1-6 44.2-12.6 61.2 22.7-12.5 39.4-34.8 44.2-61.2m-173.1 0c4.8 26.4 21.5 48.7 44.2 61.2-6.7-17-11.2-38-12.6-61.2zm76.4 55c4.5 9.6 8.2 13.8 10.2 15.5 2-1.7 5.7-5.8 10.2-15.5 6.2-13.4 11.1-32.5 12.7-55h-45.8c1.6 22.5 6.5 41.6 12.7 55m-12.7-87H247c-1.6-22.5-6.5-41.6-12.7-55-4.5-9.6-8.2-13.8-10.2-15.5-2 1.7-5.7 5.8-10.2 15.5-6.2 13.4-11.1 32.5-12.7 55m109.5 0c-4.8-26.4-21.5-48.7-44.2-61.2 6.7 17 11.2 38 12.6 61.2zM169 176c1.4-23.1 6-44.2 12.6-61.2-22.7 12.5-39.4 34.8-44.2 61.2zm-73 16a128 128 0 1 1 256 0 128 128 0 1 1-256 0"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vigilux的笔记本
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              计算机历史
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vigilux418/notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Vigilux's Notebook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  主页
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  数理基础
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../sys/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  体系结构
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../lang/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  程序设计
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ds/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  算法基础
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../core/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  核心系统
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../se/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  软件工程
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  通识
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  工具
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+  <!-- Add scripts that need to run before here -->
+  
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Vigilux的笔记本" class="md-nav__button md-logo" aria-label="Vigilux的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M96 512h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-66.7c18.6-6.6 32-24.4 32-45.3V48c0-26.5-21.5-48-48-48H96C43 0 0 43 0 96v320c0 53 43 96 96 96m-32-96c0-17.7 14.3-32 32-32h256v64H96c-17.7 0-32-14.3-32-32m246.6-208H279c-1.4 23.1-6 44.2-12.6 61.2 22.7-12.5 39.4-34.8 44.2-61.2m-173.1 0c4.8 26.4 21.5 48.7 44.2 61.2-6.7-17-11.2-38-12.6-61.2zm76.4 55c4.5 9.6 8.2 13.8 10.2 15.5 2-1.7 5.7-5.8 10.2-15.5 6.2-13.4 11.1-32.5 12.7-55h-45.8c1.6 22.5 6.5 41.6 12.7 55m-12.7-87H247c-1.6-22.5-6.5-41.6-12.7-55-4.5-9.6-8.2-13.8-10.2-15.5-2 1.7-5.7 5.8-10.2 15.5-6.2 13.4-11.1 32.5-12.7 55m109.5 0c-4.8-26.4-21.5-48.7-44.2-61.2 6.7 17 11.2 38 12.6 61.2zM169 176c1.4-23.1 6-44.2 12.6-61.2-22.7 12.5-39.4 34.8-44.2 61.2zm-73 16a128 128 0 1 1 256 0 128 128 0 1 1-256 0"/></svg>
+
+    </a>
+    Vigilux的笔记本
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vigilux418/notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Vigilux's Notebook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    主页
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../math/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    数理基础
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../sys/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    体系结构
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../lang/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    程序设计
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../ds/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    算法基础
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../core/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    核心系统
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../se/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    软件工程
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    通识
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            通识
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    计算机科学概览
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            计算机科学概览
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    计算机历史
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机历史
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机早期历史
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="计算机早期历史">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机科学抽象架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      早期计算工具演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      通用计算机架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算的规模化与商业化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      阿兰·图灵
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="阿兰·图灵">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算理论起源：可判定性问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      核心机制：图灵机
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算极限：停机问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      二战应用：密码破译
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      机器智能：图灵测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      历史里程碑与遗产
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      冷战和消费主义
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="冷战和消费主义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      核心动力学：从冷战科研到商业化循环
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agc" class="md-nav__link">
+    <span class="md-ellipsis">
+      技术范式转移：阿波罗导航计算机 (AGC) 与集成电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      全球化逻辑：美国防御合同 vs 日本消费者市场
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1970s" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人计算机时代的黎明 (1970s)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人计算机革命
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="个人计算机革命">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microcomputer" class="md-nav__link">
+    <span class="md-ellipsis">
+      微型计算机 (Microcomputer) 的硬件前提
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpreter" class="md-nav__link">
+    <span class="md-ellipsis">
+      软件层的突破：解释器 (Interpreter) 逻辑
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1977-1977-trinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      1977 年“三位一体” (1977 Trinity) 与商业化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      产业格局：开放式 vs. 封闭式架构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    体系结构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    程序设计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法基础
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    核心系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    软件工程
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    信息安全
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机未来
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../cal/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    微积分
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../cp/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    电路原理
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../cf/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    复变函数与积分变换
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../tools/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    工具
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机早期历史
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="计算机早期历史">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机科学抽象架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      早期计算工具演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      通用计算机架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算的规模化与商业化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      阿兰·图灵
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="阿兰·图灵">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算理论起源：可判定性问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      核心机制：图灵机
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算极限：停机问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      二战应用：密码破译
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      机器智能：图灵测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      历史里程碑与遗产
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      冷战和消费主义
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="冷战和消费主义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      核心动力学：从冷战科研到商业化循环
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agc" class="md-nav__link">
+    <span class="md-ellipsis">
+      技术范式转移：阿波罗导航计算机 (AGC) 与集成电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      全球化逻辑：美国防御合同 vs 日本消费者市场
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1970s" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人计算机时代的黎明 (1970s)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人计算机革命
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="个人计算机革命">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microcomputer" class="md-nav__link">
+    <span class="md-ellipsis">
+      微型计算机 (Microcomputer) 的硬件前提
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpreter" class="md-nav__link">
+    <span class="md-ellipsis">
+      软件层的突破：解释器 (Interpreter) 逻辑
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1977-1977-trinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      1977 年“三位一体” (1977 Trinity) 与商业化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      产业格局：开放式 vs. 封闭式架构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+  <!-- Add scripts that need to run afterwards here -->
+  
+    <script src="/notebook/javascripts/toc.js" defer></script>
+    <link rel="stylesheet" href="/notebook/stylesheets/fold_toc.css">
+  
+
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+                  
+
+
+  
+    <a href="https://github.com/vigilux418/notebook/edit/main/docs/general/csci/0.md" title="编辑此页" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-1.9l10-10V8l-6-6zm7 1.5L18.5 9H13zm7.1 9.5c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-2 1.8L12 20.9V23h2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/vigilux418/notebook/raw/main/docs/general/csci/0.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"/></svg>
+    </a>
+  
+
+
+<h1 id="_1">计算机历史<a class="headerlink" href="#_1" title="Permanent link">⚓︎</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 2716 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 9 分钟</p>
+</div>
+<h2 id="_2">计算机早期历史<a class="headerlink" href="#_2" title="Permanent link">⚓︎</a></h2>
+<h3 id="_3">计算机科学抽象架构<a class="headerlink" href="#_3" title="Permanent link">⚓︎</a></h3>
+<p>计算机通过多层 <strong>抽象 (Abstraction)</strong> 将简单的逻辑转化为复杂操作 。</p>
+<pre class="mermaid"><code>graph LR
+    A(位/字节) --&gt; B(晶体管)
+    B --&gt; C(逻辑门)
+    C --&gt; D(中央处理器)
+    D --&gt; E(操作系统)
+    E --&gt; F(软件应用)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>抽象层级 (Level of Abstraction)</strong></th>
+<th style="text-align: center;"><strong>核心组件 (Core Components)</strong></th>
+<th style="text-align: center;"><strong>功能描述 (Functional Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">硬件底层 (Hardware Layer)</td>
+<td style="text-align: center;">晶体管 (Transistors)、逻辑门 (Logic Gates)</td>
+<td style="text-align: center;">处理基础二进制数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">系统层 (System Layer)</td>
+<td style="text-align: center;">操作系统 (Operating Systems)</td>
+<td style="text-align: center;">管理硬件资源与任务调度</td>
+</tr>
+<tr>
+<td style="text-align: center;">应用层 (Application Layer)</td>
+<td style="text-align: center;">虚拟现实 (Virtual Reality)、机器人 (Robots)</td>
+<td style="text-align: center;">执行面向用户的复杂任务</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_4">早期计算工具演进<a class="headerlink" href="#_4" title="Permanent link">⚓︎</a></h3>
+<p>在电子时代之前，计算需求主要源于社会规模的扩张，超出了人类心算的极限 。</p>
+<pre class="mermaid"><code>timeline
+    title 计算工具演进里程碑 (Computing Evolution Milestones)
+    2500 BCE : 算盘 (Abacus) : 美索不达米亚 (Mesopotamia) ; 辅助存储计算状态
+    1613 : "Computer" 术语出现 : Richard Braithwait ; 当时为职业职称 (Job Title)
+    1694 : 步进计算器 (Step Reckoner) : Gottfried Leibniz ; 齿轮结构 ; 实现加减乘除
+    1890 : 制表机 (Tabulating Machine) : Herman Hollerith ; 打孔卡 (Punched Cards) ; IBM 前身
+    1944 : 哈佛马克一号 (Harvard Mark I) : IBM ; 机电计算机 (Electro-mechanical) ; 曼哈顿计划 (Manhattan Project)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>设备名称 (Device Name)</strong></th>
+<th style="text-align: center;"><strong>起源时间 (Origin)</strong></th>
+<th style="text-align: center;"><strong>核心功能 (Core Function)</strong></th>
+<th style="text-align: center;"><strong>技术特点 (Technical Characteristics)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>算盘 (Abacus)</strong></td>
+<td style="text-align: center;">约公元前 2500 年</td>
+<td style="text-align: center;">加减法运算</td>
+<td style="text-align: center;">手动存储计算状态</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>星盘 (Astrolabe)</strong></td>
+<td style="text-align: center;">历史悠久</td>
+<td style="text-align: center;">计算纬度</td>
+<td style="text-align: center;">辅助航海制图</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>计算尺 (Slide Rule)</strong></td>
+<td style="text-align: center;">17 世纪</td>
+<td style="text-align: center;">乘除法运算</td>
+<td style="text-align: center;">提高计算速度与精度</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>步进计算器 (Step Reckoner)</strong></td>
+<td style="text-align: center;">1694 年</td>
+<td style="text-align: center;">四则运算</td>
+<td style="text-align: center;">基于齿轮传动的机械累加器</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_5">通用计算机架构<a class="headerlink" href="#_5" title="Permanent link">⚓︎</a></h3>
+<p>Charles Babbage 提出的概念标志着从特定用途设备向 <strong>通用计算机 (General Purpose Computer)</strong> 的转型 。</p>
+<pre class="mermaid"><code>graph LR
+    A(差分机 Difference Engine) --近似多项式--&gt; B(分析机 Analytical Engine)
+    B --自动操作--&gt; C(计算机程序 Computer Program)
+    D(Ada Lovelace) --编写程序--&gt; C</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>概念/设备 (Concept/Device)</strong></th>
+<th style="text-align: center;"><strong>贡献者 (Contributor)</strong></th>
+<th style="text-align: center;"><strong>技术突破 (Technological Breakthrough)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>差分机 (Difference Engine)</strong></td>
+<td style="text-align: center;">Charles Babbage</td>
+<td style="text-align: center;">能够近似多项式 (Polynomials) 以计算对数和三角函数 。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>分析机 (Analytical Engine)</strong></td>
+<td style="text-align: center;">Charles Babbage</td>
+<td style="text-align: center;">具备内存 (Memory)、打印机，并能按顺序执行操作 。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>程序逻辑 (Program Logic)</strong></td>
+<td style="text-align: center;">Ada Lovelace</td>
+<td style="text-align: center;">构想了专为分析设计的语言，被视为首位程序员 。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_6">计算的规模化与商业化<a class="headerlink" href="#_6" title="Permanent link">⚓︎</a></h3>
+<p>19 世纪末，由于人口普查等大规模数据处理需求，<strong>电动机械 (Electro-mechanical)</strong> 设备开始普及 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>关键事件 (Key Event)</strong></th>
+<th style="text-align: center;"><strong>技术实现 (Technical Implementation)</strong></th>
+<th style="text-align: center;"><strong>社会影响 (Social Impact)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1890 年美国人口普查</strong></td>
+<td style="text-align: center;">Herman Hollerith 的制表机 。</td>
+<td style="text-align: center;">普查周期从 13 年缩短至 2.5 年 。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>打孔卡 (Punch Cards)</strong></td>
+<td style="text-align: center;">网格定位打孔代表数据 。</td>
+<td style="text-align: center;">实现数据存储与自动读取的标准化 。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>IBM 公司成立</strong></td>
+<td style="text-align: center;">制表机器公司等合并而成 。</td>
+<td style="text-align: center;">标志着计算技术正式进入商业化阶段 。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>计算历史注脚：</strong> 1613 年，“计算机 (Computer)”最初是一个职业头衔，指代负责计算的人员，而非机器 。直到 19 世纪末，该词才开始转型指代计算设备 。</p>
+</blockquote>
+<h2 id="_7">阿兰·图灵<a class="headerlink" href="#_7" title="Permanent link">⚓︎</a></h2>
+<h3 id="_8">计算理论起源：可判定性问题<a class="headerlink" href="#_8" title="Permanent link">⚓︎</a></h3>
+<p>在1935年，计算机科学的基础源于对数学逻辑极限的探索。 </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>人物 (Personnel)</strong></th>
+<th style="text-align: center;"><strong>方法 (Methodology)</strong></th>
+<th style="text-align: center;"><strong>结论 (Conclusion)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">David Hilbert</td>
+<td style="text-align: center;">提出可判定性问题 (Entscheidungsproblem)</td>
+<td style="text-align: center;">寻求是否存在通用逻辑算法</td>
+</tr>
+<tr>
+<td style="text-align: center;">Alonzo Church</td>
+<td style="text-align: center;">Lambda 算子 (Lambda Calculus)</td>
+<td style="text-align: center;">证明不存在通用算法；数学形式复杂</td>
+</tr>
+<tr>
+<td style="text-align: center;">Alan Turing</td>
+<td style="text-align: center;">图灵机 (Turing Machine)</td>
+<td style="text-align: center;">功能等价于 Lambda 算子，但模型更简洁</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_9">核心机制：图灵机<a class="headerlink" href="#_9" title="Permanent link">⚓︎</a></h3>
+<p>图灵机是一种理论计算模型，证明了简单的物理逻辑可以实现任何形式的计算。 </p>
+<pre class="mermaid"><code>graph LR
+    A[纸带 Tape] --&gt; B[读写头 Head]
+    C[状态 State] --&gt; B
+    D[规则集 Rules] --&gt; B
+    B --&gt; E{执行动作 Action}
+    E --&gt; F[修改符号 Write]
+    E --&gt; G[改变状态 Change State]
+    E --&gt; H[移动读写头 Move Left/Right]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>组件 (Component)</strong></th>
+<th style="text-align: center;"><strong>功能描述 (Functional Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">纸带 (Tape)</td>
+<td style="text-align: center;">存储符号的无限长存储媒介</td>
+</tr>
+<tr>
+<td style="text-align: center;">读写头 (Head)</td>
+<td style="text-align: center;">读取当前符号并执行写入或移动</td>
+</tr>
+<tr>
+<td style="text-align: center;">状态变量 (State)</td>
+<td style="text-align: center;">保存机器当前的内部信息（如“偶数”或“停机”）</td>
+</tr>
+<tr>
+<td style="text-align: center;">规则集 (Rules)</td>
+<td style="text-align: center;">根据“当前状态 + 符号”决定下一步动作的算法逻辑</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_10">计算极限：停机问题<a class="headerlink" href="#_10" title="Permanent link">⚓︎</a></h3>
+<p>Alan Turing 通过逻辑悖论证明了计算能力的边界，即并非所有问题都具有可计算性 (Computability)。 </p>
+<pre class="mermaid"><code>graph LR
+    Input[输入输入/程序] --&gt; H{判定机 H}
+    H -- 预测停机 --&gt; B[异魔机 Bizzaro]
+    H -- 预测永行 --&gt; C[输出停机 Halt]
+    B --&gt; D[无限循环 Loop]
+    D -- 矛盾 --&gt; H
+    C -- 矛盾 --&gt; H</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>逻辑环节 (Logical Stage)</strong></th>
+<th style="text-align: center;"><strong>描述 (Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">假设 (Hypothesis)</td>
+<td style="text-align: center;">存在一台机器 H，能准确预测任何程序是否会停机 (Halt)</td>
+</tr>
+<tr>
+<td style="text-align: center;">构造 (Construction)</td>
+<td style="text-align: center;">建立“异魔机 (Bizzaro)”，其行为与 H 的预测完全相反</td>
+</tr>
+<tr>
+<td style="text-align: center;">悖论 (Paradox)</td>
+<td style="text-align: center;">当 Bizzaro 分析自身时：若预测停机则永行，若预测永行则停机</td>
+</tr>
+<tr>
+<td style="text-align: center;">结论 (Conclusion)</td>
+<td style="text-align: center;">停机问题不可解 (Unsolvable)，计算存在极限</td>
+</tr>
+</tbody>
+</table>
+<details class="info">
+<summary>数学形式</summary>
+<p>假如说存在一个万能程序 <code>H(P, I)</code>，它可以得出<code>P(I)</code>是会停机还是会死循环。</p>
+<p>那么，我们<strong>用<code>H</code>构建</strong>一个程序<code>C(P,I)</code>，<code>C</code>满足：</p>
+<ul>
+<li>如果<code>H(P,I)</code>等于“停机”，那么<code>C</code>就会死循环</li>
+<li>如果<code>H(P,I)</code>等于“死循环”，那么<code>C</code>就会停机</li>
+</ul>
+<p>总之，<code>C</code>总和<code>H</code>“唱反调”。</p>
+<p>那么，如果<code>C</code>的输入为它自己<code>C</code>，即执行程序<code>C(C,C)</code>，<code>H</code>的输入便是<code>H(C,C)</code>，由于<code>H</code>是一个万能程序，那么<code>H</code>便能输出正确的结果（即使程序中参数包含它自己），即正确输出：<code>C</code>会不会停机。</p>
+<p>从底层分析，如果<code>C</code>会停机，那么<code>H(C,C)</code>=="会停机"，此时<code>C</code>就会陷入死循环</p>
+<p>如果<code>C</code>不会停机，那么<code>H(C,C)</code>==“死循环”，那么<code>C</code>就会停机。</p>
+<p>逻辑上不成立，因此不存在这样的万能程序<code>H(P, I)</code>。</p>
+</details>
+<hr />
+<h3 id="_11">二战应用：密码破译<a class="headerlink" href="#_11" title="Permanent link">⚓︎</a></h3>
+<p>Alan Turing 在布莱切利园 (Bletchley Park) 的工作利用机电计算缩短了战争进程。 </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>设备 (Device)</strong></th>
+<th style="text-align: center;"><strong>角色 (Role)</strong></th>
+<th style="text-align: center;"><strong>核心原理 (Principle)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">英格玛机 (Enigma)</td>
+<td style="text-align: center;">德军加密设备 (Encryption)</td>
+<td style="text-align: center;">通过齿轮 (Rotors) 和插板 (Plug board) 实现数十亿种组合</td>
+</tr>
+<tr>
+<td style="text-align: center;">Bombe</td>
+<td style="text-align: center;">盟军破译机 (Decryption)</td>
+<td style="text-align: center;">利用“字母不会加密为自身”的缺陷，排除不可能的组合</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_12">机器智能：图灵测试<a class="headerlink" href="#_12" title="Permanent link">⚓︎</a></h3>
+<p>战后，Alan Turing 将视角转向人工智能 (Artificial Intelligence)，提出了评估机器智力的行为标准。 </p>
+<ul>
+<li><strong>定义 (Definition)：</strong> 若机器能欺骗人类，使人无法分辨其与人类的区别，则视为具有智能。 </li>
+<li><strong>现代变体 (Modern Variant)：</strong> 验证码 (CAPTCHA)，用于区分计算机与人类的自动化测试。 </li>
+</ul>
+<hr />
+<h3 id="_13">历史里程碑与遗产<a class="headerlink" href="#_13" title="Permanent link">⚓︎</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>时间 (Time)</strong></th>
+<th style="text-align: center;"><strong>事件 (Event)</strong></th>
+<th style="text-align: center;"><strong>影响 (Impact)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1936</td>
+<td style="text-align: center;">提出图灵完备 (Turing Complete)</td>
+<td style="text-align: center;">定义了现代计算机系统的标准</td>
+</tr>
+<tr>
+<td style="text-align: center;">1950</td>
+<td style="text-align: center;">提出图灵测试 (Turing Test)</td>
+<td style="text-align: center;">开创人工智能理论先河</td>
+</tr>
+<tr>
+<td style="text-align: center;">1954</td>
+<td style="text-align: center;">遭遇化学阉割后中毒去世</td>
+<td style="text-align: center;">终年41岁，科学界的重大损失</td>
+</tr>
+<tr>
+<td style="text-align: center;">至今</td>
+<td style="text-align: center;">图灵奖 (Turing Award)</td>
+<td style="text-align: center;">计算机领域的最高荣誉（诺贝尔奖级）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_14">冷战和消费主义<a class="headerlink" href="#_14" title="Permanent link">⚓︎</a></h2>
+<h3 id="_15">核心动力学：从冷战科研到商业化循环<a class="headerlink" href="#_15" title="Permanent link">⚓︎</a></h3>
+<p>计算技术的发展并非线性，而是由政府资金支撑技术成熟后，再由消费者市场推动主流化的过程 。</p>
+<pre class="mermaid"><code>graph LR
+    A[二战/冷战] --&gt; B{政府资金投入}
+    B --&gt; C[曼哈顿计划]
+    B --&gt; D[集成电路研发]
+    C &amp; D --&gt; E[技术成熟/降本]
+    E --&gt; F[消费者需求]
+    F --&gt; G[计算机主流化]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>驱动阶段 (Stage)</strong></th>
+<th style="text-align: center;"><strong>核心目标 (Core Objective)</strong></th>
+<th style="text-align: center;"><strong>代表性成果 (Representative Results)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">战时/冷战初期</td>
+<td style="text-align: center;">增强物理/破译能力</td>
+<td style="text-align: center;">曼哈顿计划, 纳粹通讯破解</td>
+</tr>
+<tr>
+<td style="text-align: center;">1950s - 1960s</td>
+<td style="text-align: center;">增强人类智力与空间探索</td>
+<td style="text-align: center;">Univac 1, Memex, 阿波罗计划</td>
+</tr>
+<tr>
+<td style="text-align: center;">1970s 以后</td>
+<td style="text-align: center;">降低成本与规模经济</td>
+<td style="text-align: center;">微处理器, 家用游戏机, 个人电脑</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="agc">技术范式转移：阿波罗导航计算机 (AGC) 与集成电路<a class="headerlink" href="#agc" title="Permanent link">⚓︎</a></h3>
+<p>阿波罗导航计算机 (Apollo Guidance Computer) 是集成电路 (Integrated Circuits) 从实验室走向大规模生产的关键转折点 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>设计要求 (Requirement)</strong></th>
+<th style="text-align: center;"><strong>核心挑战 (Challenge)</strong></th>
+<th style="text-align: center;"><strong>技术解决方案 (Solution)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>速度 (Fast)</strong></td>
+<td style="text-align: center;">处理复杂轨道计算</td>
+<td style="text-align: center;">采用集成电路 (Integrated Circuits)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>轻量 (Small &amp; Lightweight)</strong></td>
+<td style="text-align: center;">航天器载重空间极度有限</td>
+<td style="text-align: center;">淘汰真空管/离散晶体管</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>可靠性 (Reliability)</strong></td>
+<td style="text-align: center;">应对震动、辐射与极端温差</td>
+<td style="text-align: center;">全固态电路设计</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="vs">全球化逻辑：美国防御合同 vs 日本消费者市场<a class="headerlink" href="#vs" title="Permanent link">⚓︎</a></h3>
+<p>1950-1970年代，美日两国半导体产业因战略重心不同，导致了后续市场格局的根本性差异 。</p>
+<pre class="mermaid"><code>graph LR
+    US[美国企业] --&gt; Def[国防合同] --&gt; HighP[高利润/低产量] --&gt; Risk[冷战消退/订单枯竭]
+    JP[日本企业] --&gt; Con[消费者市场] --&gt; HighV[高产量/低利润] --&gt; Scale[规模经济/自动化]
+    Risk &amp; Scale --&gt; Shift[产业领导权更迭]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>维度 (Dimension)</strong></th>
+<th style="text-align: center;"><strong>美国 (United States)</strong></th>
+<th style="text-align: center;"><strong>日本 (Japan)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>早期切入点</strong></td>
+<td style="text-align: center;">军事工业综合体 (Military Industrial Complex)</td>
+<td style="text-align: center;">晶体管收音机 (Transistor Radio)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>代表企业</strong></td>
+<td style="text-align: center;">Intel, Fairchild, IBM</td>
+<td style="text-align: center;">Sony, Sharp, Casio, Hitachi</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>核心优势</strong></td>
+<td style="text-align: center;">尖端技术研发 (Cutting-edge R&amp;D)</td>
+<td style="text-align: center;">生产效率、质量控制与自动化</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1970s 标志产品</strong></td>
+<td style="text-align: center;">超级计算机 (Supercomputers)</td>
+<td style="text-align: center;">便携式电子计算器 (Handheld Calculators)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="1970s">个人计算机时代的黎明 (1970s)<a class="headerlink" href="#1970s" title="Permanent link">⚓︎</a></h3>
+<p>集成电路成本的骤降与微处理器 (Microprocessors) 的诞生，使得计算设备从政府实验室进入家庭。</p>
+<ul>
+<li><strong>里程碑 1：</strong> Intel 4004 (1971) —— 应日本 Busicom 公司要求开发的微处理器 。</li>
+<li><strong>里程碑 2：</strong> Altair 8800 (1975) —— 第一批成功的家用电脑 (Home Computers) 。</li>
+<li><strong>里程碑 3：</strong> Atari 2600 (1977) —— 标志着家用游戏机 (Home Gaming Consoles) 市场的开启 。</li>
+</ul>
+<h2 id="_16">个人计算机革命<a class="headerlink" href="#_16" title="Permanent link">⚓︎</a></h2>
+<h3 id="microcomputer">微型计算机 (Microcomputer) 的硬件前提<a class="headerlink" href="#microcomputer" title="Permanent link">⚓︎</a></h3>
+<p>在 1970 年代初，组件成本的下降使得从大型机向单人使用的微型计算机转变成为可能。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>核心组件 (Core Components)</strong></th>
+<th style="text-align: center;"><strong>技术演进 (Evolution)</strong></th>
+<th style="text-align: center;"><strong>影响 (Impact)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>单芯片 CPU (Single-chip CPU)</strong></td>
+<td style="text-align: center;">强大、小型且廉价</td>
+<td style="text-align: center;">最具影响力的转变因素</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>固态存储器 (Solid-state Memory)</strong></td>
+<td style="text-align: center;">集成电路进步提供低成本 RAM/ROM</td>
+<td style="text-align: center;">允许整台计算机集成在单块电路板</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>计算机存储 (Computer Storage)</strong></td>
+<td style="text-align: center;">磁带 (Magnetic Tape) 与 软盘 (Floppy Disk)</td>
+<td style="text-align: center;">提供便宜且可靠的非易失性存储</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>显示器 (Display)</strong></td>
+<td style="text-align: center;">由电视机 (TV) 改装而成</td>
+<td style="text-align: center;">极大降低了输出设备的成本</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="interpreter">软件层的突破：解释器 (Interpreter) 逻辑<a class="headerlink" href="#interpreter" title="Permanent link">⚓︎</a></h3>
+<p>为了让非专业人士能使用 Altair 8800 等机器，Bill Gates 与 Paul Allen 开发了 BASIC 解释器，这成为微软 (Microsoft) 的首个产品。</p>
+<pre class="mermaid"><code>graph LR
+    A[BASIC 源代码] --&gt; B{解释器 Interpreter}
+    B --&gt; C[原生机器码 Native Code]
+    C --&gt; D[硬件执行]
+    style B fill:#f9f,stroke:#333,stroke-width:2px</code></pre>
+<ul>
+<li><strong>定义 (Definition)</strong>：将高级指令在程序运行时（而非运行前）转换为机器码的程序 。</li>
+<li><strong>开发背景</strong>：Bill Gates 与 Paul Allen 在没有实体机器的情况下，于几周内赶工完成 。</li>
+<li><strong>意义</strong>：使不精通机器码的爱好者也能编写复杂程序 。</li>
+</ul>
+<hr />
+<h3 id="1977-1977-trinity">1977 年“三位一体” (1977 Trinity) 与商业化<a class="headerlink" href="#1977-1977-trinity" title="Permanent link">⚓︎</a></h3>
+<p>1977 年标志着计算机从“套件 (Kit)”转变为“家电 (Appliance)”，面向普通消费者、学校和小企业 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>计算机型号 (Model)</strong></th>
+<th style="text-align: center;"><strong>生产商 (Manufacturer)</strong></th>
+<th style="text-align: center;"><strong>核心特征 (Key Features)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>Apple II</strong></td>
+<td style="text-align: center;">Apple</td>
+<td style="text-align: center;">专业设计、彩色图形、声音输出</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>TRS-80 Model I</strong></td>
+<td style="text-align: center;">Tandy (RadioShack)</td>
+<td style="text-align: center;">成本仅为 Apple II 的一半，销量极大</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PET 2001</strong></td>
+<td style="text-align: center;">Commodore</td>
+<td style="text-align: center;">一体化设计 (All-in-one)，模糊了计算机与电器的界限</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>杀手级应用 (Killer App)</strong>：1979 年推出的 VisiCalc（首个电子表格程序），确立了个人计算机在办公领域的地位 。</li>
+</ul>
+<hr />
+<h3 id="vs_1">产业格局：开放式 vs. 封闭式架构<a class="headerlink" href="#vs_1" title="Permanent link">⚓︎</a></h3>
+<p>IBM 进场后，两种截然不同的商业战略塑造了现代 PC 产业的格局 。</p>
+<pre class="mermaid"><code>graph TD
+    subgraph IBM_Strategy [开放式架构]
+    I1[标准文档] --&gt; I2[第三方硬件]
+    I2 --&gt; I3[巨大生态系统]
+    I3 --&gt; I4[雪球效应/主导市场]
+    end
+
+    subgraph Apple_Strategy [封闭式架构]
+    A1[垂直整合] --&gt; A2[自研软硬件]
+    A2 --&gt; A3[控制用户体验]
+    A3 --&gt; A4[高可靠性/特定份额]
+    end</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>战略维度 (Strategy)</strong></th>
+<th style="text-align: center;"><strong>开放式架构 (Open Architecture)</strong></th>
+<th style="text-align: center;"><strong>封闭式架构 (Closed Architecture)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>代表产品</strong></td>
+<td style="text-align: center;">IBM PC</td>
+<td style="text-align: center;">Macintosh (1984)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>核心逻辑</strong></td>
+<td style="text-align: center;">许可第三方制造“兼容机 (Compatible)”</td>
+<td style="text-align: center;">控制从硬件到软件的全栈 (Full Stack)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>操作系统</strong></td>
+<td style="text-align: center;">Microsoft DOS (授权模式)</td>
+<td style="text-align: center;">自研专属操作系统 (Proprietary)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>优势</strong></td>
+<td style="text-align: center;">成本低、软件丰富、规模化极快</td>
+<td style="text-align: center;">体验一致、易用性强（图形界面）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>结局</strong>：IBM PC 及其兼容机迅速占领商业市场，而 Apple 凭借 Macintosh 引入的图形用户界面 (GUI) 保持了竞争地位 。</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="2026年4月11日 01:22:39 CST">2026年4月11日 01:22:39</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="2026年4月11日 01:22:39 CST">2026年4月11日 01:22:39</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        此页面有帮助吗?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="帮助很大" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m7 0c0 .8-.7 1.5-1.5 1.5S14 10.3 14 9.5 14.7 8 15.5 8s1.5.7 1.5 1.5m-5 7.73c-1.75 0-3.29-.73-4.19-1.81L9.23 14c.45.72 1.52 1.23 2.77 1.23s2.32-.51 2.77-1.23l1.42 1.42c-.9 1.08-2.44 1.81-4.19 1.81"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="亟待改善" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10m-6.5-4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m2 4.5c1.75 0 3.29.72 4.19 1.81l-1.42 1.42C14.32 16.5 13.25 16 12 16s-2.32.5-2.77 1.23l-1.42-1.42C8.71 14.72 10.25 14 12 14"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              感谢你的反馈!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for your feedback! Help us improve this page by using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+          data-repo="vigilux418/mkdocs"
+          data-repo-id="R_kgDOOpylRA"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOOpylRM4CuxK_"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+<!-- 标题计数器 -->
+
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="上一页: 计算机科学概览">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                计算机科学概览
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../1/" class="md-footer__link md-footer__link--next" aria-label="下一页: 体系结构">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                体系结构
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2025 Vigilux
+    </div>
+  
+  
+    <div>
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+    
+    modified by
+    <a href="https://github.com/vigilux418" target="_blank" rel="noopener">
+      Vigilux
+    </a>
+      | Customization Reference from
+    <a href="https://github.com/TonyCrane/" target="_blank" rel="noopener">
+      TonyCrane
+    </a>
+      &
+    <a href="https://github.com/noughtq" target="_blank" rel="noopener">
+      NoughtQ
+    </a>
+    </div>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/vigilux418" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://vigilux.top" target="_blank" rel="noopener" title="vigilux.top" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M277.8 8.6c-12.3-11.4-31.3-11.4-43.5 0l-224 208c-9.6 9-12.8 22.9-8 35.1S18.8 272 32 272h16v176c0 35.3 28.7 64 64 64h288c35.3 0 64-28.7 64-64V272h16c13.2 0 25-8.1 29.8-20.3s1.6-26.2-8-35.1zM240 320h32c26.5 0 48 21.5 48 48v96H192v-96c0-26.5 21.5-48 48-48"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://app.docker.com/accounts/vigilux" target="_blank" rel="noopener" title="app.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M349.9 236.3h-66.1v-59.4h66.1zm0-204.3h-66.1v60.7h66.1zm78.2 144.8H362v59.4h66.1zm-156.3-72.1h-66.1v60.1h66.1zm78.1 0h-66.1v60.1h66.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1zm78.1 0h-66.1v59.4h66.1zm-78.1-72.1h-66.1v60.1h66.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:a3205767798@outlook.com" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M536.4-26.3c9.8-3.5 20.6-1 28 6.3s9.8 18.2 6.3 28l-178 496.9c-5 13.9-18.1 23.1-32.8 23.1-14.2 0-27-8.6-32.3-21.7l-64.2-158c-4.5-11-2.5-23.6 5.2-32.6l94.5-112.4c5.1-6.1 4.7-15-.9-20.6s-14.6-6-20.6-.9l-112.4 94.3c-9.1 7.6-21.6 9.6-32.6 5.2L38.1 216.8c-13.1-5.3-21.7-18.1-21.7-32.3 0-14.7 9.2-27.8 23.1-32.8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "search.highlight", "search.share", "search.suggest", "navigation.footer", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid.mjs" type="module"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/special_effects/lines.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>

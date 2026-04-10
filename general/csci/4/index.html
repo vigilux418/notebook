@@ -1,0 +1,4532 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Vigilux的笔记本">
+      
+      
+      
+        <link rel="canonical" href="https://vigilux418.github.io/notebook/general/csci/4/">
+      
+      
+        <link rel="prev" href="../3/">
+      
+      
+        <link rel="next" href="../5/">
+      
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+  
+    
+      
+        <title>核心系统 - Vigilux的笔记本</title>
+      
+    
+  
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M17%2013h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/custom.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/status.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap">
+    
+    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-GTK216Q9ET"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-GTK216Q9ET",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-GTK216Q9ET",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Vigilux的笔记本" class="md-header__button md-logo" aria-label="Vigilux的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M96 512h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-66.7c18.6-6.6 32-24.4 32-45.3V48c0-26.5-21.5-48-48-48H96C43 0 0 43 0 96v320c0 53 43 96 96 96m-32-96c0-17.7 14.3-32 32-32h256v64H96c-17.7 0-32-14.3-32-32m246.6-208H279c-1.4 23.1-6 44.2-12.6 61.2 22.7-12.5 39.4-34.8 44.2-61.2m-173.1 0c4.8 26.4 21.5 48.7 44.2 61.2-6.7-17-11.2-38-12.6-61.2zm76.4 55c4.5 9.6 8.2 13.8 10.2 15.5 2-1.7 5.7-5.8 10.2-15.5 6.2-13.4 11.1-32.5 12.7-55h-45.8c1.6 22.5 6.5 41.6 12.7 55m-12.7-87H247c-1.6-22.5-6.5-41.6-12.7-55-4.5-9.6-8.2-13.8-10.2-15.5-2 1.7-5.7 5.8-10.2 15.5-6.2 13.4-11.1 32.5-12.7 55m109.5 0c-4.8-26.4-21.5-48.7-44.2-61.2 6.7 17 11.2 38 12.6 61.2zM169 176c1.4-23.1 6-44.2 12.6-61.2-22.7 12.5-39.4 34.8-44.2 61.2zm-73 16a128 128 0 1 1 256 0 128 128 0 1 1-256 0"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vigilux的笔记本
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              核心系统
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vigilux418/notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Vigilux's Notebook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  主页
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  数理基础
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../sys/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  体系结构
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../lang/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  程序设计
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ds/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  算法基础
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../core/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  核心系统
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../se/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  软件工程
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  通识
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  工具
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+  <!-- Add scripts that need to run before here -->
+  
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Vigilux的笔记本" class="md-nav__button md-logo" aria-label="Vigilux的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M96 512h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-66.7c18.6-6.6 32-24.4 32-45.3V48c0-26.5-21.5-48-48-48H96C43 0 0 43 0 96v320c0 53 43 96 96 96m-32-96c0-17.7 14.3-32 32-32h256v64H96c-17.7 0-32-14.3-32-32m246.6-208H279c-1.4 23.1-6 44.2-12.6 61.2 22.7-12.5 39.4-34.8 44.2-61.2m-173.1 0c4.8 26.4 21.5 48.7 44.2 61.2-6.7-17-11.2-38-12.6-61.2zm76.4 55c4.5 9.6 8.2 13.8 10.2 15.5 2-1.7 5.7-5.8 10.2-15.5 6.2-13.4 11.1-32.5 12.7-55h-45.8c1.6 22.5 6.5 41.6 12.7 55m-12.7-87H247c-1.6-22.5-6.5-41.6-12.7-55-4.5-9.6-8.2-13.8-10.2-15.5-2 1.7-5.7 5.8-10.2 15.5-6.2 13.4-11.1 32.5-12.7 55m109.5 0c-4.8-26.4-21.5-48.7-44.2-61.2 6.7 17 11.2 38 12.6 61.2zM169 176c1.4-23.1 6-44.2 12.6-61.2-22.7 12.5-39.4 34.8-44.2 61.2zm-73 16a128 128 0 1 1 256 0 128 128 0 1 1-256 0"/></svg>
+
+    </a>
+    Vigilux的笔记本
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vigilux418/notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Vigilux's Notebook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    主页
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../math/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    数理基础
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../sys/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    体系结构
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../lang/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    程序设计
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../ds/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    算法基础
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../core/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    核心系统
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../se/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    软件工程
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    通识
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            通识
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    计算机科学概览
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            计算机科学概览
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机历史
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    体系结构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    程序设计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法基础
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    核心系统
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    核心系统
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件系统
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据解释层
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      存储管理层
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      组织结构层
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      压缩
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="压缩">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      压缩体系
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      无损压缩原理：游程编码与霍夫曼编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      有损压缩原理：感知编码与时间冗余
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作系统
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="操作系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机执行模式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      硬件抽象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      内存管理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      系统架构与安全性演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人电脑操作系统
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      命令行界面
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="命令行界面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      人机交互
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      早期批处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      交互机制与输入标准化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      命令行界面与终端架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      早期文本应用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      屏幕&amp;2D图形显示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="屏幕&amp;2D图形显示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      物理显示基础
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      扫描与渲染范式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      字符生成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      矢量指令与交互式动画
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      现代位图显示与抽象
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      图形用户界面GUI
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="图形用户界面GUI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      交互范式演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      技术与机构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wimp" class="md-nav__link">
+    <span class="md-ellipsis">
+      WIMP 框架与组件化设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件驱动编程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      商业化进程与自然选择
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      3D图形
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3D图形">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      空间建模与几何基础
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3d_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3D 投影
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      扫描线渲染与光栅化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      遮挡处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      表面着色与纹理映射
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      硬件加速与并行计算
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机网络
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="计算机网络">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      局域网基础与以太网协议
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      载波侦听多路访问与冲突处理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="载波侦听多路访问与冲突处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      指数退避算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络扩展与冲突域分割
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      交换技术对比
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      互联网协议与起源
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      互联网
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="互联网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络拓扑与物理架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp-tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      传输层协议：UDP 与 TCP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="传输层协议：UDP 与 TCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 交互逻辑与流量调节
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns" class="md-nav__link">
+    <span class="md-ellipsis">
+      域名系统DNS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osi" class="md-nav__link">
+    <span class="md-ellipsis">
+      OSI 参考模型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      万维网
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="万维网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_46" class="md-nav__link">
+    <span class="md-ellipsis">
+      抽象层级
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_47" class="md-nav__link">
+    <span class="md-ellipsis">
+      网页访问流程与协议栈
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html" class="md-nav__link">
+    <span class="md-ellipsis">
+      超文本标记语言HTML
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_48" class="md-nav__link">
+    <span class="md-ellipsis">
+      搜索引擎演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_49" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络中立性技术
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    软件工程
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    信息安全
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机未来
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../cal/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    微积分
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../cp/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    电路原理
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../cf/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    复变函数与积分变换
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../tools/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    工具
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件系统
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据解释层
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      存储管理层
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      组织结构层
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      压缩
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="压缩">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      压缩体系
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      无损压缩原理：游程编码与霍夫曼编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      有损压缩原理：感知编码与时间冗余
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作系统
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="操作系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机执行模式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      硬件抽象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      内存管理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      系统架构与安全性演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人电脑操作系统
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      命令行界面
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="命令行界面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      人机交互
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      早期批处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      交互机制与输入标准化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      命令行界面与终端架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      早期文本应用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      屏幕&amp;2D图形显示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="屏幕&amp;2D图形显示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      物理显示基础
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      扫描与渲染范式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      字符生成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      矢量指令与交互式动画
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      现代位图显示与抽象
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      图形用户界面GUI
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="图形用户界面GUI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      交互范式演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      技术与机构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wimp" class="md-nav__link">
+    <span class="md-ellipsis">
+      WIMP 框架与组件化设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件驱动编程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      商业化进程与自然选择
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      3D图形
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3D图形">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      空间建模与几何基础
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3d_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3D 投影
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      扫描线渲染与光栅化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      遮挡处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      表面着色与纹理映射
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      硬件加速与并行计算
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      计算机网络
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="计算机网络">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      局域网基础与以太网协议
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      载波侦听多路访问与冲突处理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="载波侦听多路访问与冲突处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      指数退避算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络扩展与冲突域分割
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      交换技术对比
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      互联网协议与起源
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      互联网
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="互联网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络拓扑与物理架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp-tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      传输层协议：UDP 与 TCP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="传输层协议：UDP 与 TCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 交互逻辑与流量调节
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns" class="md-nav__link">
+    <span class="md-ellipsis">
+      域名系统DNS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osi" class="md-nav__link">
+    <span class="md-ellipsis">
+      OSI 参考模型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      万维网
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="万维网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_46" class="md-nav__link">
+    <span class="md-ellipsis">
+      抽象层级
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_47" class="md-nav__link">
+    <span class="md-ellipsis">
+      网页访问流程与协议栈
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html" class="md-nav__link">
+    <span class="md-ellipsis">
+      超文本标记语言HTML
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_48" class="md-nav__link">
+    <span class="md-ellipsis">
+      搜索引擎演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_49" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络中立性技术
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+  <!-- Add scripts that need to run afterwards here -->
+  
+    <script src="/notebook/javascripts/toc.js" defer></script>
+    <link rel="stylesheet" href="/notebook/stylesheets/fold_toc.css">
+  
+
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+                  
+
+
+  
+    <a href="https://github.com/vigilux418/notebook/edit/main/docs/general/csci/4.md" title="编辑此页" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-1.9l10-10V8l-6-6zm7 1.5L18.5 9H13zm7.1 9.5c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-2 1.8L12 20.9V23h2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/vigilux418/notebook/raw/main/docs/general/csci/4.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"/></svg>
+    </a>
+  
+
+
+<h1 id="_1">核心系统<a class="headerlink" href="#_1" title="Permanent link">⚓︎</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 6355 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 21 分钟</p>
+</div>
+<h2 id="_2">文件系统<a class="headerlink" href="#_2" title="Permanent link">⚓︎</a></h2>
+<h3 id="_3">数据解释层<a class="headerlink" href="#_3" title="Permanent link">⚓︎</a></h3>
+<p>计算机文件 (File) 在底层均表现为二进制 (Binary) 数字序列 。文件格式 (File Format) 是解析这些原始数据的关键协议 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>格式类型 (Format)</strong></th>
+<th style="text-align: center;"><strong>核心元数据 (Metadata)</strong></th>
+<th style="text-align: center;"><strong>数据表示 (Data Representation)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>文本 (TXT)</strong></td>
+<td style="text-align: center;">字符编码 (Encoding): ASCII</td>
+<td style="text-align: center;">映射至特定字符的二进制数值</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>音频 (WAV)</strong></td>
+<td style="text-align: center;">文件头 (Header): 码率 (Bit Rate)、声道 (Track)</td>
+<td style="text-align: center;">振幅 (Amplitude) 采样值序列</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>位图 (BMP)</strong></td>
+<td style="text-align: center;">宽高 (Dimensions)、颜色深度 (Color Depth)</td>
+<td style="text-align: center;">RGB 像素点矩阵 (每像素 24 位)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph TD
+    A[原始二进制] --&gt; B{文件格式协议FFP}
+    B --&gt; C[文本字符Text Characters]
+    B --&gt; D[声音波形Audio Waveform]
+    B --&gt; E[图像像素Image Pixels]
+    B --&gt; F[视频帧序列Video Frames]</code></pre>
+<hr />
+<h3 id="_4">存储管理层<a class="headerlink" href="#_4" title="Permanent link">⚓︎</a></h3>
+<p>文件系统通过硬件与软件抽象 (Abstraction)，将物理存储介质视为一系列连续的存储单元 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>管理概念 (Concept)</strong></th>
+<th style="text-align: center;"><strong>定义与功能 (Definition &amp; Function)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>目录文件 (Directory File)</strong></td>
+<td style="text-align: center;">记录文件名、扩展名、起始位置及长度的特殊文件</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>数据块 (Block)</strong></td>
+<td style="text-align: center;">文件系统划分的固定大小存储单元，简化管理并提供预留空间 (Slack Space)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>碎片化 (Fragmentation)</strong></td>
+<td style="text-align: center;">文件因增删改而分布在不连续存储块中的现象</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>碎片整理 (Defragmentation)</strong></td>
+<td style="text-align: center;">通过移动数据使文件存储块恢复连续及有序状态</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    A[目录记录] -- 指向 --&gt; B[起始块]
+    B -- 链接 --&gt; C[后续块 1]
+    C -- 链接 --&gt; D[后续块 2]
+    E[删除操作] -- 仅移除 --&gt; A
+    F[整理操作] -- 重排 --&gt; B &amp; C &amp; D</code></pre>
+<hr />
+<h3 id="_5">组织结构层<a class="headerlink" href="#_5" title="Permanent link">⚓︎</a></h3>
+<p>随着存储容量爆炸，文件管理从扁平结构演进为层级抽象 。</p>
+<ul>
+<li><strong>平面文件系统 (Flat File System)</strong>: 所有文件处于同一层级，仅适用于少量文件的早期系统 。</li>
+<li><strong>分层文件系统 (Hierarchical File System)</strong>: 采用文件夹套文件夹的结构，支持无限深度的目录树 。</li>
+<li><strong>根目录 (Root Directory)</strong>: 分层结构的顶层节点 。</li>
+<li><strong>文件路径 (File Path)</strong>: 描述从根目录到目标文件的层级逻辑关系 。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>操作类型 (Operation)</strong></th>
+<th style="text-align: center;"><strong>逻辑机制 (Logical Mechanism)</strong></th>
+<th style="text-align: center;"><strong>物理影响 (Physical Impact)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>移动 (Move)</strong></td>
+<td style="text-align: center;">修改相关目录文件中的记录</td>
+<td style="text-align: center;">数据块位置保持不变</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>删除 (Delete)</strong></td>
+<td style="text-align: center;">移除目录文件中的条目</td>
+<td style="text-align: center;">数据暂存，块标记为可用</td>
+</tr>
+</tbody>
+</table>
+<p>此结构化框架展示了文件系统如何屏蔽底层物理位操作，为用户提供直观的数据管理抽象 。</p>
+<h2 id="_6">压缩<a class="headerlink" href="#_6" title="Permanent link">⚓︎</a></h2>
+<h3 id="_7">压缩体系<a class="headerlink" href="#_7" title="Permanent link">⚓︎</a></h3>
+<p>数据压缩的核心目标在于通过使用比原始表示更少的 位 (Bits) 来编码数据，从而提高<strong>存储 (Storage) 效率</strong>与<strong>传输 (Transmission) 速度</strong>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>压缩类型 (Compression Type)</strong></th>
+<th style="text-align: center;"><strong>核心特性 (Core Characteristics)</strong></th>
+<th style="text-align: center;"><strong>解压状态 (Decompression State)</strong></th>
+<th style="text-align: center;"><strong>典型格式 (Typical Formats)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>无损压缩 (Lossless Compression)</strong></td>
+<td style="text-align: center;">消除冗余信息</td>
+<td style="text-align: center;">与原始数据逐位一致 (Identical)</td>
+<td style="text-align: center;">GIF, PNG, PDF, ZIP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>有损压缩 (Lossy Compression)</strong></td>
+<td style="text-align: center;">丢弃不重要或人类无法感知的细节</td>
+<td style="text-align: center;">降级还原 (Degraded)</td>
+<td style="text-align: center;">MP3, JPEG, MPEG-4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_8">无损压缩原理：游程编码与霍夫曼编码<a class="headerlink" href="#_8" title="Permanent link">⚓︎</a></h3>
+<p>无损压缩主要通过识别并简化数据中的重复模式来实现 。</p>
+<p><strong>1. 游程编码 (Run-Length Encoding, RLE)</strong> 利用文件中经常出现的连续相同值 。通过插入一个字节表示 游程长度 (Run-length)，并消除后续冗余数据 。</p>
+<ul>
+<li><strong>示例</strong>：7个连续黄色像素编码为 <code>[7][Yellow]</code>，将 48 字节图像压缩至 24 字节 。</li>
+</ul>
+<p><strong>2. 霍夫曼编码 (Huffman Coding)</strong> 由 David Huffman 发明，基于 频率 (Frequency) 构建 霍夫曼树 (Huffman Tree) 以生成 紧凑代码 (Compact Codes) 。</p>
+<pre class="mermaid"><code>graph LR
+    A[统计频率] --&gt; B[组合最小频率项]
+    B --&gt; C[构建二叉树]
+    C --&gt; D[标注分支 0/1]
+    D --&gt; E[生成无前缀字典]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>编码属性 (Encoding Property)</strong></th>
+<th style="text-align: center;"><strong>技术定义 (Technical Definition)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>字典 (Dictionary)</strong></td>
+<td style="text-align: center;">存储代码与数据块之间的映射关系</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>无前缀 (Prefix-free)</strong></td>
+<td style="text-align: center;">任何代码都不是另一个完整代码的开头，确保解析无歧义</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>变长编码 (Variable-length)</strong></td>
+<td style="text-align: center;">高频数据使用短码，低频数据使用长码</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_9">有损压缩原理：感知编码与时间冗余<a class="headerlink" href="#_9" title="Permanent link">⚓︎</a></h3>
+<p>有损压缩依赖于 心理物理学 (Psychophysics) 领域的人类感知模型 。</p>
+<p><strong>1. 感知编码 (Perceptual Coding)</strong> 根据人类听觉或视觉系统的缺陷，降低非敏感区域的<strong>精度 (Precision)</strong> 。</p>
+<ul>
+<li><strong>音频</strong>：丢弃人类听不到的 超声波 (Ultrasound)；对人声范围保留高精度，对低音降低精度 。</li>
+<li><strong>图像</strong>：JPEG 将图像分为 8x8 像素块 (Blocks)，丢弃高频空间数据，保留视觉主体 。</li>
+</ul>
+<p><strong>2. 视频压缩与时间冗余 (Temporal Redundancy)</strong> 视频是有序的图像序列，利用 帧间相似性 (Inter-frame Similarity) 进一步压缩 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>技术手段 (Technique)</strong></th>
+<th style="text-align: center;"><strong>逻辑描述 (Logic Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>补丁复制 (Patch Copying)</strong></td>
+<td style="text-align: center;">不重传重复像素，仅向后复制数据块</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>差异编码 (Difference Encoding)</strong></td>
+<td style="text-align: center;">仅编码相邻帧之间的像素差异</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>变换处理 (Transformation)</strong></td>
+<td style="text-align: center;">对补丁应用 平移 (Shift)、旋转 (Rotation) 或亮度变化</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    F1[当前帧] --&gt; S[识别相似补丁]
+    S --&gt; T[计算位移/变化]
+    T --&gt; F2[生成后续帧]
+    F2 -- 压缩过度 --&gt; E[产生伪影/错误]</code></pre>
+<p>当压缩率过高且缺乏足够空间更新补丁内的像素数据时，视频播放器会强制应用运动路径，导致画面出现怪异效果 。</p>
+<h2 id="_10">操作系统<a class="headerlink" href="#_10" title="Permanent link">⚓︎</a></h2>
+<h3 id="_11">计算机执行模式<a class="headerlink" href="#_11" title="Permanent link">⚓︎</a></h3>
+<p>操作系统 (Operating Systems) 的诞生源于解决硬件处理速度与人工操作速度之间的指数级差距 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>阶段</strong></th>
+<th style="text-align: center;"><strong>执行特征 (Execution Traits)</strong></th>
+<th style="text-align: center;"><strong>核心限制 (Core Constraints)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">手动处理 (Manual)</td>
+<td style="text-align: center;">每次运行一个程序</td>
+<td style="text-align: center;">停机时间长，依赖人工操作</td>
+</tr>
+<tr>
+<td style="text-align: center;">批处理 (Batch Processing)</td>
+<td style="text-align: center;">自动连续加载程序</td>
+<td style="text-align: center;">I/O 设备阻塞时 CPU 闲置</td>
+</tr>
+<tr>
+<td style="text-align: center;">多任务处理 (Multitasking)</td>
+<td style="text-align: center;">单个 CPU 同时运行多个程序</td>
+<td style="text-align: center;">内存分配与隔离复杂度高</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    A[程序 A 运行] --&gt; B{I/O 请求}
+    B -- 等待打印/读取 --&gt; C[程序 A 休眠]
+    C --&gt; D[切换程序 B]
+    D --&gt; E[利用 CPU 周期]
+    E -- I/O 完成 --&gt; F[程序 A 唤醒]</code></pre>
+<hr />
+<h3 id="_12">硬件抽象<a class="headerlink" href="#_12" title="Permanent link">⚓︎</a></h3>
+<p>为了解决外部设备 (Peripherals) 型号差异带来的底层交互难题，操作系统引入了抽象层 。</p>
+<ul>
+<li><strong>中间人机制 (Intermediary):</strong> 操作系统充当软件与硬件间的媒介 。</li>
+<li><strong>设备驱动程序 (Device Drivers):</strong> 通过 应用程序接口 (API) 提供标准化机制 。</li>
+<li><strong>功能简化:</strong> 程序员只需调用通用函数，如 <code>print()</code>，由 OS 处理具体硬件逻辑 。</li>
+</ul>
+<hr />
+<h3 id="_13">内存管理<a class="headerlink" href="#_13" title="Permanent link">⚓︎</a></h3>
+<p>这是现代操作系统的核心复杂功能，旨在实现资源效率与系统稳定性 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>技术 (Technology)</strong></th>
+<th style="text-align: center;"><strong>功能描述 (Description)</strong></th>
+<th style="text-align: center;"><strong>核心优势 (Key Benefit)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">虚拟内存 (Virtual Memory)</td>
+<td style="text-align: center;">物理地址映射为连续虚拟空间</td>
+<td style="text-align: center;">简化编程，隐藏碎片化物理块</td>
+</tr>
+<tr>
+<td style="text-align: center;">动态内存分配 (Dynamic Allocation)</td>
+<td style="text-align: center;">根据需求灵活增减内存大小</td>
+<td style="text-align: center;">提高多程序运行时的资源灵活性</td>
+</tr>
+<tr>
+<td style="text-align: center;">内存保护 (Memory Protection)</td>
+<td style="text-align: center;">隔离各程序专属内存区域</td>
+<td style="text-align: center;">防止程序崩溃扩散或恶意软件攻击</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    subgraph 虚拟空间
+    V1[程序 A: 地址 0-2000]
+    end
+    subgraph 映射层
+    M[重映射 Remapping]
+    end
+    subgraph 物理空间
+    P1[块 1：0-999]
+    P2[块 2：2000-2999]
+    end
+    V1 --&gt; M
+    M --&gt; P1
+    M --&gt; P2</code></pre>
+<hr />
+<h3 id="_14">系统架构与安全性演进<a class="headerlink" href="#_14" title="Permanent link">⚓︎</a></h3>
+<p>随着 70 年代 分时操作系统 (Time-sharing) 的出现，OS 开始处理多用户交互与安全权限 。</p>
+<ul>
+<li><strong>Multics (1969):</strong> 首个初衷即考虑安全的系统，但因功能过度设计 (Over-engineered) 导致极其复杂 。</li>
+<li><strong>Unix:</strong> 由 Dennis Ritchie 和 Ken Thompson 开发，追求精简架构 。</li>
+<li><strong>内核 (Kernel):</strong> 包含内存管理、多任务处理及 I/O 处理等核心功能 。</li>
+<li><strong>工具层 (Tools):</strong> 编译器、程序库等非核心组件 。</li>
+<li><strong>内核恐慌 (Kernel Panic):</strong> 当内核遇到无法恢复的错误时主动崩溃，源于 Unix 简化错误恢复代码的设计 。</li>
+</ul>
+<h3 id="_15">个人电脑操作系统<a class="headerlink" href="#_15" title="Permanent link">⚓︎</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>属性</strong></th>
+<th style="text-align: center;"><strong>MS-DOS (1981)</strong></th>
+<th style="text-align: center;"><strong>早期 Windows (1985+)</strong></th>
+<th style="text-align: center;"><strong>现代 OS (Windows 10/macOS/Linux)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">多任务处理</td>
+<td style="text-align: center;">缺失</td>
+<td style="text-align: center;">有限支持</td>
+<td style="text-align: center;">全面支持 (Multitasking)</td>
+</tr>
+<tr>
+<td style="text-align: center;">内存保护</td>
+<td style="text-align: center;">缺失</td>
+<td style="text-align: center;">缺乏强保护</td>
+<td style="text-align: center;">强隔离 (Protected Memory)</td>
+</tr>
+<tr>
+<td style="text-align: center;">稳定性</td>
+<td style="text-align: center;">程序常导致系统崩溃</td>
+<td style="text-align: center;">易出现 蓝屏 (BSOD)</td>
+<td style="text-align: center;">高稳定性</td>
+</tr>
+<tr>
+<td style="text-align: center;">存储占用</td>
+<td style="text-align: center;">约 160 KB</td>
+<td style="text-align: center;">中等</td>
+<td style="text-align: center;">较大</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_16">命令行界面<a class="headerlink" href="#_16" title="Permanent link">⚓︎</a></h2>
+<h3 id="_17">人机交互<a class="headerlink" href="#_17" title="Permanent link">⚓︎</a></h3>
+<pre class="mermaid"><code>graph LR
+    A[机械控制] --&gt; B[打孔纸带]
+    B --&gt; C[电传打字机]
+    C --&gt; D[玻璃终端]
+    D --&gt; E[命令行应用]</code></pre>
+<h3 id="_18">早期批处理<a class="headerlink" href="#_18" title="Permanent link">⚓︎</a></h3>
+<p>早期计算系统缺乏交互性，设计核心为优化机器读取效率而非用户体验 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>技术节点 (Technical Node)</strong></th>
+<th style="text-align: center;"><strong>物理实现 (Physical Implementation)</strong></th>
+<th style="text-align: center;"><strong>系统特征 (System Characteristics)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">机械控制 (Mechanical)</td>
+<td style="text-align: center;">齿轮/旋钮/开关</td>
+<td style="text-align: center;">无交互 (Non-interactive)</td>
+</tr>
+<tr>
+<td style="text-align: center;">存储介质 (Storage)</td>
+<td style="text-align: center;">打孔纸卡/磁带</td>
+<td style="text-align: center;">机器易读 (Machine-readable)</td>
+</tr>
+<tr>
+<td style="text-align: center;">输出终端 (Output)</td>
+<td style="text-align: center;">打印纸/指示灯</td>
+<td style="text-align: center;">单线程运行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_19">交互机制与输入标准化<a class="headerlink" href="#_19" title="Permanent link">⚓︎</a></h3>
+<p>多任务 (Multitasking) 和 分时系统 (Time-sharing Systems) 的出现促使系统支持并行用户程序，产生对实时交互输入的需求。</p>
+<pre class="mermaid"><code>graph LR
+    A[打字机] --&gt; B[QWERTY键盘]
+    B --&gt; C[转换成本]
+    C --&gt; D[盲打技术]
+    D --&gt; E[数据录入]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>核心要素 (Core Elements)</strong></th>
+<th style="text-align: center;"><strong>关键人物/标准 (Key Figures/Standards)</strong></th>
+<th style="text-align: center;"><strong>演进结果 (Evolutionary Results)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">硬件架构 (Hardware)</td>
+<td style="text-align: center;">Christopher Latham Sholes</td>
+<td style="text-align: center;">现代打字机商业化</td>
+</tr>
+<tr>
+<td style="text-align: center;">布局协议 (Layout Protocol)</td>
+<td style="text-align: center;">QWERTY</td>
+<td style="text-align: center;">形成高转换成本 (Switching Cost)</td>
+</tr>
+<tr>
+<td style="text-align: center;">交互技术 (Interaction Tech)</td>
+<td style="text-align: center;">Elizabeth Longley / Frank Edward McGurrin</td>
+<td style="text-align: center;">十指盲打提升输入带宽</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_20">命令行界面与终端架构<a class="headerlink" href="#_20" title="Permanent link">⚓︎</a></h3>
+<p>工程师重用现有通信协议，将电传打字机接口适配为计算机输入输出标准，确立了文本交互的基础架构 。</p>
+<pre class="mermaid"><code>graph LR
+    A[电报网络] --&gt; B[电传打字机]
+    B --&gt; C[文本协议]
+    C --&gt; D[屏幕终端]
+    D --&gt; E[CLI交互]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>架构层级 (Architecture Layer)</strong></th>
+<th style="text-align: center;"><strong>组件描述 (Component Description)</strong></th>
+<th style="text-align: center;"><strong>核心指令/应用 (Core Commands)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">物理层 (Physical Layer)</td>
+<td style="text-align: center;">电传打字机 (Teletype Machine)</td>
+<td style="text-align: center;">长距离信号传输</td>
+</tr>
+<tr>
+<td style="text-align: center;">抽象层 (Abstraction Layer)</td>
+<td style="text-align: center;">虚拟电传终端 (Virtual Teletype / Terminals)</td>
+<td style="text-align: center;">模拟无限长纸张</td>
+</tr>
+<tr>
+<td style="text-align: center;">逻辑层 (Logical Layer)</td>
+<td style="text-align: center;">命令行界面 (Command Line Interfaces)</td>
+<td style="text-align: center;">用户与机器往复通信</td>
+</tr>
+<tr>
+<td style="text-align: center;">指令集 (Instruction Set)</td>
+<td style="text-align: center;">Unix系统命令抽象</td>
+<td style="text-align: center;"><code>ls</code> , <code>cat</code> , <code>cd</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_21">早期文本应用<a class="headerlink" href="#_21" title="Permanent link">⚓︎</a></h3>
+<p>命令行界面 (Command Line Interfaces) 为早期交互式应用程序奠定了逻辑基础 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>应用分类 (App Category)</strong></th>
+<th style="text-align: center;"><strong>典型代表 (Representative)</strong></th>
+<th style="text-align: center;"><strong>交互特征 (Interaction Feature)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">交互式小说 (Interactive Fiction)</td>
+<td style="text-align: center;">Colossal Cave Adventure</td>
+<td style="text-align: center;">单/双词指令解析</td>
+</tr>
+<tr>
+<td style="text-align: center;">文字冒险 (Text Adventure)</td>
+<td style="text-align: center;">Zork</td>
+<td style="text-align: center;">文本状态反馈</td>
+</tr>
+<tr>
+<td style="text-align: center;">多人网络应用 (Multiplayer)</td>
+<td style="text-align: center;">MUDs</td>
+<td style="text-align: center;">多用户状态同步</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2d">屏幕&amp;2D图形显示<a class="headerlink" href="#2d" title="Permanent link">⚓︎</a></h2>
+<h3 id="_22">物理显示基础<a class="headerlink" href="#_22" title="Permanent link">⚓︎</a></h3>
+<p>阴极射线管 (Cathode Ray Tube, CRT) 是早期电子计算机最核心的显示技术 。其工作原理依赖于物理电子束与化学涂层的相互作用。</p>
+<pre class="mermaid"><code>graph LR
+    A[发射器 Emitter] --&gt;|发射电子束| B[磁场控制]
+    B --&gt;|引导位置| C[磷光体涂层]
+    C --&gt;|撞击发光| D[图像生成]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>组件 (Component)</strong></th>
+<th style="text-align: center;"><strong>功能描述 (Functional Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">发射器 (Emitter)</td>
+<td style="text-align: center;">发射带电电子粒子</td>
+</tr>
+<tr>
+<td style="text-align: center;">磁场板/线圈 (Plates/Coils)</td>
+<td style="text-align: center;">上下左右引导电子束至目标位置</td>
+</tr>
+<tr>
+<td style="text-align: center;">磷光体涂层 (Phosphor Coating)</td>
+<td style="text-align: center;">被电子撞击时短暂发光</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_23">扫描与渲染范式<a class="headerlink" href="#_23" title="Permanent link">⚓︎</a></h3>
+<p>为了在屏幕上形成稳定图像，电子束必须根据不同的控制逻辑进行重复路径绘制 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>范式 (Paradigm)</strong></th>
+<th style="text-align: center;"><strong>控制逻辑 (Control Logic)</strong></th>
+<th style="text-align: center;"><strong>视觉特征 (Visual Features)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">矢量扫描 (Vector Scanning)</td>
+<td style="text-align: center;">引导电子束直接描绘形状线条</td>
+<td style="text-align: center;">线条构成，无像素点概念</td>
+</tr>
+<tr>
+<td style="text-align: center;">光栅扫描 (Raster Scanning)</td>
+<td style="text-align: center;">从左上至右下逐行扫描</td>
+<td style="text-align: center;">由小线段或像素点组成</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_24">字符生成<a class="headerlink" href="#_24" title="Permanent link">⚓︎</a></h3>
+<p>早期计算机受限于 内存 (RAM) 容量（如 PDP-1），无法直接存储高分辨率 位图 (Bitmap) 。工程师通过字符生成器 (Character Generator) 实现了空间效率的飞跃 。</p>
+<pre class="mermaid"><code>graph LR
+    A[内存 RAM] --&gt;|读取 8位代码| B[字符生成器]
+    B --&gt;|访问 ROM| C[点阵图案]
+    C --&gt;|转换| D[屏幕缓冲区]
+    D --&gt;|显示| E[光栅图形]</code></pre>
+<ul>
+<li><strong>屏幕缓冲区 (Screen Buffer):</strong> 内存中专门预留给图形显示的区域 。</li>
+<li><strong>字符集扩展 (Character Set Extensions):</strong> 如 IBM 的 CP437，通过特定字符模拟图形界面 。</li>
+<li><strong>空间对比:</strong> 200x200 像素需 40,000 位 ；而 80x25 文本界面仅需 16,000 位 。</li>
+</ul>
+<hr />
+<h3 id="_25">矢量指令与交互式动画<a class="headerlink" href="#_25" title="Permanent link">⚓︎</a></h3>
+<p>由于 矢量模式 (Vector Mode) 仅存储线条端点指令而非完整像素矩阵，其在早期绘图应用中极具效率 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>指令示例 (Example Commands)</strong></th>
+<th style="text-align: center;"><strong>效果 (Effect)</strong></th>
+<th style="text-align: center;"><strong>内存占用 (Memory Usage)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>MOVE_TO 50 50</code></td>
+<td style="text-align: center;">移动绘图点至坐标</td>
+<td style="text-align: center;">极低</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>INTENSITY 100</code></td>
+<td style="text-align: center;">设置线条亮度</td>
+<td style="text-align: center;">极低</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>LINE_TO 100 50</code></td>
+<td style="text-align: center;">绘制可见线段</td>
+<td style="text-align: center;">极低</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Spacewar (1962):</strong> 第一款基于矢量图形的电子游戏，运行于 PDP-1 。</li>
+<li><strong>Sketchpad (1962):</strong> Ivan Sutherland 开发的交互式 计算机辅助设计 (CAD) 软件 。</li>
+<li><strong>光笔 (Light Pen):</strong> 利用光传感器检测屏幕刷新时间，从而计算坐标位置 。</li>
+</ul>
+<hr />
+<h3 id="_26">现代位图显示与抽象<a class="headerlink" href="#_26" title="Permanent link">⚓︎</a></h3>
+<p>随着视频内存 (VRAM) 的普及，位图显示成为主流，每个 像素 (Pixel) 直接对应内存中的位 。</p>
+<pre class="mermaid"><code>graph LR
+    A[程序逻辑] --&gt;|调用| B[图形库 Graphics Libraries]
+    B --&gt;|操纵| C[帧缓冲区 Frame Buffer]
+    C --&gt;|存储于| D[视频内存 VRAM]
+    D --&gt;|映射| E[屏幕像素 Pixels]</code></pre>
+<ul>
+<li><strong>颜色深度 (Color Depth):</strong> 8位灰度屏幕提供 0（黑）至 255（白）的强度值 。</li>
+<li><strong>图形库 (Graphics Libraries):</strong> 预设函数（如画圆、矩形）为程序员提供了更高层级的 抽象 (Abstraction) 。</li>
+<li><strong>普及进程:</strong> 1971年全美仅约 1,000 台电脑具备交互式图形屏幕 。</li>
+</ul>
+<h2 id="gui">图形用户界面GUI<a class="headerlink" href="#gui" title="Permanent link">⚓︎</a></h2>
+<h3 id="_27">交互范式演进<a class="headerlink" href="#_27" title="Permanent link">⚓︎</a></h3>
+<p>从命令行界面到图形界面的演进，本质上是计算机直观性 (Intuitiveness) 的提升，使非专业人士也能操作计算机 。</p>
+<pre class="mermaid"><code>graph LR
+    A[命令行CLI] --&gt; B[位图图形]
+    B --&gt; C[图形用户界面GUI]
+    C --&gt; D[桌面隐喻]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>交互范式 (Paradigm)</strong></th>
+<th style="text-align: center;"><strong>操作逻辑 (Logic)</strong></th>
+<th style="text-align: center;"><strong>用户要求 (User Requirement)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">命令行界面 (CLI)</td>
+<td style="text-align: center;">输入特定命令</td>
+<td style="text-align: center;">记忆/猜测指令</td>
+</tr>
+<tr>
+<td style="text-align: center;">图形用户界面 (GUI)</td>
+<td style="text-align: center;">选择并点击 (Point and Click)</td>
+<td style="text-align: center;">视觉识别选项</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_28">技术与机构<a class="headerlink" href="#_28" title="Permanent link">⚓︎</a></h3>
+<pre class="mermaid"><code>graph LR
+    A[Douglas Engelbart] -- 人才流向 --&gt; B[Xerox PARC]
+    B -- 合作/授权 --&gt; C[Apple]
+    C -- 市场竞争 --&gt; D[Microsoft]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>实体 (Entity)</strong></th>
+<th style="text-align: center;"><strong>核心贡献 (Core Contribution)</strong></th>
+<th style="text-align: center;"><strong>关键成果 (Key Output)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Douglas Engelbart</td>
+<td style="text-align: center;">增强人类智力 (Augmenting Human Intellect)</td>
+<td style="text-align: center;">鼠标 (Mouse)、多窗口 (Multiple Windows)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Xerox PARC</td>
+<td style="text-align: center;">桌面隐喻 (Desktop Metaphor)</td>
+<td style="text-align: center;">Xerox Alto (1973)、WIMP 界面</td>
+</tr>
+<tr>
+<td style="text-align: center;">Apple</td>
+<td style="text-align: center;">GUI 主流化 (Mainstream GUI)</td>
+<td style="text-align: center;">Macintosh (1984)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Microsoft</td>
+<td style="text-align: center;">市场统治 (Market Dominance)</td>
+<td style="text-align: center;">Windows 95、多任务处理 (Multitasking)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="wimp">WIMP 框架与组件化设计<a class="headerlink" href="#wimp" title="Permanent link">⚓︎</a></h3>
+<p>WIMP 是现代桌面 GUI 的核心架构，通过模拟现实世界对象降低学习成本 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>组件 (Component)</strong></th>
+<th style="text-align: center;"><strong>描述 (Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">窗口 (Window)</td>
+<td style="text-align: center;">应用程序的视图框，支持重叠</td>
+</tr>
+<tr>
+<td style="text-align: center;">图标 (Icon)</td>
+<td style="text-align: center;">文件的逻辑抽象，如纸张或文件夹</td>
+</tr>
+<tr>
+<td style="text-align: center;">菜单 (Menu)</td>
+<td style="text-align: center;">列出可选功能供用户选择</td>
+</tr>
+<tr>
+<td style="text-align: center;">指针 (Pointer)</td>
+<td style="text-align: center;">由鼠标控制在屏幕上移动的光标</td>
+</tr>
+<tr>
+<td style="text-align: center;">部件 (Widgets)</td>
+<td style="text-align: center;">可复用的图形构建块，如按钮 (Buttons)、滑动条 (Sliders)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_29">事件驱动编程<a class="headerlink" href="#_29" title="Permanent link">⚓︎</a></h3>
+<p>与传统的线性执行不同，GUI 依赖事件驱动模式，代码响应用户或系统的异步触发 。</p>
+<pre class="mermaid"><code>graph LR
+    A[用户交互/事件] --&gt; B[GUI API 捕获]
+    B --&gt; C[事件处理器]
+    C --&gt; D[执行特定函数]</code></pre>
+<ul>
+<li><strong>线性编程 (Linear Programming)</strong>：代码从上到下执行 。</li>
+<li><strong>事件驱动 (Event-Driven)</strong>：代码可以在任何时间按不同顺序触发 。</li>
+<li><strong>点击事件 (Click Event)</strong>：例如点击“Roll”按钮触发随机数生成函数 。</li>
+<li><strong>所见即所得 (WYSIWYG)</strong>：屏幕显示与打印输出完全一致 。</li>
+</ul>
+<hr />
+<h3 id="_30">商业化进程与自然选择<a class="headerlink" href="#_30" title="Permanent link">⚓︎</a></h3>
+<p>GUI 的普及经历了高成本失败到低成本普及的过程 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>设备/系统 (System)</strong></th>
+<th style="text-align: center;"><strong>发布年份 (Year)</strong></th>
+<th style="text-align: center;"><strong>市场结果 (Market Outcome)</strong></th>
+<th style="text-align: center;"><strong>失败/成功原因 (Reason)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Xerox Star</td>
+<td style="text-align: center;">1981</td>
+<td style="text-align: center;">失败 (Flop)</td>
+<td style="text-align: center;">售价过高（约合现今 20 万美元）</td>
+</tr>
+<tr>
+<td style="text-align: center;">Apple Lisa</td>
+<td style="text-align: center;">1983</td>
+<td style="text-align: center;">失败 (Flop)</td>
+<td style="text-align: center;">售价昂贵（约合现今 2.5 万美元）</td>
+</tr>
+<tr>
+<td style="text-align: center;">Macintosh</td>
+<td style="text-align: center;">1984</td>
+<td style="text-align: center;">初期成功</td>
+<td style="text-align: center;">价格较低，但早期缺乏软件支持</td>
+</tr>
+<tr>
+<td style="text-align: center;">Windows 95</td>
+<td style="text-align: center;">1995</td>
+<td style="text-align: center;">统治地位</td>
+<td style="text-align: center;">具备多任务和受保护内存 (Protected Memory)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Microsoft Bob</td>
+<td style="text-align: center;">1995</td>
+<td style="text-align: center;">失败 (Failure)</td>
+<td style="text-align: center;">隐喻过度（虚拟房间模式）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3d">3D图形<a class="headerlink" href="#3d" title="Permanent link">⚓︎</a></h2>
+<h3 id="_31">空间建模与几何基础<a class="headerlink" href="#_31" title="Permanent link">⚓︎</a></h3>
+<p>3D 图形的核心在于通过数学坐标定义空间位置，并使用最小几何单元构建复杂物体 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>概念</strong></th>
+<th style="text-align: center;"><strong>定义</strong></th>
+<th style="text-align: center;"><strong>特性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>3D 坐标 (3D Coordinates)</strong></td>
+<td style="text-align: center;">X, Y, Z (Zed) 三轴系统</td>
+<td style="text-align: center;">定义空间中点的绝对位置</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>多边形 (Polygons)</strong></td>
+<td style="text-align: center;">以三角形 (Triangles) 为核心</td>
+<td style="text-align: center;">三点唯一确定一个平面，具备数学稳定性</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>网格 (Mesh)</strong></td>
+<td style="text-align: center;">多边形的集合</td>
+<td style="text-align: center;">密度决定模型精细度 (Fidelity) 与计算负载 (Polygon Count)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    A[顶点 Vertex] --&gt; B[多边形 Polygon]
+    B --&gt; C[网格 Mesh]
+    C --&gt; D[复杂模型 Complex Model]</code></pre>
+<hr />
+<h3 id="3d_1">3D 投影<a class="headerlink" href="#3d_1" title="Permanent link">⚓︎</a></h3>
+<p>由于计算机屏幕为 2D 介面，算法必须将 3D 坐标通过数学计算“拍平”为 2D 坐标，这一过程称为 3D 投影 (3D Projection) 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>投影类型</strong></th>
+<th style="text-align: center;"><strong>特性描述</strong></th>
+<th style="text-align: center;"><strong>应用场景</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>正交投影 (Orthographic Projection)</strong></td>
+<td style="text-align: center;">平行边在投影中保持平行</td>
+<td style="text-align: center;">建筑设计、技术绘图</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>透视投影 (Perspective Projection)</strong></td>
+<td style="text-align: center;">平行线随距离增加向远方收敛</td>
+<td style="text-align: center;">真实感游戏、影视渲染</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_32">扫描线渲染与光栅化<a class="headerlink" href="#_32" title="Permanent link">⚓︎</a></h3>
+<p>将几何形状转化为屏幕像素的过程称为渲染。扫描线渲染 (Scanline Rendering) 是处理多边形填充的经典算法 。</p>
+<ul>
+<li><strong>算法逻辑</strong>：</li>
+<li>识别多边形的最高与最低 Y 轴数值 。</li>
+<li>逐行 (Row by Row) 计算扫描线与多边形边的交点 。</li>
+<li>填充两交点之间的像素区域 。</li>
+<li><strong>抗锯齿 (Antialiasing)</strong>：针对填充产生的阶梯状边缘 (Jaggies)，通过计算像素被覆盖的比例调整颜色深浅，实现边缘羽化 (Feathering) 。</li>
+</ul>
+<pre class="mermaid"><code>graph LR
+    A[读入顶点] --&gt; B[确定 Y 轴范围]
+    B --&gt; C[计算行交点]
+    C --&gt; D[填充区间像素]
+    D --&gt; E[下一行循环]</code></pre>
+<hr />
+<h3 id="_33">遮挡处理<a class="headerlink" href="#_33" title="Permanent link">⚓︎</a></h3>
+<p>在复杂场景中，算法必须决定哪些像素可见，哪些被遮挡 (Occlusion) 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>技术方案</strong></th>
+<th style="text-align: center;"><strong>处理逻辑</strong></th>
+<th style="text-align: center;"><strong>优缺点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>画家算法 (Painter's Algorithm)</strong></td>
+<td style="text-align: center;">从远到近对多边形排序并依次渲染</td>
+<td style="text-align: center;">逻辑简单但需大量排序计算</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>深度缓冲 (Z-Buffering)</strong></td>
+<td style="text-align: center;">在内存中维护 Z 轴矩阵，记录每个像素的最小距离值</td>
+<td style="text-align: center;">速度快，无需全局排序</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>背面剔除 (Back-Face Culling)</strong></td>
+<td style="text-align: center;">忽略背向观察者的多边形背面</td>
+<td style="text-align: center;">减少一半计算量，但进入模型内部会导致物体消失</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Z 冲突 (Z-Fighting)</strong>：当两个多边形距离极近时，由于浮点数舍入误差 (Rounding errors)，会导致渲染像素闪烁，不可预测哪个多边形在最前 。</li>
+</ul>
+<hr />
+<h3 id="_34">表面着色与纹理映射<a class="headerlink" href="#_34" title="Permanent link">⚓︎</a></h3>
+<p>为了增加 3D 真实感，需要模拟光照效果 (Lighting/Shading) 和表面细节 (Texture) 。</p>
+<ul>
+<li><strong>表面法线 (Surface Normal)</strong>：垂直于多边形表面的向量，决定光线反射方向 。</li>
+<li><strong>着色模型</strong>：</li>
+<li><strong>平面着色 (Flat Shading)</strong>：整个多边形使用统一颜色，边界明显且不光滑 。</li>
+<li><strong>高洛德/冯氏着色 (Gouraud/Phong Shading)</strong>：在多边形表面平滑改变颜色，模拟自然光泽 。</li>
+<li><strong>纹理映射 (Texture Mapping)</strong>：通过建立多边形坐标与内存中纹理图像的映射关系，查询对应像素颜色并填充。</li>
+</ul>
+<hr />
+<h3 id="_35">硬件加速与并行计算<a class="headerlink" href="#_35" title="Permanent link">⚓︎</a></h3>
+<p>3D 渲染涉及海量重复计算（如数百万个多边形的扫描线填充与光照处理） 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>硬件组件</strong></th>
+<th style="text-align: center;"><strong>架构特点</strong></th>
+<th style="text-align: center;"><strong>职能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>中央处理器 (CPU)</strong></td>
+<td style="text-align: center;">通用计算，非并行设计</td>
+<td style="text-align: center;">处理游戏逻辑与任务调度</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>图形处理器 (GPU)</strong></td>
+<td style="text-align: center;">具备数千个处理核心 (Cores)，支持大规模并行处理</td>
+<td style="text-align: center;">每秒处理数亿个多边形的几何与渲染计算</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>显存 (Video RAM)</strong></td>
+<td style="text-align: center;">专用高速内存</td>
+<td style="text-align: center;">存储网格 (Meshes) 与纹理 (Textures)，供核心高速访问</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    A[场景数据] --&gt; B[多核并行 CPU/GPU]
+    B --&gt; C[扫描线/抗锯齿]
+    B --&gt; D[光照/纹理]
+    C --&gt; E[最终帧缓冲区]
+    D --&gt; E</code></pre>
+<h2 id="_36">计算机网络<a class="headerlink" href="#_36" title="Permanent link">⚓︎</a></h2>
+<h3 id="_37">局域网基础与以太网协议<a class="headerlink" href="#_37" title="Permanent link">⚓︎</a></h3>
+<p>计算机网络最初旨在组织内部共享资源（如打印机、存储器）并加速信息交换 。早期的 "球鞋网络 (Sneakernet)" 依赖人工搬运物理介质，效率极低 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>概念 (Concept)</strong></th>
+<th style="text-align: center;"><strong>描述 (Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">局域网 (Local Area Network, LAN)</td>
+<td style="text-align: center;">近距离计算机组成的网络，规模可从单室至校园</td>
+</tr>
+<tr>
+<td style="text-align: center;">以太网 (Ethernet)</td>
+<td style="text-align: center;">1970年代由 Xerox PARC 开发，最成功的局域网技术</td>
+</tr>
+<tr>
+<td style="text-align: center;">媒体访问控制地址 (MAC Address)</td>
+<td style="text-align: center;">硬件自带的全球唯一识别码，用于确定数据接收者</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    A[数据发送] --&gt; B[添加 MAC 头部]
+    B --&gt; C[共享电缆传输]
+    C --&gt; D{匹配 MAC?}
+    D -- 是 --&gt; E[处理数据]
+    D -- 否 --&gt; F[忽略数据]</code></pre>
+<hr />
+<h3 id="_38">载波侦听多路访问与冲突处理<a class="headerlink" href="#_38" title="Permanent link">⚓︎</a></h3>
+<p>在共享介质（如铜线或空气）中，多个设备同时发送数据会导致 "冲突 (Collision)"，使电信号混乱 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>术语 (Term)</strong></th>
+<th style="text-align: center;"><strong>定义 (Definition)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">载体 (Carrier)</td>
+<td style="text-align: center;">运输数据的物理媒介（如电缆或无线电波）</td>
+</tr>
+<tr>
+<td style="text-align: center;">带宽 (Bandwidth)</td>
+<td style="text-align: center;">载体传输数据的速率</td>
+</tr>
+<tr>
+<td style="text-align: center;">载波侦听多路访问 (CSMA)</td>
+<td style="text-align: center;">多个设备在发送前侦听载体是否空闲的机制</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_39">指数退避算法<a class="headerlink" href="#_39" title="Permanent link">⚓︎</a></h4>
+<p>当检测到冲突时，设备不会立即重传，而是采用指数级增长的随机等待时间，以疏导网络拥塞 。</p>
+<pre class="mermaid"><code>graph LR
+    A[检测冲突] --&gt; B[随机等待 n 秒]
+    B --&gt; C{再次冲突?}
+    C -- 否 --&gt; D[成功发送]
+    C -- 是 --&gt; E[等待时间翻倍]
+    E --&gt; B</code></pre>
+<hr />
+<h3 id="_40">网络扩展与冲突域分割<a class="headerlink" href="#_40" title="Permanent link">⚓︎</a></h3>
+<p>为提升效率，必须限制同一载体上的设备数量，即缩小 "冲突域 (Collision Domain)" 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>设备 (Device)</strong></th>
+<th style="text-align: center;"><strong>逻辑功能 (Logic Function)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">网络交换机 (Network Switch)</td>
+<td style="text-align: center;">根据 MAC 地址列表在不同子网间转发数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">路由器 (Router)</td>
+<td style="text-align: center;">连接不同网络，实现跨网络通信与负载均衡</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_41">交换技术对比<a class="headerlink" href="#_41" title="Permanent link">⚓︎</a></h3>
+<p>随着网络规模扩大，路由技术从物理线路分配演进为灵活的数据包分发 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>技术 (Technique)</strong></th>
+<th style="text-align: center;"><strong>特点 (Characteristics)</strong></th>
+<th style="text-align: center;"><strong>优缺点 (Pros/Cons)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">电路交换 (Circuit Switching)</td>
+<td style="text-align: center;">分配专用物理线路（如早期电话系统）</td>
+<td style="text-align: center;">独占带宽但成本高且不灵活</td>
+</tr>
+<tr>
+<td style="text-align: center;">报文交换 (Message Switching)</td>
+<td style="text-align: center;">整份数据经多个站点中转（类似邮政系统）</td>
+<td style="text-align: center;">容错性强但易阻塞长链路</td>
+</tr>
+<tr>
+<td style="text-align: center;">分组交换 (Packet Switching)</td>
+<td style="text-align: center;">将数据拆分为小块 (Packets) 独立路由</td>
+<td style="text-align: center;">极高效率与去中心化抗打击能力</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_42">互联网协议与起源<a class="headerlink" href="#_42" title="Permanent link">⚓︎</a></h3>
+<p>现代互联网基于分组交换逻辑，通过标准化的协议栈确保全球互联 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>核心组件 (Core Component)</strong></th>
+<th style="text-align: center;"><strong>说明 (Explanation)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">互联网协议 (Internet Protocol, IP)</td>
+<td style="text-align: center;">定义数据包格式与点分十进制地址标准</td>
+</tr>
+<tr>
+<td style="text-align: center;">跳数限制 (Hop Limit)</td>
+<td style="text-align: center;">记录通过路由器次数，用于检测路由环路错误</td>
+</tr>
+<tr>
+<td style="text-align: center;">阻塞控制 (Congestion Control)</td>
+<td style="text-align: center;">路由器平衡负载以确保传输可靠性</td>
+</tr>
+<tr>
+<td style="text-align: center;">ARPANET</td>
+<td style="text-align: center;">1974年由美国高级研究计划局资助的现代互联网雏形</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>graph LR
+    A[大数据报文] --&gt; B[拆分为 Packets]
+    B --&gt; C[灵活路由选择]
+    C --&gt; D[乱序到达目标]
+    D --&gt; E[TCP/IP 协议重组]</code></pre>
+<h2 id="_43">互联网<a class="headerlink" href="#_43" title="Permanent link">⚓︎</a></h2>
+<h3 id="_44">网络拓扑与物理架构<a class="headerlink" href="#_44" title="Permanent link">⚓︎</a></h3>
+<p>互联网 (The Internet) 是一个由互联设备组成的巨型分布式网络 。数据通过多个中转点（跳数/Hops）进行传输。</p>
+<pre class="mermaid"><code>graph LR
+    A[计算机/LAN] --&gt; B[广域网/WAN]
+    B --&gt; C[区域路由器]
+    C --&gt; D[互联网主干/Backbone]
+    D --&gt; E[目标服务器]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>节点类型 (Node Type)</strong></th>
+<th style="text-align: center;"><strong>定义与功能 (Definition and Function)</strong></th>
+<th style="text-align: center;"><strong>归属/示例 (Owner/Example)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">局域网 (Local Area Network, LAN)</td>
+<td style="text-align: center;">连接家庭或办公室内所有设备</td>
+<td style="text-align: center;">无线路由器</td>
+</tr>
+<tr>
+<td style="text-align: center;">广域网 (Wide Area Network, WAN)</td>
+<td style="text-align: center;">连接较大区域的路由器网络</td>
+<td style="text-align: center;">互联网服务提供商 (ISP)</td>
+</tr>
+<tr>
+<td style="text-align: center;">互联网主干 (Internet Backbone)</td>
+<td style="text-align: center;">超高带宽连接的超大型路由器集合</td>
+<td style="text-align: center;">核心路由节点</td>
+</tr>
+<tr>
+<td style="text-align: center;">跳数 (Hops)</td>
+<td style="text-align: center;">数据包从中转设备移动到下一个设备的过程</td>
+<td style="text-align: center;">路由路径</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="udp-tcp">传输层协议：UDP 与 TCP<a class="headerlink" href="#udp-tcp" title="Permanent link">⚓︎</a></h3>
+<p>在互联网协议 (Internet Protocol, IP) 这一底层协议之上，开发了处理程序分配和可靠性的传输层协议 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>特性 (Feature)</strong></th>
+<th style="text-align: center;"><strong>用户数据报协议 (User Datagram Protocol, UDP)</strong></th>
+<th style="text-align: center;"><strong>传输控制协议 (Transmission Control Protocol, TCP)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">标识方式</td>
+<td style="text-align: center;">端口号 (Port Number)</td>
+<td style="text-align: center;">端口号 (Port Number)</td>
+</tr>
+<tr>
+<td style="text-align: center;">数据验证</td>
+<td style="text-align: center;">校验和 (Checksum)</td>
+<td style="text-align: center;">校验和 (Checksum)</td>
+</tr>
+<tr>
+<td style="text-align: center;">可靠性</td>
+<td style="text-align: center;">不提供重发机制，可能丢包</td>
+<td style="text-align: center;">必须发送确认码 (ACK)，丢失则重传</td>
+</tr>
+<tr>
+<td style="text-align: center;">数据顺序</td>
+<td style="text-align: center;">不保证顺序</td>
+<td style="text-align: center;">使用序列号 (Sequence Numbers) 重新排序</td>
+</tr>
+<tr>
+<td style="text-align: center;">传输速度</td>
+<td style="text-align: center;">快，开销小</td>
+<td style="text-align: center;">慢，存在确认码产生的双倍消息开销</td>
+</tr>
+<tr>
+<td style="text-align: center;">应用场景</td>
+<td style="text-align: center;">视频通话 (Skype)、在线游戏</td>
+<td style="text-align: center;">电子邮件、网页请求</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tcp">TCP 交互逻辑与流量调节<a class="headerlink" href="#tcp" title="Permanent link">⚓︎</a></h4>
+<pre class="mermaid"><code>graph LR
+    P1[发送包 15] --&gt; R[接收方]
+    R -- 校验成功 --&gt; ACK[发送确认码 ACK]
+    ACK --&gt; P2[发送包 16]
+    R -- 确认码丢失/超时 --&gt; T[超时重传]
+    T --&gt; P1</code></pre>
+<ul>
+<li><strong>校验和 (Checksum) 算法</strong>：将原始数据求和并存储为 16 位数值 。接收方重新计算并对比，不一致则丢弃。</li>
+<li><strong>拥塞控制 (Congestion Control)</strong>：通过确认码的成功率和往返时间推测网络拥堵程度，动态调整发包频率。</li>
+</ul>
+<hr />
+<h3 id="dns">域名系统DNS<a class="headerlink" href="#dns" title="Permanent link">⚓︎</a></h3>
+<p>由于 IP 地址 (如 <code>172.217.7.238</code>) 难以记忆，DNS 负责将域名映射为 IP 地址 。</p>
+<pre class="mermaid"><code>graph LR
+    Root[DNS 根] --&gt; TLD[顶级域名 .com/.gov]
+    TLD --&gt; SLD[二级域名 google.com]
+    SLD --&gt; Sub[子域名 images.google.com]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>层级 (Level)</strong></th>
+<th style="text-align: center;"><strong>说明 (Description)</strong></th>
+<th style="text-align: center;"><strong>示例 (Example)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">顶级域名 (Top Level Domain, TLD)</td>
+<td style="text-align: center;">树状结构的最顶层分类</td>
+<td style="text-align: center;">.com, .gov</td>
+</tr>
+<tr>
+<td style="text-align: center;">二级域名 (Second Level Domain)</td>
+<td style="text-align: center;">注册的特定组织名称</td>
+<td style="text-align: center;">google.com, dftba.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">子域名 (Subdomain)</td>
+<td style="text-align: center;">二级域名下的进一步划分</td>
+<td style="text-align: center;">images.google.com</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="osi">OSI 参考模型<a class="headerlink" href="#osi" title="Permanent link">⚓︎</a></h3>
+<p>开放式系统互联通信参考模型 (OSI Model) 用于将网络通信过程划分为不同的抽象层 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>层号</strong></th>
+<th style="text-align: center;"><strong>层名称 (Layer Name)</strong></th>
+<th style="text-align: center;"><strong>核心功能与协议 (Function and Protocols)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">会话层 (Session Layer)</td>
+<td style="text-align: center;">使用传输协议创建、管理及关闭连接（如 DNS 查询）</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">传输层 (Transport Layer)</td>
+<td style="text-align: center;">点对点数据传输、错误检测与恢复（UDP, TCP）</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">网络层 (Network Layer)</td>
+<td style="text-align: center;">报文交换与路由选择技术</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">数据链路层 (Data Link Layer)</td>
+<td style="text-align: center;">媒体访问控制 (MAC)、碰撞检测、指数退避</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">物理层 (Physical Layer)</td>
+<td style="text-align: center;">线路电信号或无线电信号的物理传输</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_45">万维网<a class="headerlink" href="#_45" title="Permanent link">⚓︎</a></h2>
+<h3 id="_46">抽象层级<a class="headerlink" href="#_46" title="Permanent link">⚓︎</a></h3>
+<p>万维网 (World Wide Web) 是运行在互联网 (Internet) 之上的分布式应用程序 (Distributed Application) 。互联网作为底层基础设施，负责传输各类程序的数据 。</p>
+<pre class="mermaid"><code>graph LR
+    A[互联网 Internet] --&gt; B[底层管道 Plumbing]
+    B --&gt; C[万维网 WWW]
+    B --&gt; D[Skype]
+    B --&gt; E[Instagram]
+    C --&gt; F[浏览器 Browser]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>概念 (Concept)</strong></th>
+<th style="text-align: center;"><strong>描述 (Description)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">互联网 (Internet)</td>
+<td style="text-align: center;">传递数据的底层硬件与协议网络</td>
+</tr>
+<tr>
+<td style="text-align: center;">万维网 (World Wide Web)</td>
+<td style="text-align: center;">在服务器上运行并通浏览器访问的分布式应用</td>
+</tr>
+<tr>
+<td style="text-align: center;">浏览器 (Web Browser)</td>
+<td style="text-align: center;">用于检索并渲染网页的专用程序</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_47">网页访问流程与协议栈<a class="headerlink" href="#_47" title="Permanent link">⚓︎</a></h3>
+<p>访问网页是一个涉及多个协议层级的线性逻辑链。</p>
+<pre class="mermaid"><code>graph LR
+    A[输入 URL] --&gt; B[DNS 查找]
+    B --&gt; C[获取 IP 地址]
+    C --&gt; D[TCP 连接]
+    D --&gt; E[HTTP GET 请求]
+    E --&gt; F[服务器响应]
+    F --&gt; G[浏览器渲染]</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>组件 (Component)</strong></th>
+<th style="text-align: center;"><strong>技术细节 (Technical Details)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">统一资源定位器 (URL)</td>
+<td style="text-align: center;">网页的唯一地址</td>
+</tr>
+<tr>
+<td style="text-align: center;">DNS 查找 (DNS Lookup)</td>
+<td style="text-align: center;">将域名转换为 IP 地址</td>
+</tr>
+<tr>
+<td style="text-align: center;">TCP 连接 (TCP Connection)</td>
+<td style="text-align: center;">连接至服务器 80 端口</td>
+</tr>
+<tr>
+<td style="text-align: center;">超文本传输协议 (HTTP)</td>
+<td style="text-align: center;">使用 "GET" 指令请求资源</td>
+</tr>
+<tr>
+<td style="text-align: center;">状态码 (Status Codes)</td>
+<td style="text-align: center;">200 (OK) 或 404 (Not Found)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="html">超文本标记语言HTML<a class="headerlink" href="#html" title="Permanent link">⚓︎</a></h3>
+<p>网页通过超文本 (Hypertext) 实现关联索引，通过标记语言 (Markup Language) 定义结构。</p>
+<blockquote>
+<p>由于HTML不具有图灵完备性，所以被称为<strong>标记语言</strong>而非<strong>编程语言</strong>。</p>
+<p>一种语言如果能在数学上模拟“图灵机”，则被称为“图灵完备”。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>标签 (Tag)</strong></th>
+<th style="text-align: center;"><strong>功能 (Function)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>&lt;h1&gt;</code> / <code>&lt;h2&gt;</code></td>
+<td style="text-align: center;">第一/二级标题 (Headings)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>&lt;a&gt;</code></td>
+<td style="text-align: center;">超链接与 href 属性 (Hyperlinks)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>&lt;ol&gt;</code></td>
+<td style="text-align: center;">有序列表 (Ordered List)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>&lt;li&gt;</code></td>
+<td style="text-align: center;">列表项目 (List Item)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>CSS</code></td>
+<td style="text-align: center;">层叠样式表 (Cascading Style Sheets)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>JavaScript</code></td>
+<td style="text-align: center;">网页内嵌脚本语言</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>HTML经常与CSS和Javascript搭配使用，共同构成网页。</p>
+</blockquote>
+<hr />
+<h3 id="_48">搜索引擎演进<a class="headerlink" href="#_48" title="Permanent link">⚓︎</a></h3>
+<p>从人工目录转向自动化算法检索。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>阶段 (Stage)</strong></th>
+<th style="text-align: center;"><strong>系统/算法 (System/Algorithm)</strong></th>
+<th style="text-align: center;"><strong>核心机制 (Mechanism)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">早期目录</td>
+<td style="text-align: center;">Yahoo (1994)</td>
+<td style="text-align: center;">人工编辑的网页指南</td>
+</tr>
+<tr>
+<td style="text-align: center;">自动化索引</td>
+<td style="text-align: center;">JumpStation (1993)</td>
+<td style="text-align: center;">爬虫 (Crawler)、索引 (Index)、搜索算法 (Algorithm)</td>
+</tr>
+<tr>
+<td style="text-align: center;">链接分析</td>
+<td style="text-align: center;">Google (PageRank)</td>
+<td style="text-align: center;">基于反向链接 (Backlinks) 数量与信誉评估质量</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_49">网络中立性技术<a class="headerlink" href="#_49" title="Permanent link">⚓︎</a></h3>
+<p>网络中立性 (Net Neutrality) 核心在于所有数据包 (Packets) 是否应被平等对待 。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>立场 (Position)</strong></th>
+<th style="text-align: center;"><strong>核心论点 (Core Arguments)</strong></th>
+<th style="text-align: center;"><strong>技术/商业影响 (Impact)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">支持者 (Advocates)</td>
+<td style="text-align: center;">防止服务商成为内容守门人</td>
+<td style="text-align: center;">保护创新，防止小公司因无法支付“溢价包”而劣势</td>
+</tr>
+<tr>
+<td style="text-align: center;">反对者 (Opponents)</td>
+<td style="text-align: center;">市场竞争会制约不良行为</td>
+<td style="text-align: center;">允许根据数据类型（如实时通话）分配优先级</td>
+</tr>
+<tr>
+<td style="text-align: center;">节流 (Throttling)</td>
+<td style="text-align: center;">故意限制特定流量的带宽</td>
+<td style="text-align: center;">可能导致非优先内容传输延迟</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="2026年4月11日 01:22:39 CST">2026年4月11日 01:22:39</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="2026年4月11日 01:22:39 CST">2026年4月11日 01:22:39</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        此页面有帮助吗?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="帮助很大" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m7 0c0 .8-.7 1.5-1.5 1.5S14 10.3 14 9.5 14.7 8 15.5 8s1.5.7 1.5 1.5m-5 7.73c-1.75 0-3.29-.73-4.19-1.81L9.23 14c.45.72 1.52 1.23 2.77 1.23s2.32-.51 2.77-1.23l1.42 1.42c-.9 1.08-2.44 1.81-4.19 1.81"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="亟待改善" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10m-6.5-4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m2 4.5c1.75 0 3.29.72 4.19 1.81l-1.42 1.42C14.32 16.5 13.25 16 12 16s-2.32.5-2.77 1.23l-1.42-1.42C8.71 14.72 10.25 14 12 14"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              感谢你的反馈!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for your feedback! Help us improve this page by using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+          data-repo="vigilux418/mkdocs"
+          data-repo-id="R_kgDOOpylRA"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOOpylRM4CuxK_"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+<!-- 标题计数器 -->
+
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../3/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 算法基础">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                算法基础
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../5/" class="md-footer__link md-footer__link--next" aria-label="下一页: 软件工程">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                软件工程
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2025 Vigilux
+    </div>
+  
+  
+    <div>
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+    
+    modified by
+    <a href="https://github.com/vigilux418" target="_blank" rel="noopener">
+      Vigilux
+    </a>
+      | Customization Reference from
+    <a href="https://github.com/TonyCrane/" target="_blank" rel="noopener">
+      TonyCrane
+    </a>
+      &
+    <a href="https://github.com/noughtq" target="_blank" rel="noopener">
+      NoughtQ
+    </a>
+    </div>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/vigilux418" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://vigilux.top" target="_blank" rel="noopener" title="vigilux.top" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M277.8 8.6c-12.3-11.4-31.3-11.4-43.5 0l-224 208c-9.6 9-12.8 22.9-8 35.1S18.8 272 32 272h16v176c0 35.3 28.7 64 64 64h288c35.3 0 64-28.7 64-64V272h16c13.2 0 25-8.1 29.8-20.3s1.6-26.2-8-35.1zM240 320h32c26.5 0 48 21.5 48 48v96H192v-96c0-26.5 21.5-48 48-48"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://app.docker.com/accounts/vigilux" target="_blank" rel="noopener" title="app.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M349.9 236.3h-66.1v-59.4h66.1zm0-204.3h-66.1v60.7h66.1zm78.2 144.8H362v59.4h66.1zm-156.3-72.1h-66.1v60.1h66.1zm78.1 0h-66.1v60.1h66.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1zm78.1 0h-66.1v59.4h66.1zm-78.1-72.1h-66.1v60.1h66.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:a3205767798@outlook.com" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M536.4-26.3c9.8-3.5 20.6-1 28 6.3s9.8 18.2 6.3 28l-178 496.9c-5 13.9-18.1 23.1-32.8 23.1-14.2 0-27-8.6-32.3-21.7l-64.2-158c-4.5-11-2.5-23.6 5.2-32.6l94.5-112.4c5.1-6.1 4.7-15-.9-20.6s-14.6-6-20.6-.9l-112.4 94.3c-9.1 7.6-21.6 9.6-32.6 5.2L38.1 216.8c-13.1-5.3-21.7-18.1-21.7-32.3 0-14.7 9.2-27.8 23.1-32.8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "search.highlight", "search.share", "search.suggest", "navigation.footer", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid.mjs" type="module"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/special_effects/lines.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
