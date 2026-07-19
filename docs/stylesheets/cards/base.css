@@ -40,14 +40,12 @@
 
 }
 
-.cards {
+.card {
 
   /* place the card on a new transform layer and
   make sure it has hardward acceleration... we gun'need that! */
   -webkit-transform: translate3d(0px, 0px, 0.01px);
   transform: translate3d(0px, 0px, 0.01px);
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
   pointer-events: none;
   
   /* make sure the card is above others if it's scaled up */
@@ -56,25 +54,29 @@
   /* every little helps! */
   will-change: transform, visibility, z-index;
 
+  /* this prevents major problems in firefox, but also causes a bit of
+  clipping as the card animates to/from active state. worth it. */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
-.cards,
-.cards * {
+.card,
+.card * {
   /* outline is a little trick to anti-alias */
   outline: 1px solid transparent;
 }
 
-.cards:not( .interactive ) .card__translater,
-.cards:not( .interactive ) .card__rotator,
-.cards:not( .interactive ) .card__shine,
-.cards:not( .interactive ) .card__glare {
+.card:not( .interactive ) .card__translater,
+.card:not( .interactive ) .card__rotator,
+.card:not( .interactive ) .card__shine,
+.card:not( .interactive ) .card__glare {
 
   /* if this card is not in a framework, we can add simply
     hover effects when it's not "interactive" */
   transition: all 0.3s ease;
 
 }
-.cards:not( .interactive ):hover {
+.card:not( .interactive ):hover {
   
   --pointer-x: 25% !important;
   --pointer-y: 10% !important;
@@ -92,29 +94,30 @@
   
 }
 
-.cards.water       { --card-glow: hsl(192, 97%,  60%); }
-.cards.fire        { --card-glow: hsl(9,   81%,  59%); }
-.cards.grass       { --card-glow: hsl(96,  81%,  65%); }
-.cards.lightning   { --card-glow: hsl(54,  87%,  63%); }
-.cards.psychic     { --card-glow: hsl(281, 62%,  58%); }
-.cards.fighting    { --card-glow: rgb(145, 90, 39); }
-.cards.darkness    { --card-glow: hsl(189, 77%,  27%); }
-.cards.metal       { --card-glow: hsl(184, 20%,  70%); }
-.cards.dragon      { --card-glow: hsl(51, 60%, 35%); }
-.cards.fairy       { --card-glow: hsl(323, 100%, 89%); }
+.card.water       { --card-glow: hsl(192, 97%,  60%); }
+.card.fire        { --card-glow: hsl(9,   81%,  59%); }
+.card.grass       { --card-glow: hsl(96,  81%,  65%); }
+.card.lightning   { --card-glow: hsl(54,  87%,  63%); }
+.card.psychic     { --card-glow: hsl(281, 62%,  58%); }
+.card.fighting    { --card-glow: rgb(145, 90, 39); }
+.card.darkness    { --card-glow: hsl(189, 77%,  27%); }
+.card.metal       { --card-glow: hsl(184, 20%,  70%); }
+.card.dragon      { --card-glow: hsl(51, 60%, 35%); }
+.card.fairy       { --card-glow: hsl(323, 100%, 89%); }
 
-.cards,
+.card,
 .card__rotator {
   aspect-ratio: var(--card-aspect);
   border-radius: var(--card-radius);
 }
 
-.cards.interacting {
+.card.interacting {
   z-index: calc(var(--card-scale) * 120);
 }
 
-.cards.active .card__translater,
-.cards.active .card__rotator {
+
+.card.active .card__translater,
+.card.active .card__rotator {
   /* prevent pinch/double-tap zooms on card */
   touch-action: none;
 }
@@ -124,24 +127,25 @@
   display: grid;
   perspective: 600px;
   will-change: transform, box-shadow;
-
   transform-origin: center;
   -webkit-transform-origin: center;
+  transform-style: preserve-3d;
 }
 
 .card__translater {
   width: auto;
   position: relative;
 
-  -webkit-transform: translate3d(var(--translate-x), var(--translate-y), 0.1px) scale(var(--card-scale));
-  transform: translate3d(var(--translate-x), var(--translate-y), 0.1px) scale(var(--card-scale));
+  --translate-z: calc(var(--card-scale) * 150px + 0.01px); /* add 150px to the z-axis to ensure the card is always in front of the others */
+  -webkit-transform: translate3d(var(--translate-x), var(--translate-y), var(--translate-z)) scale(var(--card-scale));
+  transform: translate3d(var(--translate-x), var(--translate-y), var(--translate-z)) scale(var(--card-scale));
 }
 
 .card__rotator {
   -webkit-transform: rotateY(var(--rotate-x)) rotateX(var(--rotate-y));
   -webkit-transform-style: preserve-3d;
-  transform: rotateY(var(--rotate-x)) rotateX(var(--rotate-y));
   transform-style: preserve-3d;
+  transform: rotateY(var(--rotate-x)) rotateX(var(--rotate-y));
   
   /* performance */
   pointer-events: auto;
@@ -160,7 +164,7 @@ button.card__rotator {
 }
 
 .card__rotator,
-.cards.active .card__rotator:focus {
+.card.active .card__rotator:focus {
   transition: box-shadow 0.4s ease, opacity .33s ease-out;
   box-shadow: 
     0 0 3px -1px transparent, 
@@ -171,7 +175,7 @@ button.card__rotator {
     0 0 20px 0px transparent;
 }
 
-.cards.active .card__rotator,
+.card.active .card__rotator,
 .card__rotator:focus {
   box-shadow: 
     0 0 3px -1px white, 
@@ -197,6 +201,8 @@ button.card__rotator {
 
 .card__rotator img {
   height: auto;
+}
+.card__rotator img:not(.card__back) {
   -webkit-transform: translate3d(0px, 0px, 0.01px);
   transform: translate3d(0px, 0px, 0.01px);
 }
@@ -312,9 +318,9 @@ Shine & Glare Effects
 
 **/
 
-.cards.masked .card__shine,
-.cards.masked .card__shine:before,
-.cards.masked .card__shine:after {
+.card.masked .card__shine,
+.card.masked .card__shine:before,
+.card.masked .card__shine:after {
 
   /** masking image for cards which are masked **/
   -webkit-mask-image: var(--mask);
@@ -326,20 +332,20 @@ Shine & Glare Effects
 
 }
 
-.cards[data-rarity="rare holo"] .card__glare:after,
-.cards[data-rarity="rare holo cosmos"] .card__glare:after,
-.cards[data-rarity$="reverse holo"] .card__glare:after {
+.card[data-rarity="rare holo"] .card__glare:after,
+.card[data-rarity="rare holo cosmos"] .card__glare:after,
+.card[data-rarity$="reverse holo"] .card__glare:after {
   clip-path: var(--clip);
 }
 
-.cards[data-rarity="rare holo"][data-subtypes^="stage"] .card__glare:after,
-.cards[data-rarity="rare holo cosmos"][data-subtypes^="stage"] .card__glare:after,
-.cards[data-rarity$="reverse holo"][data-subtypes^="stage"] .card__glare:after {
+.card[data-rarity="rare holo"][data-subtypes^="stage"] .card__glare:after,
+.card[data-rarity="rare holo cosmos"][data-subtypes^="stage"] .card__glare:after,
+.card[data-rarity$="reverse holo"][data-subtypes^="stage"] .card__glare:after {
   clip-path: var(--clip-stage);
 }
 
-.cards[data-rarity="rare holo"][data-supertype="trainer"] .card__glare:after,
-.cards[data-rarity="rare holo cosmos"][data-supertype="trainer"] .card__glare:after,
-.cards[data-rarity$="reverse holo"][data-supertype="trainer"] .card__glare:after {
+.card[data-rarity="rare holo"][data-supertype="trainer"] .card__glare:after,
+.card[data-rarity="rare holo cosmos"][data-supertype="trainer"] .card__glare:after,
+.card[data-rarity$="reverse holo"][data-supertype="trainer"] .card__glare:after {
   clip-path: var(--clip-trainer);
 }
