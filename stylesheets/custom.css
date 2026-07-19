@@ -1,7 +1,7 @@
 :root {
   --admonition-border-left-width: 0.2rem;
   --base-border-radius: 1rem;
-  /* --card-hover-shadow: 0 0 0.2rem #ffffff40; */
+  --card-hover-shadow: 0 0 0.2rem #ffffff40;
 }
 
 /* 卡片圆角与悬浮阴影 */
@@ -128,17 +128,6 @@
   background: rgb(255 255 255 / 0%);
   box-shadow: 0 0 .4rem .4rem rgba(255, 255, 255, 0);
   position: relative;
-}
-
-.md-nav__list a.is-active {
-  color: var(--md-accent-fg-color);
-}
-
-.md-sidebar--secondary .md-nav > .md-nav__list > li > a + .md-nav {
-  display: none;
-}
-.md-sidebar--secondary .md-nav > .md-nav__list > li > a.is-active + .md-nav {
-  display: block;
 }
 
 [data-md-color-scheme="default"] .md-nav__title {

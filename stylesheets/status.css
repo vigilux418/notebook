@@ -1,6 +1,6 @@
 .box {
     border-radius: 3px; padding: 1px 4px;
-    font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+    font-family: 'Lato', 'SimHei', 'STHeiti', serif;
     font-size: 90%;
 }
 .box-blue,  .badge-primary  { background-color: rgba(66, 139, 202, 0.5); color: #1d4ed8; }
