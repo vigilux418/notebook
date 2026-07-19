@@ -5,12 +5,15 @@
 /.cache/
 *.cache
 
-# --- Node / homepage widget build deps (docs/javascripts/index.js is committed pre-built) ---
+# --- Node (unused; homepage card.js is hand-written, no build step) ---
 /node_modules/
 
 # --- Python ---
 __pycache__/
 *.py[cod]
+
+# --- Local dev/design notes (not part of the site or repo) ---
+/.dev/
 
 # --- OS / editor cruft ---
 .DS_Store

@@ -24,7 +24,7 @@ mkdocs build      # 生成静态站点到 site/
 
 ## License / 许可
 
-- 首页卡片相关的代码与样式（`docs/javascripts/index.js`、`docs/stylesheets/cards/*`）
+- 首页卡片相关的代码与样式（`docs/javascripts/card.js`、`docs/stylesheets/cards/*`）
   沿用上游 [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css/) 的
   **GPL-3.0** 许可，完整许可文本见
   [`LICENSE.pokemon-cards-css`](./LICENSE.pokemon-cards-css)（© 2022 Simon Goellner, [@simeydotme](https://github.com/simeydotme/)）。
