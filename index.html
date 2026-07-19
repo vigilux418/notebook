@@ -143,8 +143,9 @@
     
   <link rel="stylesheet" href="stylesheets/cards/base.css" />
   <link rel="stylesheet" href="stylesheets/cards/cards.css" />
-  <script type="module" crossorigin src="javascripts/index.js"></script>
+  <link rel="stylesheet" href="stylesheets/cards/secret-rare.css" />
   <link rel="stylesheet" href="stylesheets/cards/index.css">
+  <script type="module" src="javascripts/card.js"></script>
   <style>
     body[data-md-color-scheme="slate"] {
       background-color: #0d0d0d;
@@ -1154,7 +1155,11 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <div id="app" style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw;"></div>
+  <div id="app"
+       data-card-img="images/card.png"
+       data-card-img-light="images/card.light.png"
+       data-card-rarity="rare secret"
+       style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw; width: 320px;"></div>
   <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
     <div class="md-grid">
       <div style="margin-left: 3rem;margin-bottom: 7rem">
