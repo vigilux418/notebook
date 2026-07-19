@@ -113,18 +113,21 @@ nav:
           - Python Markdown参考: tools/mkdocs/3.md
           - MkDocs美化: tools/mkdocs/4.md
 dev_addr: 127.0.0.1:8001
+# 有意不放进导航栏的独立页面（从首页链接进入），抑制构建时的 "not in nav" INFO 提示
+not_in_nav: |
+  /links.md
+  /spirit.md
 extra_css: 
     - stylesheets/extra.css
     - stylesheets/custom.css
     - stylesheets/status.css
     - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
-    - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
     - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
 extra_javascript: 
-    - javascripts/mermaid.mjs
-    - javascripts/mathjax.js
-    - https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/special_effects/lines.js
-    - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+    # 站点级脚本：仅保留粒子背景加载器（会尊重 prefers-reduced-motion）。
+    # MathJax 与 Mermaid 改为“按页面内容需要时”才在 overrides/main.html 注入，
+    # 避免无公式 / 无图表的页面（如首页）白白拉取整套引擎。
+    - javascripts/effects.js
 theme: 
     name: material
     custom_dir: overrides

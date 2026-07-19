@@ -25,3 +25,16 @@
     <link rel="stylesheet" href="{{ 'stylesheets/fold_toc.css' | url }}">
   {% endif %}
 {% endblock %}
+
+{# 按需加载重型引擎：只有当本页渲染结果里确实含公式(.arithmatex)或图表(.mermaid)时
+   才注入 MathJax / Mermaid，避免无公式、无图表的页面（如首页）白拉整套引擎。 #}
+{% block scripts %}
+  {{ super() }}
+  {% if page.content and 'class="arithmatex"' in page.content %}
+    <script src="{{ 'javascripts/mathjax.js' | url }}"></script>
+    <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+  {% endif %}
+  {% if page.content and 'class="mermaid"' in page.content %}
+    <script type="module" src="{{ 'javascripts/mermaid.mjs' | url }}"></script>
+  {% endif %}
+{% endblock %}
