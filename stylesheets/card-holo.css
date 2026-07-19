@@ -1,0 +1,95 @@
+/*
+ * Homepage holographic card effect.
+ * Written from scratch for Vigilux's Notebook — original work, no third-party code.
+ * Pointer-driven 3D tilt + gloss sheen + rainbow glare, all via CSS custom properties
+ * set by card-holo.js.
+ */
+#app.holo-card {
+  --holo-rx: 0deg;   /* rotateX */
+  --holo-ry: 0deg;   /* rotateY */
+  --holo-mx: 50%;    /* pointer x within card */
+  --holo-my: 50%;    /* pointer y within card */
+  --holo-op: 0;      /* sheen / glare intensity */
+  width: 320px;
+  aspect-ratio: 660 / 921;
+  perspective: 1200px;
+}
+
+.holo-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 4.8% / 3.4%;
+  overflow: hidden;
+  transform: rotateX(var(--holo-rx)) rotateY(var(--holo-ry));
+  transition: transform .6s cubic-bezier(.23, 1, .32, 1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .38), 0 3px 10px rgba(0, 0, 0, .28);
+  will-change: transform;
+}
+#app.holo-card.is-interacting .holo-card__inner {
+  transition: transform .1s ease-out;
+}
+
+/* override the global `img { border-radius; box-shadow }` rule from custom.css */
+#app .holo-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  box-shadow: none;
+  display: block;
+}
+
+/* Theme-aware image swap. Material's built-in #only-light/#only-dark handling is
+   scoped to .md-typeset, and this card lives outside it, so do it explicitly here. */
+[data-md-color-scheme="default"] #app .holo-card__img[src$="#only-dark"],
+[data-md-color-scheme="slate"] #app .holo-card__img[src$="#only-light"] {
+  display: none;
+}
+
+.holo-card__sheen,
+.holo-card__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--holo-op);
+  transition: opacity .6s ease;
+}
+
+/* soft white gloss that tracks the pointer */
+.holo-card__sheen {
+  background: radial-gradient(
+    circle at var(--holo-mx) var(--holo-my),
+    rgba(255, 255, 255, .55) 0%,
+    rgba(255, 255, 255, .16) 22%,
+    rgba(255, 255, 255, 0) 55%);
+  mix-blend-mode: soft-light;
+}
+
+/* rainbow holographic band that shifts with the pointer */
+.holo-card__glare {
+  background: repeating-linear-gradient(
+    110deg,
+    rgba(255, 119, 168, .35) 0%,
+    rgba(120, 194, 255, .35) 12%,
+    rgba(150, 255, 178, .35) 24%,
+    rgba(255, 233, 128, .35) 36%,
+    rgba(255, 119, 168, .35) 48%);
+  background-size: 300% 300%;
+  background-position: var(--holo-mx) var(--holo-my);
+  mix-blend-mode: color-dodge;
+  filter: brightness(.85) contrast(1.15);
+  opacity: calc(var(--holo-op) * .45);
+}
+
+@media (max-width: 960px) {
+  #app.holo-card { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .holo-card__inner { transition: none; }
+  .holo-card__sheen,
+  .holo-card__glare { display: none; }
+}

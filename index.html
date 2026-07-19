@@ -143,10 +143,8 @@
     
     
     
-  <link rel="stylesheet" href="stylesheets/cards/base.css" />
-  <link rel="stylesheet" href="stylesheets/cards/cards.css" />
-  <script type="module" crossorigin src="javascripts/index.js"></script>
-  <link rel="stylesheet" href="stylesheets/cards/index.css">
+  <link rel="stylesheet" href="stylesheets/card-holo.css" />
+  <script src="javascripts/card-holo.js" defer></script>
   <style>
     body[data-md-color-scheme="slate"] {
       background-color: #0d0d0d;
@@ -1156,7 +1154,14 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <div id="app" style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw;"></div>
+  <div id="app" class="holo-card" aria-hidden="true">
+    <div class="holo-card__inner">
+      <img class="holo-card__img" src="images/card.png#only-dark" alt="" width="660" height="921" loading="lazy" />
+      <img class="holo-card__img" src="images/card.light.png#only-light" alt="" width="660" height="921" loading="lazy" />
+      <div class="holo-card__sheen"></div>
+      <div class="holo-card__glare"></div>
+    </div>
+  </div>
   <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
     <div class="md-grid">
       <div style="margin-left: 3rem;margin-bottom: 7rem">
