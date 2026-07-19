@@ -47,7 +47,7 @@
   }
   function kick() { if (raf === null) raf = requestAnimationFrame(render); }
 
-  var MAX = reduce ? 5 : 16;                    // max tilt in degrees
+  var MAX = reduce ? 5 : 14;                    // max tilt in degrees
   function fromPointer(e) {
     var r = card.getBoundingClientRect();
     if (!r.width) return;
@@ -84,13 +84,13 @@
     var startTimer = setTimeout(function () {
       card.classList.add("is-active");
       var t = 0;
-      op.target = 0.9;
+      op.target = 0.6;
       var iv = setInterval(function () {
         t += 0.05;
-        px.target = 50 + Math.sin(t) * 46;
-        py.target = 50 + Math.cos(t * 0.9) * 42;
-        ry.target = Math.sin(t) * 13;
-        rx.target = Math.cos(t * 0.9) * 11;
+        px.target = 50 + Math.sin(t) * 26;
+        py.target = 50 + Math.cos(t * 0.9) * 22;
+        ry.target = Math.sin(t) * 6;
+        rx.target = Math.cos(t * 0.9) * 5;
         kick();
       }, 24);
       var end = setTimeout(function () {
@@ -98,7 +98,7 @@
         card.classList.remove("is-active");
         px.target = 50; py.target = 50; rx.target = 0; ry.target = 0; op.target = 0;
         kick();
-      }, 2600);
+      }, 2200);
       show = { iv: iv, end: end };
     }, 900);
     card.addEventListener("pointerenter", function () { clearTimeout(startTimer); }, { once: true });
