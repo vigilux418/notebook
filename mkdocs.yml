@@ -233,11 +233,6 @@ markdown_extensions:
         generic: true
     - pymdownx.betterem
     - pymdownx.smartsymbols
-    - pymdownx.pathconverter: 
-        base_path: '' # default: ''
-        relative_path: '' # default ''
-        absolute: false # default: false
-        tags: 'a script img link object embed'
 plugins:
     - macros: 
         # [[% raw %]]
