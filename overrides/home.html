@@ -4,8 +4,9 @@
 {% block extrahead %}
   <link rel="stylesheet" href="{{ 'stylesheets/cards/base.css' | url }}" />
   <link rel="stylesheet" href="{{ 'stylesheets/cards/cards.css' | url }}" />
-  <script type="module" crossorigin src="{{ 'javascripts/index.js' | url }}"></script>
+  <link rel="stylesheet" href="{{ 'stylesheets/cards/secret-rare.css' | url }}" />
   <link rel="stylesheet" href="{{ 'stylesheets/cards/index.css' | url }}">
+  <script type="module" src="{{ 'javascripts/card.js' | url }}"></script>
   <style>
     body[data-md-color-scheme="slate"] {
       background-color: #0d0d0d;
@@ -63,7 +64,10 @@
 {% endblock %}
 
 {% block content %}
-  <div id="app" style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw;"></div>
+  <div id="app"
+       data-card-img="{{ 'images/card.png' | url }}"
+       data-card-rarity="rare secret"
+       style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw; width: 320px;"></div>
   <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
     <div class="md-grid">
       <div style="margin-left: 3rem;margin-bottom: 7rem">
