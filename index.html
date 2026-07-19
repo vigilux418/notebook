@@ -187,6 +187,40 @@
     .md-header--shadow {
       box-shadow: none !important;
     }
+    /* 首页正文外边距（桌面）。原为内联样式，改为类以便在移动端按需覆盖 */
+    .home-content {
+      margin-left: 3rem;
+      margin-bottom: 7rem;
+    }
+    /* 移动端 / 竖屏平板：此时右侧全息卡片 #app 已 display:none。
+       桌面“英雄区”那套用 space-between + flex-grow 把正文“撑到底”的布局，
+       失去卡片平衡后会让标题/介绍/链接偏到一角、又空又丑，介绍与链接还会换行。
+       这里改为“垂直 + 水平居中”的极简英雄区，并适当缩小字号避免换行，
+       观感对齐 note.noughtq.top 的移动端首页。 */
+    @media screen and (max-width: 960px) {
+      /* 垂直居中：用 center 取代 space-between；让承载抽屉的空包裹层不再撑高 */
+      .md-main__inner {
+        justify-content: center;
+        margin-top: 0;
+      }
+      .md-main__inner > div:first-child {
+        flex-grow: 0 !important;
+      }
+      /* 首页英雄字号：用 rem/vw 明确定尺（Material 移动端基准仅 10px，
+         相对百分比会层层缩水成 11px 过小）。随屏幕从小手机到大平板平滑放大，
+         保证“欢迎…”与链接行既清晰又不折行。桌面仍走内联 125%，不受影响。 */
+      .md-content .md-typeset {
+        font-size: clamp(0.72rem, 3.6vw, 1rem) !important;
+      }
+      /* 水平居中 + 两侧留白，收敛行宽让折行更自然 */
+      .home-content {
+        margin: 0 auto;
+        max-width: 32rem;
+        padding: 0 1.1rem;
+        text-align: center;
+        text-wrap: balance;
+      }
+    }
   </style>
 
    <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
@@ -1162,7 +1196,7 @@
        style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw; width: 320px;"></div>
   <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
     <div class="md-grid">
-      <div style="margin-left: 3rem;margin-bottom: 7rem">
+      <div class="home-content">
         <h1 id="vigilux">Vigilux的笔记本<a class="headerlink" href="#vigilux" title="Permanent link">⚓︎</a></h1>
 <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 <p><span id="typed-des-zh"></span></p>
@@ -1181,7 +1215,7 @@
 <p><a href="spirit/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.04 2.5 9.53 5h5zM4 7v13h16V7zm8-7 5 5h3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3zM7 18v-4h5v4zm7-1v-7h4v7zm-8-5V9h5v3z"/></svg></span> 笔记思想</a> | 
 <a href="javascript:toggle_statistics();"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"/></svg></span> 站点统计</a> | 
 <a href="links/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .75.75 0 0 1 .018-1.042.75.75 0 0 1 1.042-.018 2 2 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042m-4.69 9.64a2 2 0 0 0 2.83 0l1.25-1.25a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .75.75 0 0 1-.018 1.042.75.75 0 0 1-1.042.018 2 2 0 0 0-2.83 0l-2.5 2.5a2 2 0 0 0 0 2.83"/></svg></span> 友链</a></p>
-<div id="statistics" style="width: 27em; border-color: #e3e3e3; opacity: 0; font-size: 75%">
+<div id="statistics" style="max-width: 27em; border-color: #e3e3e3; opacity: 0; font-size: 75%">
 页面总数：65 </br>
 总字数：63526 </br>
 代码块行数：2052 <br>
