@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content%}
+{{ super() }}
+<!-- 标题计数器 -->
+{% if page and page.meta and page.meta.counter %}
+<link rel="stylesheet" href="/notebook/stylesheets/counter.css">
+{% endif %}
+{% endblock %}
+
+{% block htmltitle %}
+  {% if page.meta and page.meta.home %}
+    <title>{{ config.site_name }}</title>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block site_nav %}
+  <!-- Add scripts that need to run before here -->
+  {{ super() }}
+  <!-- Add scripts that need to run afterwards here -->
+  {% if page.toc and not "toc.integrate" in features %}
+    <script src="/notebook/javascripts/toc.js" defer></script>
+    <link rel="stylesheet" href="/notebook/stylesheets/fold_toc.css">
+  {% endif %}
+{% endblock %}
