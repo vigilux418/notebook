@@ -57,7 +57,8 @@ function initCard() {
   const app = document.getElementById("app");
   if (!app) return;
 
-  const img = app.dataset.cardImg || "";
+  const imgDark = app.dataset.cardImg || "";
+  const imgLight = app.dataset.cardImgLight || imgDark;
   const rarity = (app.dataset.cardRarity || "rare secret").toLowerCase();
 
   // ---- build DOM ----
@@ -79,8 +80,20 @@ function initCard() {
   const rotator = card.querySelector(".card__rotator");
   const frontImg = card.querySelector(".card__front img");
   frontImg.addEventListener("load", () => card.classList.remove("loading"));
-  frontImg.src = img; // set after listener so cached images still fire onload logic
+  // Pick the card art matching Material's colour scheme ("slate" = dark art,
+  // "default" = light art) and swap it when the user toggles the theme.
+  const pickImg = () =>
+    document.body.getAttribute("data-md-color-scheme") === "slate" ? imgDark : imgLight;
+  const applyImg = () => {
+    const src = pickImg();
+    if (frontImg.getAttribute("src") !== src) frontImg.src = src;
+  };
+  applyImg();
   if (frontImg.complete) card.classList.remove("loading");
+  new MutationObserver(applyImg).observe(document.body, {
+    attributes: true,
+    attributeFilter: ["data-md-color-scheme"],
+  });
 
   // ---- springs ----
   const springRotate = makeSpring({ x: 0, y: 0 });
