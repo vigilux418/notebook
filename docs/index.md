@@ -29,7 +29,7 @@ statistics: true
 [:material-chart-line: 站点统计](javascript:toggle_statistics();) | 
 [:octicons-link-16: 友链](links.md)
 
-<div id="statistics" style="width: 27em; border-color: #e3e3e3; opacity: 0; font-size: 75%">
+<div id="statistics" style="max-width: 27em; border-color: #e3e3e3; opacity: 0; font-size: 75%">
 页面总数：{{pages}} </br>
 总字数：{{words}} </br>
 代码块行数：{{codes}} <br>

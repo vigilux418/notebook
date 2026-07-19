@@ -48,6 +48,40 @@
     .md-header--shadow {
       box-shadow: none !important;
     }
+    /* 首页正文外边距（桌面）。原为内联样式，改为类以便在移动端按需覆盖 */
+    .home-content {
+      margin-left: 3rem;
+      margin-bottom: 7rem;
+    }
+    /* 移动端 / 竖屏平板：此时右侧全息卡片 #app 已 display:none。
+       桌面“英雄区”那套用 space-between + flex-grow 把正文“撑到底”的布局，
+       失去卡片平衡后会让标题/介绍/链接偏到一角、又空又丑，介绍与链接还会换行。
+       这里改为“垂直 + 水平居中”的极简英雄区，并适当缩小字号避免换行，
+       观感对齐 note.noughtq.top 的移动端首页。 */
+    @media screen and (max-width: 960px) {
+      /* 垂直居中：用 center 取代 space-between；让承载抽屉的空包裹层不再撑高 */
+      .md-main__inner {
+        justify-content: center;
+        margin-top: 0;
+      }
+      .md-main__inner > div:first-child {
+        flex-grow: 0 !important;
+      }
+      /* 首页英雄字号：用 rem/vw 明确定尺（Material 移动端基准仅 10px，
+         相对百分比会层层缩水成 11px 过小）。随屏幕从小手机到大平板平滑放大，
+         保证“欢迎…”与链接行既清晰又不折行。桌面仍走内联 125%，不受影响。 */
+      .md-content .md-typeset {
+        font-size: clamp(0.72rem, 3.6vw, 1rem) !important;
+      }
+      /* 水平居中 + 两侧留白，收敛行宽让折行更自然 */
+      .home-content {
+        margin: 0 auto;
+        max-width: 32rem;
+        padding: 0 1.1rem;
+        text-align: center;
+        text-wrap: balance;
+      }
+    }
   </style>
 {% endblock %}
 
@@ -71,7 +105,7 @@
        style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw; width: 320px;"></div>
   <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
     <div class="md-grid">
-      <div style="margin-left: 3rem;margin-bottom: 7rem">
+      <div class="home-content">
         {{ page.content }}
       </div>
     </div>
