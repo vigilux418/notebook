@@ -75,8 +75,11 @@
     }
     #app {
       position: absolute;
-      right: calc(35% - 320px / 2);
+      /* 单一定位：right 已含原内联 margin-right:-1vw 的修正（实测右缘 1110.39px @1440px，
+         与原「CSS calc + 内联 margin」双系统逐像素一致）；卡片宽 320px 也收归此处 */
+      right: calc(35% - 320px / 2 - 1vw);
       top: calc(50% - 445.68px / 2);
+      width: 320px;
     }
     @media (max-width: 960px) {
       #app {
@@ -158,8 +161,7 @@
   <div id="app"
        data-card-img="{{ 'images/card.png' | url }}"
        data-card-img-light="{{ 'images/card.light.png' | url }}"
-       data-card-rarity="rare secret"
-       style="margin-left: 56vw; margin-top: 0vh; margin-bottom: 110vh; margin-right: -1vw; width: 320px;"></div>
+       data-card-rarity="rare secret"></div>
   <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
     <div class="md-grid">
       <div class="home-content">
