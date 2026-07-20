@@ -1,15 +1,19 @@
 /*
  * 装饰性粒子连线背景（lines.js）的加载器。
  * - 尊重用户的 prefers-reduced-motion：偏好减少动效时不加载，节省 CPU / 电量。
- * - 延迟(defer)注入，避免阻塞首屏渲染。
- * lines.js 会读取“最后一个 <script>”上的可选属性(zIndex/opacity/color/count)，
- * 此处不设自定义属性，沿用其默认值（与原全站直挂时一致）。
+ * - instant navigation 友好：extra_javascript 中的脚本会在每次软导航后被重放，
+ *   故用 window 级守卫保证外部 lines.js「整站仅注入一次」——它生成的 canvas 是
+ *   position:fixed，本就跨页存活，无需（也不应）重复注入，否则 canvas 与 rAF 循环层层叠加。
  */
 (function () {
+  if (window.__linesInjected) return;
+
   var reduce =
     window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
+
+  window.__linesInjected = true;
 
   var s = document.createElement("script");
   s.src =

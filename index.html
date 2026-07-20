@@ -120,6 +120,8 @@
     
       <link rel="stylesheet" href="stylesheets/status.css">
     
+      <link rel="stylesheet" href="stylesheets/fold_toc.css">
+    
       <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
     
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap">
@@ -145,10 +147,67 @@
   <link rel="stylesheet" href="stylesheets/cards/cards.css" />
   <link rel="stylesheet" href="stylesheets/cards/secret-rare.css" />
   <link rel="stylesheet" href="stylesheets/cards/index.css">
-  <script type="module" src="javascripts/card.js"></script>
+  
   <style>
+    /* 首页「融为一体」：顶栏/标签/底栏透明，融入整页渐变。
+       技法学自 @TonyCrane（其用整幅背景图 home/*.jpg），此处改用自研 CSS 渐变，
+       更轻量且明暗两套完全不同的调色，规避雷同。 */
+    .md-header, .md-tabs, .md-footer, .md-footer-meta {
+      background-color: transparent !important;
+    }
+    .md-header--shadow { box-shadow: none !important; }
+
+    /* 浅色首页【A 瓷光 PORCELAIN】：深色石墨聚光的「白昼镜像」——近白瓷底上
+       一束柔光聚焦卡片区，四周向冷灰微微收暗。昼夜共用「聚光打亮卡片」同一设计语言。 */
+    body[data-md-color-scheme="default"] {
+      background:
+        radial-gradient(60% 62% at 65% 50%, rgba(255,255,255,0.95) 0%, rgba(233,240,251,0.45) 42%, rgba(222,230,242,0) 70%),
+        radial-gradient(140% 120% at 50% 120%, rgba(200,210,228,0.60) 26%, rgba(200,210,228,0) 100%),
+        linear-gradient(180deg, #e8edf5 0%, #e1e7f1 55%, #dae1ee 100%);
+      background-attachment: fixed;
+    }
+    /* 浅色首页页头/底栏透明后，白字会看不见 → 局部改深墨保证对比度 */
+    body[data-md-color-scheme="default"] .md-header,
+    body[data-md-color-scheme="default"] .md-tabs,
+    body[data-md-color-scheme="default"] .md-footer-meta {
+      --md-primary-bg-color: #1e2a44;
+      --md-primary-bg-color--light: #46567a;
+      --md-footer-fg-color: #26324a;
+      --md-footer-fg-color--light: #46567a;
+      --md-footer-fg-color--lighter: #5a6884;
+      color: #26324a;
+    }
+    body[data-md-color-scheme="default"] .md-footer-meta a,
+    body[data-md-color-scheme="default"] .md-social__link { color: #26324a; }
+
+    /* 深色首页【C 石墨·聚光 GRAPHITE】：石墨黑底上一束大柔光聚焦卡片区，
+       画廊级打光。此为加亮版——柔光更亮、光斑更开、暗角收敛、基底微提。 */
     body[data-md-color-scheme="slate"] {
-      background-color: #0d0d0d;
+      background:
+        radial-gradient(60% 62% at 65% 50%, rgba(158,178,220,0.24) 0%, rgba(126,146,196,0.08) 42%, rgba(11,12,16,0) 70%),
+        radial-gradient(140% 120% at 50% 120%, #000 28%, rgba(0,0,0,0) 100%),
+        #0b0c10;
+      background-attachment: fixed;
+    }
+    /* 浅色首页同样叠极淡颗粒（浅底更显，故更低 0.035），与深色哑光质感成对 */
+    body[data-md-color-scheme="default"]::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    /* 极淡胶片颗粒：消除大面积渐变的色带(banding)、增哑光质感。全屏叠加、不挡交互。 */
+    body[data-md-color-scheme="slate"]::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
     @media screen and (min-width: 1220px) {
       .sidebar_nav {
@@ -1198,60 +1257,19 @@
     <div class="md-grid">
       <div class="home-content">
         <h1 id="vigilux">Vigilux的笔记本<a class="headerlink" href="#vigilux" title="Permanent link">⚓︎</a></h1>
-<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+<!-- 打字标语由 docs/javascripts/home.js 驱动（全局加载 + 订阅 document$，兼容 instant navigation） -->
 <p><span id="typed-des-zh"></span></p>
-<script>
-  var typed = new Typed('#typed-des-zh', {
-    strings: ['欢迎来到Vigilux的个人笔记本！(｡･∀･)ﾉﾞ'],
-    typeSpeed: 50,
-    backSpeed: 0,
-    // cursorChar: '_',
-    smartBackspace: true, // this is a default
-    // fadeOut: true,
-    // shuffle: true,
-    loop: true
-  });
-</script>
 <p><a href="spirit/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.04 2.5 9.53 5h5zM4 7v13h16V7zm8-7 5 5h3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3zM7 18v-4h5v4zm7-1v-7h4v7zm-8-5V9h5v3z"/></svg></span> 笔记思想</a> | 
 <a href="javascript:toggle_statistics();"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"/></svg></span> 站点统计</a> | 
 <a href="links/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .75.75 0 0 1 .018-1.042.75.75 0 0 1 1.042-.018 2 2 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042m-4.69 9.64a2 2 0 0 0 2.83 0l1.25-1.25a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .75.75 0 0 1-.018 1.042.75.75 0 0 1-1.042.018 2 2 0 0 0-2.83 0l-2.5 2.5a2 2 0 0 0 0 2.83"/></svg></span> 友链</a></p>
 <div id="statistics" style="max-width: 27em; border-color: #e3e3e3; opacity: 0; font-size: 75%">
 页面总数：65 </br>
-总字数：63526 </br>
+总字数：63386 </br>
 代码块行数：2052 <br>
 网站运行时间：<span id="web-time"></span>
 </div>
 
-<script>
-function updateTime() {
-    var date = new Date();
-    var now = date.getTime();
-    var startDate = new Date("2025/08/30 00:00:00");
-    var start = startDate.getTime();
-    var diff = now - start;
-    var y, d, h, m;
-    y = Math.floor(diff / (365 * 24 * 3600 * 1000));
-    diff -= y * 365 * 24 * 3600 * 1000;
-    d = Math.floor(diff / (24 * 3600 * 1000));
-    h = Math.floor(diff / (3600 * 1000) % 24);
-    m = Math.floor(diff / (60 * 1000) % 60);
-    if (y == 0) {
-        document.getElementById("web-time").innerHTML = d + "<span class=\"heti-spacing\"> </span>天<span class=\"heti-spacing\"> </span>" + h + "<span class=\"heti-spacing\"> </span>小时<span class=\"heti-spacing\"> </span>" + m + "<span class=\"heti-spacing\"> </span>分钟";
-    } else {
-        document.getElementById("web-time").innerHTML = y + "<span class=\"heti-spacing\"> </span>年<span class=\"heti-spacing\"> </span>" + d + "<span class=\"heti-spacing\"> </span>天<span class=\"heti-spacing\"> </span>" + h + "<span class=\"heti-spacing\"> </span>小时<span class=\"heti-spacing\"> </span>" + m + "<span class=\"heti-spacing\"> </span>分钟";
-    }
-    setTimeout(updateTime, 1000 * 60);
-}
-updateTime();
-function toggle_statistics() {
-    var statistics = document.getElementById("statistics");
-    if (statistics.style.opacity == 0) {
-        statistics.style.opacity = 1;
-    } else {
-        statistics.style.opacity = 0;
-    }
-}
-</script>
+<!-- 运行时长与 toggle_statistics() 由 docs/javascripts/home.js 提供（幂等、切页回收定时器） -->
       </div>
     </div>
   </div>
@@ -1387,21 +1405,31 @@ function toggle_statistics() {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "search.highlight", "search.share", "search.suggest", "navigation.footer", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "search.highlight", "search.share", "search.suggest", "navigation.footer", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-  
       <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
       
         <script src="javascripts/effects.js"></script>
       
+        <script src="javascripts/toc.js"></script>
+      
+        <script src="javascripts/mathjax.js"></script>
+      
+        <script src="javascripts/engines.js" type="module"></script>
+      
+        <script src="javascripts/mermaid.mjs" type="module"></script>
+      
+        <script src="javascripts/card.js" type="module"></script>
+      
+        <script src="javascripts/home.js" type="module"></script>
+      
     
-  
-  
-
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
 document$.subscribe(() => { lightbox.reload() });
 </script></body>

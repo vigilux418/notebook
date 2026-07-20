@@ -103,9 +103,14 @@
   margin: .8em 0 .8em
 }
 
-/* 链接下划线(by @NoughtQ) */
+/* 链接下划线：升级为考究实线——常态半透明(currentColor 混 40%)，
+   悬停时实色渐显，配色随 S1 蓝宝石 accent 平滑过渡。取代原虚线的“随手笔记感”。 */
 .md-typeset a {
-  border-bottom: 1px dashed;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+  transition: color .2s ease, border-color .2s ease;
+}
+.md-typeset a:hover {
+  border-bottom-color: currentColor;
 }
 
 .md-typeset a.md-content__button, .md-typeset .tabbed-labels.tabbed-labels--linked a, html .md-footer-meta.md-typeset a, .md-typeset .highlighttable a, .md-typeset a.headerlink, .md-typeset a.footnote-ref {
@@ -131,7 +136,7 @@
 }
 
 [data-md-color-scheme="default"] .md-nav__title {
-  color: #000;
+  color: #1a1e26;
 }
 
 /* 隐藏两侧目录栏的滚轮 by @NoughtQ */
