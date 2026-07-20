@@ -2,10 +2,6 @@
 
 {% block content%}
 {{ super() }}
-<!-- 标题计数器 -->
-{% if page and page.meta and page.meta.counter %}
-<link rel="stylesheet" href="{{ 'stylesheets/counter.css' | url }}">
-{% endif %}
 {% endblock %}
 
 {% block htmltitle %}

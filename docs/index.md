@@ -7,7 +7,6 @@ hide:
   - toc
 home: true
 template: home.html
-statistics: true
 ---
 
 # Vigilux的笔记本

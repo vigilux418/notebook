@@ -5,9 +5,6 @@
 /.cache/
 *.cache
 
-# --- Node (unused; homepage card.js is hand-written, no build step) ---
-/node_modules/
-
 # --- Python ---
 __pycache__/
 *.py[cod]

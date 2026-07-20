@@ -122,6 +122,7 @@ extra_css:
     - stylesheets/custom.css
     - stylesheets/status.css
     - stylesheets/fold_toc.css   # 目录智能展开样式（配合全局 toc.js，随 instant 导航常驻）
+    - stylesheets/links.css      # 友链页卡片（限定 #links 作用域，避免与首页全息卡 .card 冲突）
     - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
     - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
 extra_javascript:
@@ -272,15 +273,8 @@ plugins:
         fallback_to_build_date: true
         enable_creation_date: true
     - glightbox
-    - statistics: 
+    - statistics:
         page_check_metadata: comments
-    - encryptcontent:
-        # https://github.com/unverbuggt/mkdocs-encryptcontent-plugin
-        title_prefix: "🔒 "
-        remember_password: True 
-        decryption_failure_message: '密码错误'
-        encrypted_something:
-          mkdocs-encrypted-toc: [nav, class]
 extra:
     analytics: 
       provider: google
@@ -307,7 +301,6 @@ extra:
           link: https://app.docker.com/accounts/vigilux
         - icon: fontawesome/solid/paper-plane
           link: mailto:a3205767798@outlook.com
-    scope: /
-watch: 
+watch:
     - includes
 copyright: Copyright © 2025 Vigilux

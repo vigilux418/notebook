@@ -1,0 +1,70 @@
+/* 友链页卡片样式（docs/links.md 专用）。
+   全部规则限定在 #links 内：首页全息卡同样使用 .card 类（cards/base.css），
+   不限定会互相污染。颜色取自 Material 调色板变量，明暗双主题自适应。 */
+#links .link-navigation {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    max-width: 100%;
+}
+#links .card {
+    width: 100%;
+    max-width: 320px;
+    height: 90px;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    color: var(--md-default-fg-color);
+}
+#links .card:hover {
+    transform: scale(1.05);
+    background-color: rgba(68, 138, 255, 0.1);
+}
+#links .card a {
+    border: none;
+}
+#links .card .ava {
+    width: 3rem !important;
+    height: 3rem !important;
+    margin: 0 !important;
+    margin-right: 1em !important;
+    border-radius: 50%;
+}
+#links .card .card-header {
+    font-style: italic;
+    overflow: hidden;
+    width: auto;
+}
+#links .card .card-header a {
+    font-style: normal;
+    color: var(--md-typeset-a-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+#links .card .card-header a:hover {
+    color: var(--md-accent-fg-color);
+    text-decoration: none;
+}
+#links .card .card-header .info {
+    font-style: normal;
+    color: var(--md-default-fg-color--light);
+    font-size: 14px;
+    min-width: 0;
+    overflow: visible;
+    white-space: normal;
+}
+@media (max-width: 768px) {
+    #links .link-navigation {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    #links .card {
+        max-width: 100%;
+        height: auto;
+        min-height: 80px;
+    }
+}
