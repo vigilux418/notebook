@@ -15,9 +15,11 @@
 
   window.__linesInjected = true;
 
+  // 钉死在 downloads 仓库的 commit（bbc578d = 2025-09-04 main HEAD），
+  // 避免 @main 浮动分支内容变化导致站点行为不可复现；升级 lines.js 时同步更新此 sha。
   var s = document.createElement("script");
   s.src =
-    "https://cdn.jsdelivr.net/gh/vigilux418/downloads@main/special_effects/lines.js";
+    "https://cdn.jsdelivr.net/gh/vigilux418/downloads@bbc578d5146d3cfd206705fb8c8443a6756d39c1/special_effects/lines.js";
   s.defer = true;
   (document.body || document.documentElement).appendChild(s);
 })();
