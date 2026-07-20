@@ -9,7 +9,8 @@
  * 检测当前页是否真的含 .arithmatex，需要时才注入引擎，且整站仅注入一次。
  * 既保留原有省流量优化，又兼容 instant navigation。
  *
- * Mermaid 另由 mermaid.mjs 处理（Material 内置 loader 硬加载 → mermaid.mjs 软导航重渲染）。
+ * Mermaid 已由 Material 内置 loader 处理（superfences custom_fences 触发，
+ * 硬/软导航均渲染且自带调色板主题 CSS），无需本站自定义脚本介入。
  */
 
 const scriptCache = new Map();

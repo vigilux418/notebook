@@ -131,10 +131,10 @@ extra_javascript:
     - javascripts/effects.js   # 粒子背景加载器（尊重 prefers-reduced-motion，整站仅注入一次）
     - javascripts/toc.js       # 目录智能展开（每次导航重建 IntersectionObserver）
     - javascripts/mathjax.js   # MathJax 配置 + 跨页重排（引擎本体由 engines.js 懒加载）
-    # 重型引擎：MathJax 懒加载（engines.js）+ Mermaid 软导航重渲染（mermaid.mjs）
+    # MathJax 运行时懒加载（engines.js 检测 .arithmatex 后注入，整站仅一次）。
+    # Mermaid 无需自定义脚本：Material 内置 loader 随 superfences custom_fences 自动
+    # 加载引擎并按 document$ 在硬/软导航均渲染（9.7.7 实测 26/26），且自带调色板主题。
     - path: javascripts/engines.js
-      type: module
-    - path: javascripts/mermaid.mjs
       type: module
     # 首页全息卡片：module 保证仅执行一次、作用域隔离；靠 document$ 挂载/卸载。
     - path: javascripts/card.js
