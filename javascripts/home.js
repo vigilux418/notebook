@@ -18,13 +18,15 @@ window.toggle_statistics = function () {
 };
 
 // —— 懒加载 typed.js（整站仅注入一次，返回 Typed 构造器）——
+// typed.js 已收编进本仓库（docs/javascripts/typed.umd.js，MIT © Matt Boldt）。
+// import.meta.url 即本模块 URL，同目录解析——任意页面深度下都指向站点内文件。
 let typedPromise = null;
 function loadTyped() {
   if (window.Typed) return Promise.resolve(window.Typed);
   if (typedPromise) return typedPromise;
   typedPromise = new Promise((resolve, reject) => {
     const s = document.createElement("script");
-    s.src = "https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js";
+    s.src = new URL("./typed.umd.js", import.meta.url).href;
     s.onload = () => resolve(window.Typed);
     s.onerror = () => { typedPromise = null; reject(new Error("typed.js load failed")); };
     document.body.appendChild(s);
