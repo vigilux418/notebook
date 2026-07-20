@@ -1,36 +1,110 @@
 :root {
   --md-text-font: "JetBrains Mono", "LXGW WenKai Screen"; 
   --md-code-font: "JetBrains Mono";  
-  --md-primary-fg-color: #000000;
-  --md-primary-fg-color--light: #000000;
-  --md-primary-fg-color--dark:  #000000;
 }
 
+/* ============================================================
+   冷调配色系统（自研 · 非抄袭）
+   原则：拒绝纯黑白两端 · 灰阶注入极淡冷相(hue≈216°) · 背景分层 ·
+   双色主线 = 石板蓝(主) + 静音青(交互)。
+   ============================================================ */
+
 [data-md-color-scheme="default"] {
-  --md-typeset-a-color: #000000;
-  --md-footer-fg-color: #ffffff;
-  --md-footer-bg-color: #0d0d0d;
-  --md-footer-bg-color--dark: #0d0d0d;
-  --md-footer-fg-color--light: #fff;
-  --md-footer-fg-color--lighter: #fff;
+  /* 页头/标签栏：浅冷调（与首页破晓渐变同调，不再是深色块）；文字改深墨保对比度 */
+  --md-primary-fg-color: #eaeff7;
+  --md-primary-fg-color--light: #f2f5fb;
+  --md-primary-fg-color--dark: #dde4ef;
+  --md-primary-bg-color: #26324a;          /* 页头上的文字/图标：深墨 */
+  --md-primary-bg-color--light: #46567a;
+
+  /* 正文文字：近黑但掺极淡冷相，不用纯黑 */
+  --md-default-fg-color: hsla(216, 24%, 12%, 0.90);
+  --md-default-fg-color--light: hsla(216, 18%, 20%, 0.72);
+  --md-default-fg-color--lighter: hsla(216, 16%, 30%, 0.42);
+  --md-default-fg-color--lightest: hsla(216, 16%, 40%, 0.14);
+  /* 背景：几乎白、微冷；代码块底走近白冷灰做层次 */
+  --md-default-bg-color: #fbfcfe;
+  --md-code-bg-color: #f3f5f8;
+  --md-code-fg-color: #3a4250;
+
+  /* 【S1 蓝宝石】交互单色相体系：链接=中蓝(常态)，一切悬停/激活=更深蓝(accent)。
+     link 与 hover 同一支蓝的深浅两档，取代旧的“蓝→青”跳色。 */
+  --md-typeset-a-color: #2f6bd6;
+  --md-accent-fg-color: #1c4aa0;
+
+  /* 底栏：浅冷调 + 深墨文字（与首页/内容页统一，不再是深色块） */
+  --md-footer-fg-color: #26324a;
+  --md-footer-bg-color: #e4ebf5;
+  --md-footer-bg-color--dark: #dbe3f0;
+  --md-footer-fg-color--light: #46567a;
+  --md-footer-fg-color--lighter: #5a6884;
 }
 
 [data-md-color-scheme="slate"] {
-  --md-typeset-a-color: #ffffff;
-  --md-default-bg-color: #151515;
-  --md-default-bg-color--light: #151515;
-  --md-default-bg-color--lighter: #151515;
-  --md-default-bg-color--lightest: #151515;
-  --md-default-fg-color: rgb(255, 255, 255);
-  --md-default-fg-color--light: rgb(255, 255, 255);
-  --md-default-fg-color--lighter: rgba(255, 255, 255, 0.8);
-  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.6);
+  /* 页头：石墨近黑，与内容页顶端相融（石墨体系） */
+  --md-primary-fg-color: #0d0e12;
+  --md-primary-fg-color--light: #14161c;
+  --md-primary-fg-color--dark: #08090c;
+  --md-primary-bg-color: #eaf0f9;
+  --md-primary-bg-color--light: #a6b2c6;
+
+  /* 背景分层（关键）：页面底 < 卡片 < 代码/悬浮，制造纵深 */
+  --md-default-bg-color: #12141a;
+  --md-default-bg-color--light: #171a21;
+  --md-default-bg-color--lighter: #1c2029;
+  --md-default-bg-color--lightest: #222732;
+  --md-code-bg-color: #1c2029;
+  --md-code-fg-color: #c3cad6;
+
+  /* 正文文字：冷调柔白，绝不用纯白 */
+  --md-default-fg-color: hsla(214, 30%, 94%, 0.90);
+  --md-default-fg-color--light: hsla(214, 22%, 88%, 0.72);
+  --md-default-fg-color--lighter: hsla(214, 18%, 82%, 0.46);
+  --md-default-fg-color--lightest: hsla(214, 16%, 78%, 0.14);
+
+  /* 【S1 蓝宝石】深色版：链接=柔蓝(常态)，一切悬停/激活=提亮蓝(accent)。
+     与浅色同一体系，仅明度反向。 */
+  --md-typeset-a-color: #7fb0f0;
+  --md-accent-fg-color: #a9cbf8;
+
   --md-footer-fg-color: #fff;
-  --md-footer-bg-color: #0d0d0d;
-  --md-footer-bg-color--dark: #0d0d0d;
+  --md-footer-bg-color: #08090c;
+  --md-footer-bg-color--dark: #08090c;
   --md-footer-fg-color--light: #fff;
   --md-footer-fg-color--lighter: #fff;
-  --md-accent-fg-color:  #93d2ce;
+}
+
+/* ============================================================
+   内容页整页渐变：与首页同族、但更克制，保证正文对比度。
+   body 渐变会从透明的 .md-main/.md-content 透出，让全站与首页统一。
+   首页由 home.html 内联样式以同源更后位置覆盖，互不影响。
+   ============================================================ */
+body[data-md-color-scheme="default"] {
+  background:
+    radial-gradient(120% 44% at 50% 0%, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0) 58%),
+    linear-gradient(180deg, #e9eef6 0%, #e3e9f2 55%, #dce3ee 100%);
+  background-attachment: fixed;
+}
+body[data-md-color-scheme="slate"] {
+  background:
+    radial-gradient(120% 42% at 50% 0%, rgba(150,170,210,0.13) 0%, rgba(150,170,210,0) 55%),
+    linear-gradient(180deg, #101217 0%, #0c0d12 55%, #08090c 100%);
+  background-attachment: fixed;
+}
+
+/* 选中高亮：并入 S1 蓝宝石体系（浅色淡蓝、深色亮蓝），取代浏览器默认蓝 */
+[data-md-color-scheme="default"] ::selection {
+  background: rgba(47, 107, 214, 0.20);
+}
+[data-md-color-scheme="slate"] ::selection {
+  background: rgba(127, 176, 240, 0.26);
+}
+
+/* 装饰性星座连线（lines.js 注入的 fixed canvas，id 形如 c_n0）：
+   仅浅色模式显示，深色模式隐藏——冷调星空在浅底更雅致，深底石墨聚光则保持纯净。
+   主题切换时 data-md-color-scheme 变化，此规则即时生效。 */
+body[data-md-color-scheme="slate"] canvas[id^="c_n"] {
+  display: none !important;
 }
 
 .youtube {

@@ -53,10 +53,9 @@ function makeSpring(initial, opts = {}) {
   };
 }
 
-function initCard() {
-  const app = document.getElementById("app");
-  if (!app) return;
-
+// 渲染卡片到给定的 #app 节点，返回 teardown 函数用于卸载时回收资源
+// （rAF 循环、showcase 定时器、body 上的主题 MutationObserver）。
+function initCard(app) {
   const imgDark = app.dataset.cardImg || "";
   const imgLight = app.dataset.cardImgLight || imgDark;
   const rarity = (app.dataset.cardRarity || "rare secret").toLowerCase();
@@ -90,7 +89,8 @@ function initCard() {
   };
   applyImg();
   if (frontImg.complete) card.classList.remove("loading");
-  new MutationObserver(applyImg).observe(document.body, {
+  const themeObserver = new MutationObserver(applyImg);
+  themeObserver.observe(document.body, {
     attributes: true,
     attributeFilter: ["data-md-color-scheme"],
   });
@@ -183,8 +183,9 @@ function initCard() {
     kick();
   };
 
+  const onLeave = () => interactEnd();
   rotator.addEventListener("pointermove", interact);
-  rotator.addEventListener("pointerleave", () => interactEnd());
+  rotator.addEventListener("pointerleave", onLeave);
 
   showcaseStart = setTimeout(() => {
     card.classList.add("interacting");
@@ -204,7 +205,38 @@ function initCard() {
   }, 2000);
 
   render();
+
+  // 卸载：离开首页（instant navigation 换走 #app）时回收所有长生命周期资源，
+  // 避免 rAF 空转、定时器悬挂、body 上主题观察者泄漏。
+  return function teardown() {
+    if (rafId !== null) cancelAnimationFrame(rafId);
+    clearTimeout(showcaseStart);
+    clearTimeout(showcaseEnd);
+    clearInterval(showcaseInterval);
+    themeObserver.disconnect();
+    rotator.removeEventListener("pointermove", interact);
+    rotator.removeEventListener("pointerleave", onLeave);
+  };
 }
 
-if (document.readyState !== "loading") initCard();
-else document.addEventListener("DOMContentLoaded", initCard);
+// 生命周期管理：订阅 document$（每次软导航触发）。首页存在 #app 且尚未挂载时渲染；
+// 离开首页（旧 #app 已脱离文档）时卸载。幂等——同一 #app 不会重复渲染。
+let mounted = null; // { app, teardown }
+function manageCard() {
+  if (mounted && !mounted.app.isConnected) {
+    mounted.teardown();
+    mounted = null;
+  }
+  const app = document.getElementById("app");
+  if (app && !mounted) {
+    mounted = { app, teardown: initCard(app) };
+  }
+}
+
+if (window.document$ && typeof window.document$.subscribe === "function") {
+  window.document$.subscribe(manageCard);
+} else if (document.readyState !== "loading") {
+  manageCard();
+} else {
+  document.addEventListener("DOMContentLoaded", manageCard);
+}

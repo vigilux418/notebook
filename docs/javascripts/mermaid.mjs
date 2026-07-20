@@ -1,36 +1,48 @@
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-import elkLayouts from 'https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0/dist/mermaid-layout-elk.esm.min.mjs';
+/*
+ * Mermaid 图表渲染器——软导航兼容版。
+ *
+ * 正常流程：Material 内置 loader（custom_fence）在硬加载 mermaid 页面时从 unpkg 注入
+ * mermaid 并渲染。本脚本只负责补刀——若 Material 尚未加载（软导航首次遇见 mermaid），
+ * 则自行用经典 <script> 注入；每次软导航后调用 window.mermaid.run() 对当前页重渲染。
+ */
 
-mermaid.registerLayoutLoaders(elkLayouts);
-mermaid.initialize({
-  startOnLoad: false,
-  securityLevel: "loose",
-  layout: "elk",
-});
+const MERMAID_SRC = "https://unpkg.com/mermaid@11/dist/mermaid.min.js";
+let loading = null;
 
-// Important: necessary to make it visible to Material for MkDocs
-window.mermaid = mermaid;
+function ensureMermaid() {
+  if (window.mermaid) return Promise.resolve(window.mermaid);
+  if (loading) return loading;
+  loading = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = MERMAID_SRC;
+    s.onload = () => {
+      if (window.mermaid && typeof window.mermaid.initialize === "function")
+        window.mermaid.initialize({ startOnLoad: false, securityLevel: "loose" });
+      resolve(window.mermaid);
+    };
+    s.onerror = () => { loading = null; reject(new Error("mermaid load failed")); };
+    document.body.appendChild(s);
+  });
+  return loading;
+}
 
-// 实际触发渲染：把 <pre class="mermaid"> 代码块渲染为 SVG。
-// （此前只 initialize、从不 run，导致全站图表根本不渲染——这是被本次修复的既有 bug。）
-// mermaid.run() 是幂等的（已渲染节点带 data-processed 会被跳过），故多次触发安全。
-// suppressErrors 让个别语法有误的图不影响其余图正常渲染。
-const renderMermaid = () => {
-  try {
-    mermaid.run({ querySelector: "pre.mermaid, .mermaid", suppressErrors: true });
-  } catch (e) {
-    /* 逐图错误已由 suppressErrors 吞掉，这里兜底忽略偶发异常 */
-  }
-};
+function renderMermaid() {
+  ensureMermaid()
+    .then(() => {
+      if (window.mermaid && typeof window.mermaid.run === "function") {
+        const run = () => {
+          try {
+            window.mermaid.run({ querySelector: "pre.mermaid, .mermaid", suppressErrors: true });
+          } catch (e) { /* suppressErrors 吞单图错误 */ }
+        };
+        run();
+        setTimeout(run, 250);
+      }
+    })
+    .catch(() => {});
+}
 
-// 1) Material 的 document$：会重放当前文档给后订阅者，并在（未来若启用）instant
-//    navigation 切页时重新触发——覆盖软导航场景。
-if (window.document$ && typeof window.document$.subscribe === "function") {
+if (window.document$ && typeof window.document$.subscribe === "function")
   window.document$.subscribe(renderMermaid);
-}
-// 2) 首屏兜底：不依赖 document$ 的时序，用 window load 保证首次一定渲染。
-if (document.readyState === "complete") {
-  renderMermaid();
-} else {
-  window.addEventListener("load", renderMermaid);
-}
+if (document.readyState === "complete") renderMermaid();
+else window.addEventListener("load", renderMermaid);

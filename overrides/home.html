@@ -6,10 +6,67 @@
   <link rel="stylesheet" href="{{ 'stylesheets/cards/cards.css' | url }}" />
   <link rel="stylesheet" href="{{ 'stylesheets/cards/secret-rare.css' | url }}" />
   <link rel="stylesheet" href="{{ 'stylesheets/cards/index.css' | url }}">
-  <script type="module" src="{{ 'javascripts/card.js' | url }}"></script>
+  {# card.js 已改为全局加载（mkdocs.yml），靠 document$ 挂载/卸载，兼容 instant navigation #}
   <style>
+    /* 首页「融为一体」：顶栏/标签/底栏透明，融入整页渐变。
+       技法学自 @TonyCrane（其用整幅背景图 home/*.jpg），此处改用自研 CSS 渐变，
+       更轻量且明暗两套完全不同的调色，规避雷同。 */
+    .md-header, .md-tabs, .md-footer, .md-footer-meta {
+      background-color: transparent !important;
+    }
+    .md-header--shadow { box-shadow: none !important; }
+
+    /* 浅色首页【A 瓷光 PORCELAIN】：深色石墨聚光的「白昼镜像」——近白瓷底上
+       一束柔光聚焦卡片区，四周向冷灰微微收暗。昼夜共用「聚光打亮卡片」同一设计语言。 */
+    body[data-md-color-scheme="default"] {
+      background:
+        radial-gradient(60% 62% at 65% 50%, rgba(255,255,255,0.95) 0%, rgba(233,240,251,0.45) 42%, rgba(222,230,242,0) 70%),
+        radial-gradient(140% 120% at 50% 120%, rgba(200,210,228,0.60) 26%, rgba(200,210,228,0) 100%),
+        linear-gradient(180deg, #e8edf5 0%, #e1e7f1 55%, #dae1ee 100%);
+      background-attachment: fixed;
+    }
+    /* 浅色首页页头/底栏透明后，白字会看不见 → 局部改深墨保证对比度 */
+    body[data-md-color-scheme="default"] .md-header,
+    body[data-md-color-scheme="default"] .md-tabs,
+    body[data-md-color-scheme="default"] .md-footer-meta {
+      --md-primary-bg-color: #1e2a44;
+      --md-primary-bg-color--light: #46567a;
+      --md-footer-fg-color: #26324a;
+      --md-footer-fg-color--light: #46567a;
+      --md-footer-fg-color--lighter: #5a6884;
+      color: #26324a;
+    }
+    body[data-md-color-scheme="default"] .md-footer-meta a,
+    body[data-md-color-scheme="default"] .md-social__link { color: #26324a; }
+
+    /* 深色首页【C 石墨·聚光 GRAPHITE】：石墨黑底上一束大柔光聚焦卡片区，
+       画廊级打光。此为加亮版——柔光更亮、光斑更开、暗角收敛、基底微提。 */
     body[data-md-color-scheme="slate"] {
-      background-color: #0d0d0d;
+      background:
+        radial-gradient(60% 62% at 65% 50%, rgba(158,178,220,0.24) 0%, rgba(126,146,196,0.08) 42%, rgba(11,12,16,0) 70%),
+        radial-gradient(140% 120% at 50% 120%, #000 28%, rgba(0,0,0,0) 100%),
+        #0b0c10;
+      background-attachment: fixed;
+    }
+    /* 浅色首页同样叠极淡颗粒（浅底更显，故更低 0.035），与深色哑光质感成对 */
+    body[data-md-color-scheme="default"]::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    /* 极淡胶片颗粒：消除大面积渐变的色带(banding)、增哑光质感。全屏叠加、不挡交互。 */
+    body[data-md-color-scheme="slate"]::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
     @media screen and (min-width: 1220px) {
       .sidebar_nav {

@@ -117,17 +117,30 @@ dev_addr: 127.0.0.1:8001
 not_in_nav: |
   /links.md
   /spirit.md
-extra_css: 
+extra_css:
     - stylesheets/extra.css
     - stylesheets/custom.css
     - stylesheets/status.css
+    - stylesheets/fold_toc.css   # 目录智能展开样式（配合全局 toc.js，随 instant 导航常驻）
     - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
     - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
-extra_javascript: 
-    # 站点级脚本：仅保留粒子背景加载器（会尊重 prefers-reduced-motion）。
-    # MathJax 与 Mermaid 改为“按页面内容需要时”才在 overrides/main.html 注入，
-    # 避免无公式 / 无图表的页面（如首页）白白拉取整套引擎。
-    - javascripts/effects.js
+extra_javascript:
+    # 全部自定义脚本改为「全局加载 + 订阅 document$」，以兼容 navigation.instant（软导航）。
+    # 各脚本均幂等：IIFE/module 隔离作用域、window 级守卫避免重复订阅、切页回收旧资源。
+    - javascripts/effects.js   # 粒子背景加载器（尊重 prefers-reduced-motion，整站仅注入一次）
+    - javascripts/toc.js       # 目录智能展开（每次导航重建 IntersectionObserver）
+    - javascripts/mathjax.js   # MathJax 配置 + 跨页重排（引擎本体由 engines.js 懒加载）
+    # 重型引擎：MathJax 懒加载（engines.js）+ Mermaid 软导航重渲染（mermaid.mjs）
+    - path: javascripts/engines.js
+      type: module
+    - path: javascripts/mermaid.mjs
+      type: module
+    # 首页全息卡片：module 保证仅执行一次、作用域隔离；靠 document$ 挂载/卸载。
+    - path: javascripts/card.js
+      type: module
+    # 首页打字标语 / 运行时长 / 统计开关：仅首页激活，typed.js 懒加载，切页回收。
+    - path: javascripts/home.js
+      type: module
 theme: 
     name: material
     custom_dir: overrides
@@ -148,7 +161,8 @@ theme:
             name: Switch to light mode
     font: false
     features:
-        # - navigation.instant
+        - navigation.instant           # 即时加载（软导航，XHR 换页不整页刷新）
+        - navigation.instant.progress   # 慢加载时显示顶部进度条
         - navigation.tracking
         - navigation.tabs
         - navigation.tabs.sticky
@@ -205,8 +219,8 @@ markdown_extensions:
           - includes/abbreviations.md
     - admonition
     - pymdownx.details
-    - pymdownx.superfences: 
-        custom_fences: 
+    - pymdownx.superfences:
+        custom_fences:
           - name: mermaid
             class: mermaid
             format: !!python/name:pymdownx.superfences.fence_code_format
