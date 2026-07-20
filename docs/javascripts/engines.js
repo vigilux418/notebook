@@ -33,7 +33,9 @@ let mathjaxRequested = false;
 function ensureEngines() {
   if (!mathjaxRequested && document.querySelector(".arithmatex")) {
     mathjaxRequested = true;
-    loadScript("https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js").catch(() => {
+    // 钉死精确版本（原为 @3 大版本浮动）：防上游静默变更；引擎体积约 1MB 且
+    // 会按需动态拉取扩展，自托管成本过高，故 MathJax 保持 CDN + 精确版本策略。
+    loadScript("https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js").catch(() => {
       mathjaxRequested = false;
     });
   }
