@@ -8,10 +8,10 @@ jobs:
     permissions:  # 新增权限声明
       contents: write  # 授予写入仓库的权限
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0  # 拉取完整历史，供 git-revision-date-localized 插件生成准确的“最后更新”日期
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'  # 钉死版本，避免 runner 默认 Python 漂移破坏构建
       - run: pip install -r requirements.txt
