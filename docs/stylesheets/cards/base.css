@@ -222,5 +222,27 @@ Shine & Glare Effects
 
   opacity: var(--card-opacity);
   mix-blend-mode: overlay;
-  
+
+}
+
+
+/*
+
+  MASK — 只裁剪箔纹层 (.card__shine 三层)，不裁剪 glare。
+  --mask 由 card.js 设在 .card__front 上（绝对 URL），向下继承到 .card__shine。
+  pseudo 层带 translateZ 处于独立 3D 层，父级 mask 不保证向下裁剪，故逐层显式设定。
+
+*/
+
+.card.masked .card__shine,
+.card.masked .card__shine:before,
+.card.masked .card__shine:after {
+  -webkit-mask-image: var(--mask);
+  mask-image: var(--mask);
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }

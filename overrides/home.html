@@ -4,7 +4,7 @@
 {% block extrahead %}
   <link rel="stylesheet" href="{{ 'stylesheets/cards/base.css' | url }}" />
   <link rel="stylesheet" href="{{ 'stylesheets/cards/cards.css' | url }}" />
-  <link rel="stylesheet" href="{{ 'stylesheets/cards/secret-rare.css' | url }}" />
+  <link rel="stylesheet" href="{{ 'stylesheets/cards/radiant-holo.css' | url }}" />
   <link rel="stylesheet" href="{{ 'stylesheets/cards/index.css' | url }}">
   {# card.js 已改为全局加载（mkdocs.yml），靠 document$ 挂载/卸载，兼容 instant navigation #}
   <style>
@@ -161,7 +161,9 @@
   <div id="app"
        data-card-img="{{ 'images/card.png' | url }}"
        data-card-img-light="{{ 'images/card.light.png' | url }}"
-       data-card-rarity="rare secret"></div>
+       data-card-mask="{{ 'images/card.mask.png' | url }}"
+       data-card-mask-light="{{ 'images/card.mask.light.png' | url }}"
+       data-card-rarity="radiant rare"></div>
   <div class="md-typeset" style="display: block; background-color: transparent; font-size: 125%;">
     <div class="md-grid">
       <div class="home-content">

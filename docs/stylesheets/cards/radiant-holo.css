@@ -1,0 +1,181 @@
+/*
+
+  RADIANT HOLO — 「聚光金属 Spotlit Metal」冷色版
+  改自 pokemon-cards-css (GPL-3.0, © Simon Goellner)。
+  原为暖金放射全息；此处：
+    · --hue 50(暖金) → 210(冷蓝)，让交叉光条呈冷调金属星芒；
+    · :after 光谱由暖彩虹 → 冷极光(teal→cyan→azure→sapphire→indigo→violet)；
+    · clip-path 置 none（原为宝可梦版式「画面窗」裁剪，会把光爆裁成矩形带）；
+    · 纹理 url 改仓库内相对路径；
+    · 蒙版策略：仅 :before(glitter) 受蒙版裁剪 → 两枚徽章内额外聚焦闪粉；
+      主 shine 与 :after(星芒+极光) 全卡流动 → 整卡「活」而焦点仍在徽章。
+  呼应 设计.md：一束光聚焦卡片、画廊级打光。
+
+*/
+
+.card[data-rarity="radiant rare"] .card__shine,
+.card[data-rarity="radiant rare"] .card__shine:after {
+  clip-path: none;
+}
+
+
+/*  SHINE — 全卡交叉金属星芒（灰阶光条，被金属卡面 color-dodge 染色）  */
+
+.card[data-rarity="radiant rare"] .card__shine {
+
+  --barwidth: 1.2%;
+  --space: 200px;
+  --hue: 210;
+  --imgsize: cover;
+
+  background-image:
+    radial-gradient(
+      farthest-corner ellipse
+      at calc( ((var(--pointer-x)) * 0.5) + 25% ) calc( ((var(--pointer-y)) * 0.5) + 25% ),
+      hsl(0, 0%, 95%) 20%,
+      var(--card-glow) 130%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      hsl(0,0%,10%) 0% ,
+      hsl(0,0%,10%) 1% ,
+      hsl(0,0%,10%) var(--barwidth),
+      hsl(0,0%,20%) calc( var(--barwidth) + 0.01% ) ,
+      hsl(0,0%,20%) calc( var(--barwidth) * 2 ),
+      hsl(0,0%,35%) calc( var(--barwidth) * 2 + 0.01% ) ,
+      hsl(0,0%,35%) calc( var(--barwidth) * 3 ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 3 + 0.01% ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 4 ) ,
+      hsl(0,0%,50%) calc( var(--barwidth) * 4 + 0.01% ) ,
+      hsl(0,0%,50%) calc( var(--barwidth) * 5 ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 5 + 0.01% ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 6 ) ,
+      hsl(0,0%,35%) calc( var(--barwidth) * 6 + 0.01% ) ,
+      hsl(0,0%,35%) calc( var(--barwidth) * 7 ) ,
+      hsl(0,0%,20%) calc( var(--barwidth) * 7 + 0.01% ) ,
+      hsl(0,0%,20%) calc( var(--barwidth) * 8 )  ,
+      hsl(0,0%,10%) calc( var(--barwidth) * 8 + 0.01% ) ,
+      hsl(0,0%,10%) calc( var(--barwidth) * 9 )  ,
+      hsl(0,0%,0%) calc( var(--barwidth) * 9 + 0.01% ) ,
+      hsl(0,0%,0%) calc( var(--barwidth) * 10 )
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      hsl(0,0%,10%) 0% ,
+      hsl(0,0%,10%) 1% ,
+      hsl(0,0%,10%) var(--barwidth),
+      hsl(0,0%,20%) calc( var(--barwidth) + 0.01% ) ,
+      hsl(0,0%,20%) calc( var(--barwidth) * 2 ),
+      hsl(0,0%,35%) calc( var(--barwidth) * 2 + 0.01% ) ,
+      hsl(0,0%,35%) calc( var(--barwidth) * 3 ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 3 + 0.01% ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 4 ) ,
+      hsl(0,0%,50%) calc( var(--barwidth) * 4 + 0.01% ) ,
+      hsl(0,0%,50%) calc( var(--barwidth) * 5 ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 5 + 0.01% ) ,
+      hsl(0,0%,42.5%) calc( var(--barwidth) * 6 ) ,
+      hsl(0,0%,35%) calc( var(--barwidth) * 6 + 0.01% ) ,
+      hsl(0,0%,35%) calc( var(--barwidth) * 7 ) ,
+      hsl(0,0%,20%) calc( var(--barwidth) * 7 + 0.01% ) ,
+      hsl(0,0%,20%) calc( var(--barwidth) * 8 )  ,
+      hsl(0,0%,10%) calc( var(--barwidth) * 8 + 0.01% ) ,
+      hsl(0,0%,10%) calc( var(--barwidth) * 9 )  ,
+      hsl(0,0%,0%) calc( var(--barwidth) * 9 + 0.01% ) ,
+      hsl(0,0%,0%) calc( var(--barwidth) * 10 )
+    );
+
+  background-size: cover, 210% 210%, 210% 210%;
+  background-position:
+    center,
+    calc( ((var(--background-x) - 50%) * 1.5) + 50% ) calc( ((var(--background-y) - 50%) * 1.5) + 50% ),
+    calc( ((var(--background-x) - 50%) * 1.5) + 50% ) calc( ((var(--background-y) - 50%) * 1.5) + 50% );
+
+  background-blend-mode: exclusion, darken, color-dodge;
+
+  filter: brightness(.5) contrast(2) saturate(1.75);
+  mix-blend-mode: color-dodge;
+
+}
+
+/*  :after — 全卡冷极光谱，随倾斜反向流动，给金属星芒染上极淡冷彩  */
+
+.card[data-rarity="radiant rare"] .card__shine:after {
+
+  content: "";
+
+  background-image:
+    var(--foil),
+    repeating-linear-gradient( 55deg,
+    hsl(190, 90%, 85%) calc(var(--space)*1),
+    hsl(205, 95%, 85%) calc(var(--space)*2),
+    hsl(218, 95%, 86%) calc(var(--space)*3),
+    hsl(235, 90%, 86%) calc(var(--space)*4),
+    hsl(258, 85%, 87%) calc(var(--space)*5),
+    hsl(280, 80%, 86%) calc(var(--space)*6),
+    hsl(190, 90%, 85%) calc(var(--space)*7)
+  );
+
+  background-size: var(--imgsize), 400% 100%;
+  background-position: center, calc( ((var(--background-x) - 50%) * -2.5) + 50% ) calc( ((var(--background-y) - 50%) * -2.5) + 50% );
+
+  filter: brightness(.6) contrast(3) saturate(2);
+  mix-blend-mode: color-dodge;
+
+  background-blend-mode: hard-light;
+
+}
+
+/*  :before — 闪粉 + 光源径向。此层【受蒙版裁剪】→ 徽章内聚焦闪粉  */
+
+.card[data-rarity="radiant rare"] .card__shine:before {
+
+  content: "";
+  z-index: 2;
+  grid-area: 1/1;
+
+  background-image:
+    var(--glitter),
+    radial-gradient(
+      farthest-corner ellipse at calc( ((var(--pointer-x)) * 0.5) + 25% ) calc( ((var(--pointer-y)) * 0.5) + 25% ),
+      hsla(0, 0%, 58%, 0.8) 10%,
+      hsla(0, 0%, 20%, 0.9) 20%,
+      hsla(0, 0%, 20%, 0.5) 50%
+    );
+
+  background-position: center;
+  background-size: 15% 15%, 350% 350%;
+  background-blend-mode: color-dodge;
+
+  mix-blend-mode: overlay;
+  filter: brightness(.66) contrast(2) saturate(.5);
+
+}
+
+
+/*  GLARE — 湿润镜面反光，随指针扫过  */
+
+.card[data-rarity="radiant rare"] .card__glare {
+
+  background-image:
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(210, 30%, 100%, 0.18) 0%,
+      hsl(214, 20%, 18%) 120%
+    );
+
+  filter: brightness(.72) contrast(1.25);
+  mix-blend-mode: hard-light;
+
+}
+
+
+/*  纹理与蒙版策略  */
+
+/* 纹理层（交叉光条 rays + foil + glitter）全部走 base.css 的 .card.masked
+   蒙版裁剪 → 纹理只现于两枚徽章内；全卡「打光」由未被蒙版的 .card__glare 提供。
+   （不再用 mask-image:none 覆盖，故 shine 与 :after 也受蒙版限制。） */
+.card[data-rarity="radiant rare"] .card__shine,
+.card[data-rarity="radiant rare"] .card__shine:after {
+  --foil: url("../../img/crossover.png");
+  --imgsize: 25% auto;
+}
