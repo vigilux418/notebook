@@ -59,6 +59,9 @@ function initCard(app) {
   const imgDark = app.dataset.cardImg || "";
   const imgLight = app.dataset.cardImgLight || imgDark;
   const rarity = (app.dataset.cardRarity || "rare secret").toLowerCase();
+  const maskDark = app.dataset.cardMask || "";
+  const maskLight = app.dataset.cardMaskLight || maskDark;
+  const absUrl = (u) => new URL(u, document.baseURI).href;
 
   // ---- build DOM ----
   const card = document.createElement("div");
@@ -81,15 +84,27 @@ function initCard(app) {
   frontImg.addEventListener("load", () => card.classList.remove("loading"));
   // Pick the card art matching Material's colour scheme ("slate" = dark art,
   // "default" = light art) and swap it when the user toggles the theme.
-  const pickImg = () =>
-    document.body.getAttribute("data-md-color-scheme") === "slate" ? imgDark : imgLight;
+  const front = card.querySelector(".card__front");
+  if (maskDark || maskLight) card.classList.add("masked");
+  const isSlate = () =>
+    document.body.getAttribute("data-md-color-scheme") === "slate";
+  const pickImg = () => (isSlate() ? imgDark : imgLight);
+  const pickMask = () => (isSlate() ? maskDark : maskLight);
   const applyImg = () => {
     const src = pickImg();
     if (frontImg.getAttribute("src") !== src) frontImg.src = src;
   };
-  applyImg();
+  const applyMask = () => {
+    const m = pickMask();
+    if (m) front.style.setProperty("--mask", 'url("' + absUrl(m) + '")');
+  };
+  const applyTheme = () => {
+    applyImg();
+    applyMask();
+  };
+  applyTheme();
   if (frontImg.complete) card.classList.remove("loading");
-  const themeObserver = new MutationObserver(applyImg);
+  const themeObserver = new MutationObserver(applyTheme);
   themeObserver.observe(document.body, {
     attributes: true,
     attributeFilter: ["data-md-color-scheme"],
