@@ -107,6 +107,87 @@ body[data-md-color-scheme="slate"] canvas[id^="c_n"] {
   display: none !important;
 }
 
+/* ============================================================
+   首页大标题「铭牌」——画廊聚光下的品牌字。仅作用于首页 H1（.home-content h1），
+   其余页面标题不受影响。设计语言承接本站：S1 蓝宝石双色 + 昼夜聚光。
+   - Vigilux：JetBrains Mono（CS/代码身份），紧字距、蓝宝石竖向渐变（呼应自上而下的聚光）
+   - 的笔记本：LXGW WenKai（手写笔记温度），冷墨/冷白，退居其次让「名」成为焦点
+   ============================================================ */
+.md-typeset .home-content h1 {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  margin-bottom: 0.4rem;
+}
+.home-content h1 .brand-en {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 800;
+  letter-spacing: -0.02em;   /* 等宽字偏松，收紧让品牌名更凝练 */
+  margin-right: 0.12em;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.home-content h1 .brand-cn {
+  font-family: "LXGW WenKai Screen", "LXGW WenKai", serif;
+  font-weight: 600;
+}
+
+/* 浅色【瓷光】：蓝宝石竖向渐变（顶亮底深，呼应破晓聚光），中文取深墨 */
+[data-md-color-scheme="default"] .home-content h1 .brand-en {
+  background-image: linear-gradient(180deg, #3f78e0 0%, #1c4aa0 100%);
+}
+[data-md-color-scheme="default"] .home-content h1 .brand-cn {
+  color: #22304c;
+}
+
+/* 深色【石墨·聚光】：提亮蓝宝石渐变 + 柔蓝辉光（如画廊射灯打在铭牌上），中文取冷白 */
+[data-md-color-scheme="slate"] .home-content h1 .brand-en {
+  background-image: linear-gradient(180deg, #cfe0fb 0%, #6fa2ec 100%);
+  filter: drop-shadow(0 0 10px rgba(127, 176, 240, 0.28));
+}
+[data-md-color-scheme="slate"] .home-content h1 .brand-cn {
+  color: hsla(214, 30%, 92%, 0.94);
+}
+
+/* ============================================================
+   首页「站点统计」面板——收编进本站冷调/S1 蓝宝石体系。
+   原为 index.md 内联写死的 #e3e3e3 灰边（不随明暗切换、游离于设计系统外）。
+   现改为：聚光卡质感 + 标签(冷墨/冷白) + 数值(JetBrains Mono 蓝宝石)。
+   仅作用于 #statistics；opacity 由 home.js 的 toggle_statistics() 控制，故不在此定义。
+   ============================================================ */
+#statistics {
+  max-width: 24em;
+  margin-top: 1rem;
+  padding: 0.85em 1.2em;
+  border-radius: 0.9rem;
+  font-size: 78%;
+  line-height: 1.9;
+  /* 用主题 token 上色，明暗自动适配 */
+  background: color-mix(in srgb, var(--md-default-fg-color--lightest) 60%, transparent);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: opacity 0.4s ease;
+}
+#statistics .stat-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5em;
+}
+#statistics .stat-k {
+  color: var(--md-default-fg-color--light);
+  letter-spacing: 0.02em;
+}
+#statistics .stat-v {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;   /* 数字等宽对齐，运行时长跳秒不抖动 */
+  color: var(--md-typeset-a-color);      /* S1 蓝宝石：浅色中蓝 / 深色柔蓝 */
+}
+
 .youtube {
   color: #EE0F0F;
 }
