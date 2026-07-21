@@ -132,6 +132,8 @@
     
       <link rel="stylesheet" href="../../../stylesheets/links.css">
     
+      <link rel="stylesheet" href="../../../stylesheets/toc_index.css">
+    
       <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
     
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap">
@@ -3978,45 +3980,58 @@
           data-reactions-enabled="1"
           data-emit-metadata="0"
           data-input-position="bottom"
-          data-theme="preferred_color_scheme"
+          data-theme="light"
           data-lang="zh-CN"
           crossorigin="anonymous"
           async>
   </script>
-  <!-- Synchronize Giscus theme with palette -->
+  <!-- Synchronize Giscus theme with palette (instant-navigation safe) -->
   <script>
-    var giscus = document.querySelector("script[src*=giscus]")
+    (function () {
+      // 从站点调色板推导 giscus 主题：直接读 body 上的 data-md-color-scheme，
+      // 该属性由 Material 在切换时同步写入，比 __md_get 更少竞态。
+      function giscusTheme() {
+        var scheme = document.body.getAttribute("data-md-color-scheme");
+        return scheme === "slate" ? "transparent_dark" : "light";
+      }
 
-    // Set palette on initial load
-    var palette = __md_get("__palette")
-    if (palette && typeof palette.color === "object") {
-      var theme = palette.color.scheme === "slate"
-        ? "transparent_dark"
-        : "light"
-
-      // Instruct Giscus to set theme
-      giscus.setAttribute("data-theme", theme) 
-    }
-
-    // Register event handlers after documented loaded
-    document.addEventListener("DOMContentLoaded", function() {
-      var ref = document.querySelector("[data-md-component=palette]")
-      ref.addEventListener("change", function() {
-        var palette = __md_get("__palette")
-        if (palette && typeof palette.color === "object") {
-          var theme = palette.color.scheme === "slate"
-            ? "transparent_dark"
-            : "light"
-
-          // Instruct Giscus to change theme
-          var frame = document.querySelector(".giscus-frame")
+      // 同时覆盖两种状态：尚未加载完的 loader <script> 与已加载的 iframe。
+      function syncGiscus() {
+        var theme = giscusTheme();
+        var loader = document.querySelector("script[src*=giscus]");
+        if (loader) loader.setAttribute("data-theme", theme);
+        var frame = document.querySelector("iframe.giscus-frame");
+        if (frame && frame.contentWindow) {
           frame.contentWindow.postMessage(
-            { giscus: { setConfig: { theme } } },
+            { giscus: { setConfig: { theme: theme } } },
             "https://giscus.app"
-          )
+          );
         }
-      })
-    })
+      }
+
+      // ① 本页立即同步一次（首屏 / 硬加载）。
+      syncGiscus();
+
+      // ② 每次 instant 软导航后再同步一次；subscribe 全局仅一次，避免重复订阅。
+      if (window.document$ && typeof document$.subscribe === "function"
+          && !window.__giscusSubscribed) {
+        window.__giscusSubscribed = true;
+        document$.subscribe(syncGiscus);
+      }
+
+      // ③ 调色板切换监听：事件委托挂到常驻的 document 上，且全局仅挂一次，
+      //    这样 instant 软导航到的新页面也能生效，无需刷新。
+      if (!window.__giscusThemeHooked) {
+        window.__giscusThemeHooked = true;
+        document.addEventListener("change", function (e) {
+          if (e.target && e.target.closest &&
+              e.target.closest("[data-md-component=palette]")) {
+            // 等 Material 把新的 data-md-color-scheme 写到 body 之后再读取。
+            setTimeout(syncGiscus, 0);
+          }
+        });
+      }
+    })();
   </script>
 
                 
@@ -4180,6 +4195,8 @@
         <script src="../../../javascripts/effects.js"></script>
       
         <script src="../../../javascripts/toc.js"></script>
+      
+        <script src="../../../javascripts/toc_index.js"></script>
       
         <script src="../../../javascripts/mathjax.js"></script>
       
