@@ -123,6 +123,7 @@ extra_css:
     - stylesheets/status.css
     - stylesheets/fold_toc.css   # 目录智能展开样式（配合全局 toc.js，随 instant 导航常驻）
     - stylesheets/links.css      # 友链页卡片（限定 #links 作用域，避免与首页全息卡 .card 冲突）
+    - stylesheets/toc_index.css  # 分区索引目录（{{ BEGIN_TOC }}，配合 toc_index.js 与 hooks/toc.py）
     - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
     - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
 extra_javascript:
@@ -130,6 +131,7 @@ extra_javascript:
     # 各脚本均幂等：IIFE/module 隔离作用域、window 级守卫避免重复订阅、切页回收旧资源。
     - javascripts/effects.js   # 粒子背景加载器（尊重 prefers-reduced-motion，整站仅注入一次）
     - javascripts/toc.js       # 目录智能展开（每次导航重建 IntersectionObserver）
+    - javascripts/toc_index.js # 分区索引目录的折叠 + “x days ago”相对时间（幂等，订阅 document$）
     - javascripts/mathjax.js   # MathJax 配置 + 跨页重排（引擎本体由 engines.js 懒加载）
     # MathJax 运行时懒加载（engines.js 检测 .arithmatex 后注入，整站仅一次）。
     # Mermaid 无需自定义脚本：Material 内置 loader 随 superfences custom_fences 自动
@@ -250,8 +252,12 @@ markdown_extensions:
         generic: true
     - pymdownx.betterem
     - pymdownx.smartsymbols
+hooks:
+    # 分区索引目录：把页面中 {{ BEGIN_TOC }}…{{ END_TOC }} 的 YAML 渲染成卡片式目录。
+    # 自包含单文件（含 git 统计），改编自 TonyCrane/note (CC BY 4.0)，详见文件顶部署名。
+    - hooks/toc.py
 plugins:
-    - macros: 
+    - macros:
         # [[% raw %]]
         j2_block_start_string: '[[%'
         j2_block_end_string: '%]]'
