@@ -177,9 +177,12 @@ ghp-import -n -p -f -r origin -b gh-pages D:\Workplace\zensical-migration-rollba
 
 | 项目 | 值 |
 | --- | --- |
-| 迁移提交 | 本提交（`migrate/zensical` → `main`） |
+| 迁移代码提交 | `f203d6b87ca1b8bf2c59229581c47c5bb936eff0`（`feat(build): 迁移站点生成器 …`） |
 | 切换前 `gh-pages` | `3354aec7d685eec9dfd603a9373f1b8cdabff3e7`（已归档，见 §7） |
-| CI 运行 | 待发布后填写 |
-| 新 `gh-pages` 提交 | 待发布后填写 |
-| 线上复核 | 待发布后填写：首页、分区目录、公式页、图表页、友链/灯箱、评论区 |
+| CI 运行 | [42806468762](https://github.com/vigilux418/notebook/actions/runs/42806468762) — success（安装依赖 18s：build + ghp-import 均通过） |
+| 迁移后首次 `gh-pages` | `7de9618c94063334bf99b10ffc1dfbcb449b73a1`（126 文件，含 `.nojekyll`；Pages build `legacy` 状态 built） |
+| 线上复核（https://vigilux.top/notebook/） | 通过：`meta generator=zensical-0.1.0`；首页统计 65/63119/2056、卡片/打字/页脚 “Made with Zensical”；`/math/`、`/tools/` 分区目录与 64 页日期正常；公式页 267/267 渲染；`/general/csci/4/` Mermaid 26/26；友链头像 naturalWidth=460、Giscus iframe 正常；搜索“基尔霍夫”返回结果；无未处理 JS 异常；canonical 仍为 `https://vigilux418.github.io/notebook/` |
+
+> 说明：本文件自身的后续文档提交会再次触发 CI，重建内容与首次迁移发布一致（仅 `MIGRATION.md` 变化）。
+> 后续若要核对“当前线上发布对应的提交”，以 `gh-pages` 最新提交或其 CI 运行为准。
 
