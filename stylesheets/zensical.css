@@ -1,0 +1,87 @@
+/*
+ * 仅 Zensical 构建加载的兼容样式。
+ *
+ * 由 mkdocs.zensical.yml 的 extra_css 引入；Material 回退构建（mkdocs.yml）不会加载，
+ * 因此这里的规则只为抹平 Material → Zensical 的引擎差异，不影响回退产物。
+ */
+
+/*
+ * 1) 滚动条占位。
+ * Zensical classic 在 <html> 上使用 scrollbar-gutter: stable，会始终预留滚动条宽度，
+ * 使桌面端内容网格相对 Material 左右偏移约 7.5px（1440px 视口实测）。Material 使用
+ * 默认 auto。这里恢复 Material 的行为。
+ * 已知副作用（与 Material 基线相同）：短页面/长页面在“有无竖向滚动条”之间切换时，
+ * 居中内容会有 7.5px 的水平位置变化。
+ */
+html {
+  scrollbar-gutter: auto;
+}
+
+/*
+ * 2) 搜索触发器。
+ * Material 的搜索入口是 <form class="md-search__form">（234×36，项目在 custom.css 中
+ * 设置 --base-border-radius 圆角）；Zensical 0.1.0 换成
+ * <button class="md-search__button">（178×32，默认 .2rem 圆角，并带 Ctrl+K 提示）。
+ * 这里对齐尺寸/圆角/内边距、隐藏快捷键角标，保留 Zensical 的放大镜图标与搜索弹层行为。
+ * 搜索弹层本身是独立 Shadow DOM，不在全局 CSS 范围内（迁移验收已记录其原生差异）。
+ */
+@media screen and (min-width: 60em) {
+  .md-search__button {
+    width: 11.7rem;
+    height: 1.8rem;
+    border-radius: var(--base-border-radius);
+    font-size: 0.8rem;
+  }
+  [dir="ltr"] .md-search__button {
+    padding-left: 2.2rem;
+    padding-right: 0.7rem;
+  }
+  [dir="rtl"] .md-search__button {
+    padding-right: 2.2rem;
+    padding-left: 0.7rem;
+  }
+  .md-search__button:before {
+    top: 0.4rem;
+  }
+  .md-search__button:after {
+    display: none;
+  }
+}
+
+/*
+ * 3) GLightbox 样式补丁。
+ * Material 版本由 mkdocs-glightbox 插件在页面 <head> 注入这些规则；Zensical 的
+ * 兼容实现只负责加载库本体（本项目已在 overrides/main.html 中改为本地资产），
+ * 因此把 Material 时代的补丁样式保留在仅 Zensical 生效的样式表中，保证灯箱的
+ * 标题/描述/深色主题表现与迁移前一致。
+ */
+html.glightbox-open {
+  overflow: initial;
+  height: 100%;
+}
+.gslide-title {
+  margin-top: 0;
+  user-select: text;
+}
+.gslide-desc {
+  color: #666;
+  user-select: text;
+}
+.gslide-image img {
+  background: white;
+}
+.gscrollbar-fixer {
+  padding-right: 15px;
+}
+.gdesc-inner {
+  font-size: 0.75rem;
+}
+body[data-md-color-scheme="slate"] .gdesc-inner {
+  background: var(--md-default-bg-color);
+}
+body[data-md-color-scheme="slate"] .gslide-title {
+  color: var(--md-default-fg-color);
+}
+body[data-md-color-scheme="slate"] .gslide-desc {
+  color: var(--md-default-fg-color);
+}
