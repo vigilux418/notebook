@@ -115,33 +115,49 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8-sig")
 
 
-def split_front_matter(text: str) -> tuple[dict, str]:
+#: MkDocs 的 YAML front matter 正则：起始 ``---``，结束标记可以是 ``---`` 或 ``...``。
+#: 与 ``mkdocs.utils.meta.YAML_RE`` 语义对齐（结束标记后必须换行，正文去掉开头空行）。
+FRONT_MATTER_RE = re.compile(
+    r"\A---[ \t]*\r?\n(.*?\r?\n)(?:\.{3}|-{3})[ \t]*\r?\n", re.UNICODE | re.DOTALL
+)
+
+
+def split_front_matter(text: str) -> tuple[dict, str, bool]:
     """拆分 YAML front matter 与正文。
 
-    行为与 ``mkdocs.utils.meta.get_data`` 对齐：仅当首个非空行是 ``---`` 时解析，
-    分隔符行允许首尾空白；解析失败时返回空元数据与完整正文（保持原行为）。
+    与 ``mkdocs.utils.meta.get_data`` 的 YAML 分支语义对齐：
+
+    * 起始标记为 ``---``，结束标记同时接受 ``---`` 与合法的 ``...``；
+    * 首个分隔行后的内容按 YAML 解析；非映射结果视为“无元数据”；
+    * 若 YAML 解析失败，**保留完整原文**并返回 ``ok=False``，由调用方原样写出，
+      避免静默剥掉用户的元数据块。
+
+    返回值：``(meta, body, ok)``。无 front matter 时返回 ``({}, text, True)``。
     """
-    lines = text.splitlines()
-    if not lines or lines[0].strip() != "---":
-        return {}, text
-    for idx in range(1, len(lines)):
-        if lines[idx].strip() == "---":
-            meta_text = "\n".join(lines[1:idx])
-            body = "\n".join(lines[idx + 1 :])
-            if text.endswith(("\n", "\r")):
-                body += "\n"
-            try:
-                meta = yaml.safe_load(meta_text) or {}
-            except yaml.YAMLError:
-                meta = {}
-            if not isinstance(meta, dict):
-                meta = {}
-            return meta, body
-    return {}, text
+    match = FRONT_MATTER_RE.match(text)
+    if not match:
+        # MkDocs 还支持无分隔符的 MultiMarkdown 风格元数据；本项目笔记未使用该写法，
+        # 这里保持正文原样，与历史行为一致（如需支持应补兼容实现）。
+        return {}, text, True
+    meta_text = match.group(1)
+    body = text[match.end() :].lstrip("\n")
+    try:
+        meta = yaml.safe_load(meta_text)
+    except yaml.YAMLError as exc:
+        LOG.warning("front matter YAML 解析失败，按原样保留该页内容：%s", exc)
+        return {}, text, False
+    if not isinstance(meta, dict):
+        LOG.warning("front matter 不是 YAML 映射，按原样保留该页内容")
+        return {}, text, False
+    return meta, body, True
 
 
 def dump_front_matter(meta: dict, body: str) -> str:
-    """把元数据与正文组合为页面文本（暂存内容允许重排 front matter）。"""
+    """把元数据与正文组合为页面文本（暂存内容允许重排 front matter）。
+
+    MkDocs 允许 ``...`` 作为 front matter 结束标记，但 Zensical 0.1.0 的兼容解析
+    只识别 ``---``；这里统一用 ``---`` 重新序列化，保证两种引擎对暂存内容的理解一致。
+    """
     if meta:
         front = yaml.safe_dump(
             meta,
@@ -555,7 +571,7 @@ def collect_site_statistics() -> dict:
     """复刻 statistics 0.1.5 ``on_files`` 的全站统计。"""
     pages = words = codes = images = 0
     for path in sorted(DOCS_DIR.rglob("*.md")):
-        _meta, body = split_front_matter(read_text(path))
+        _meta, body, _ok = split_front_matter(read_text(path))
         page_words, page_codes, page_images = statistics_counts(body)
         pages += 1
         words += page_words
@@ -622,7 +638,8 @@ def _process_page(
     """处理单个 Markdown 页面，返回待写入暂存的文本与统计标记（可在线程池中执行）。"""
     relative = source.relative_to(DOCS_DIR)
     src_path = rel_posix(source)
-    meta, body = split_front_matter(read_text(source))
+    source_text = read_text(source)
+    meta, body, front_matter_ok = split_front_matter(source_text)
     meta = dict(meta)
     result = {
         "source": source,
@@ -633,6 +650,12 @@ def _process_page(
         "page_stats": False,
         "dated": False,
     }
+
+    if not front_matter_ok:
+        # YAML 无法解析：保留完整原文（与 MkDocs get_data 一致），不注入统计/日期，
+        # 避免静默丢失用户的元数据块或正文。
+        result["text"] = source_text
+        return result
 
     # 1) 页面统计（插件在 hooks/toc.py 之前执行，此处保持相同顺序）
     if not meta.get("nostatistics"):
@@ -675,6 +698,9 @@ def prepare(incremental: bool = False) -> dict:
 
     ``incremental=True`` 供 ``serve`` 的监听线程使用：保留暂存根目录、只删除源中
     已不存在的文件，避免目标引擎监听目录时因目录被删除而崩溃。
+
+    每轮 prepare 都会清空 Git 时间缓存；``serve`` 的监听快照还包含仓库 HEAD，
+    因此新的提交会触发重新生成，日期与目录 ``data-ts`` 不会停留在旧值。
     """
     if not DOCS_DIR.is_dir():
         raise SystemExit(f"找不到源目录：{DOCS_DIR}")
@@ -682,6 +708,11 @@ def prepare(incremental: bool = False) -> dict:
         raise SystemExit(f"找不到目录模板：{TOC_TEMPLATE_PATH}")
 
     started = time.perf_counter()
+
+    # Git 时间缓存只服务于单次 prepare：serve 会在同一进程内反复调用 prepare，
+    # 若跨轮复用缓存，提交后的新日期/目录 data-ts 会停留在旧值。
+    _GIT_TIMESTAMP_CACHE.clear()
+    _TOC_TIME_CACHE.clear()
 
     global GLOBAL_STATS
     GLOBAL_STATS = collect_site_statistics()
@@ -776,9 +807,33 @@ def run_build(strict: bool = True) -> int:
     return subprocess.call(command, cwd=str(ROOT))
 
 
-def _snapshot_sources() -> dict[str, float]:
-    """记录需要监听的原始输入文件 mtime。"""
-    snapshot: dict[str, float] = {}
+def _git_head_signature() -> str:
+    """无需启动子进程地读取当前 HEAD 提交（供 ``serve`` 监听提交变化）。
+
+    返回 ``.git/HEAD`` 指向的分支引用内容（提交 SHA）；分离 HEAD 时返回 HEAD 本身。
+    读取失败时返回空串（非 git 环境下降级，不影响 mtime 监听）。
+    """
+    git_dir = ROOT / ".git"
+    try:
+        head = (git_dir / "HEAD").read_text(encoding="utf-8", errors="replace").strip()
+    except OSError:
+        return ""
+    if head.startswith("ref: "):
+        ref_path = git_dir / head[5:].strip()
+        try:
+            return ref_path.read_text(encoding="utf-8", errors="replace").strip()
+        except OSError:
+            return head
+    return head
+
+
+def _snapshot_sources() -> dict[str, object]:
+    """记录需要监听的原始输入：文件 mtime + Git HEAD。
+
+    单独提交（如 ``git commit -m docs``）不会改变工作区文件 mtime，但会改变 HEAD；
+    日期与目录时间都来自 Git 历史，因此 HEAD 必须纳入快照才能让 ``serve`` 在提交后刷新。
+    """
+    snapshot: dict[str, object] = {}
     for directory in (DOCS_DIR, INCLUDES_DIR):
         if not directory.is_dir():
             continue
@@ -788,6 +843,7 @@ def _snapshot_sources() -> dict[str, float]:
     for extra in (TOC_TEMPLATE_PATH, ROOT / "hooks" / "toc.py", CONFIG_FILE):
         if extra.is_file():
             snapshot[str(extra)] = extra.stat().st_mtime
+    snapshot["__git_head__"] = _git_head_signature()
     return snapshot
 
 

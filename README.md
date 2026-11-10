@@ -21,18 +21,41 @@ Zensical 不会执行 MkDocs 插件与 Hook。原站点依赖的分区索引目�
 
 ## 本地构建 / Build（Zensical）
 
-```shell
-python -m venv .venv-zensical
-.venv-zensical/Scripts/pip install -r requirements-zensical.txt   # Windows
-# source .venv-zensical/bin/activate && pip install -r requirements-zensical.txt  # Linux/macOS
+构建脚本会用**创建虚拟环境时的同一个解释器**启动 Zensical（`sys.executable -m zensical`），
+所以下面的命令必须显式使用 `.venv-zensical` 内的 Python（或先激活环境），不要改用全局 `python`。
 
-python tools/notebook_build.py serve    # 预览（默认 http://127.0.0.1:8001/notebook/）
-python tools/notebook_build.py build    # 严格构建到 site-zensical/
-python tools/notebook_build.py prepare  # 只生成 .migration/docs 暂存内容并打印统计
+```powershell
+# Windows PowerShell
+python -m venv .venv-zensical
+.venv-zensical\Scripts\python.exe -m pip install -r requirements-zensical.txt
+
+.venv-zensical\Scripts\python.exe tools\notebook_build.py serve    # 预览 http://127.0.0.1:8001/
+.venv-zensical\Scripts\python.exe tools\notebook_build.py build    # 严格构建到 site-zensical/
+.venv-zensical\Scripts\python.exe tools\notebook_build.py prepare  # 只生成 .migration/docs 暂存内容
 ```
 
-`serve` 会在原始 `docs/`、`includes/`、`hooks/templates/toc.html` 变化后自动重新 prepare，
-再由 Zensical 刷新预览；生成的 `.migration/`、`site-zensical/`、`.venv-zensical/` 均不入库。
+```shell
+# Linux / macOS
+python -m venv .venv-zensical
+.venv-zensical/bin/python -m pip install -r requirements-zensical.txt
+.venv-zensical/bin/python tools/notebook_build.py serve
+.venv-zensical/bin/python tools/notebook_build.py build
+.venv-zensical/bin/python tools/notebook_build.py prepare
+```
+
+也可以先激活环境再使用 `python`：Windows `.venv-zensical\Scripts\Activate.ps1`，
+Linux/macOS `source .venv-zensical/bin/activate`。
+
+`serve` 会在原始 `docs/`、`includes/`、`hooks/templates/toc.html` 变化**以及 Git HEAD 变化**后
+自动重新 prepare（提交后日期与目录时间会刷新），再由 Zensical 刷新预览；生成的
+`.migration/`、`site-zensical/`、`.venv-zensical/` 均不入库。
+
+回归测试（front matter 兼容性、持续预览日期刷新）：
+
+```shell
+.venv-zensical\Scripts\python.exe tools\test_notebook_build.py   # Windows
+.venv-zensical/bin/python tools/test_notebook_build.py           # Linux/macOS
+```
 
 ## 回退构建 / Fallback（Material for MkDocs）
 
@@ -47,13 +70,25 @@ mkdocs build      # 生成静态站点到 site/
 推送到 `main` 后由 GitHub Actions 自动执行 `python tools/notebook_build.py build`，
 随后用 `ghp-import` 把 `site-zensical/` 发布到 `gh-pages` 分支（Pages 仍为 legacy + `gh-pages`）。
 
-回退发布：在同一源提交上重新用 Material 构建后，把已知良好产物发布到 `gh-pages`：
+回退发布：先暂停自动发布，确认没有进行中/排队的 Deploy Docs 运行，再发布已知良好的 Material 产物；
+否则运行中的 workflow 或回退后的 `main` push 会重新用 Zensical 覆盖 `gh-pages`。
 
 ```shell
+# 1) 暂停自动发布者（GitHub CLI）
+gh workflow disable "Deploy Docs"
+gh run list --workflow "Deploy Docs" --limit 20   # 确认没有 in_progress / queued
+# 如有进行中/排队运行：gh run cancel <run-id>，再复查一次
+
+# 2) 发布 Material 产物
 pip install -r requirements.txt ghp-import==2.1.0
 mkdocs build -d site-rollback
 ghp-import -n -p -f -r origin -b gh-pages site-rollback
+
+# 3) 稳定后若要继续用 Zensical，再重新启用自动发布
+gh workflow enable "Deploy Docs"
 ```
+
+完整回退 runbook（含归档产物位置与重新启用条件）见 [`MIGRATION.md`](./MIGRATION.md) §7。
 
 ## Acknowledgement / 致谢
 

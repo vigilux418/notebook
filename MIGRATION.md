@@ -35,10 +35,11 @@ docs/（唯一人工编辑源）
 | 文件 | 作用 |
 | --- | --- |
 | `mkdocs.zensical.yml` | 目标配置：`INHERIT: mkdocs.yml`、`docs_dir: .migration/docs`、`site_dir: site-zensical`、`hooks: []`、`theme.variant: classic`、保留 macros/meta/search/glightbox 兼容插件；完整保留父配置的 `extra_css` 并追加 `zensical.css`；`extra.build_engine: zensical` 供模板区分构建器 |
-| `tools/notebook_build.py` | 构建入口：`prepare` / `build` / `serve`。等价实现目录、统计、Git 日期、头像适配；`serve` 监听原始 docs/includes/Hook 模板并增量重建暂存内容 |
+| `tools/notebook_build.py` | 构建入口：`prepare` / `build` / `serve`。等价实现目录、统计、Git 日期、头像适配；`serve` 监听原始 docs/includes/Hook 模板与 Git HEAD 并增量重建暂存内容；每轮 prepare 重置 Git 时间缓存 |
 | `requirements-zensical.txt` | 固定版本：`zensical==0.1.0`（UI 0.0.41）、`Jinja2==3.1.6`、`PyYAML==6.0.3`、`Babel==2.18.0`、`tzdata==2026.6`、`ghp-import==2.1.0`，并锁定 2026-11-10 干净环境解析出的全部传递依赖 |
 | `requirements-dev.txt` | 本地验收工具依赖（BeautifulSoup/Playwright，不参与构建） |
 | `tools/verify_migration.py`、`tools/verify_runtime.py` | 可复跑的迁移验收脚本：Material 基线 vs Zensical 产物的静态对照与浏览器运行时探针 |
+| `tools/test_notebook_build.py` | 构建预处理回归测试（标准库 unittest）：front matter `...` 结束标记/非法 YAML 原文保留、同一进程两次提交后日期与目录 `data-ts` 刷新、监听快照包含 Git HEAD |
 | `docs/stylesheets/zensical.css` | 仅 Zensical 加载的兼容样式：恢复 `scrollbar-gutter`、对齐搜索触发器尺寸/圆角、保留 GLightbox 深色主题补丁 |
 | `docs/javascripts/vendor/glightbox.min.js`、`docs/stylesheets/vendor/glightbox.min.css`、`LICENSE.glightbox` | 本地化 GLightbox（MIT）：Zensical 本会运行时从 unpkg 拉取，这里改为仓库自维护，保持“小型前端资源本地化”原则 |
 | `MIGRATION.md` | 本文件 |
@@ -63,13 +64,18 @@ docs/（唯一人工编辑源）
 
 ### 3.1 本地
 
+构建脚本通过 `sys.executable -m zensical` 调用目标引擎，因此**必须使用安装了依赖的同一个解释器**
+（`.venv-zensical` 内的 Python，或先激活该环境）；不要改用全局 `python`。
+
 ```powershell
-# Zensical（当前生产构建器）
+# Windows PowerShell
 python -m venv .venv-zensical
-.venv-zensical\Scripts\pip install -r requirements-zensical.txt
-python tools/notebook_build.py serve     # 预览 http://127.0.0.1:8001/
-python tools/notebook_build.py build     # 严格构建到 site-zensical/
-python tools/notebook_build.py prepare   # 只生成 .migration/docs 并打印统计
+.venv-zensical\Scripts\python.exe -m pip install -r requirements-zensical.txt
+
+.venv-zensical\Scripts\python.exe tools\notebook_build.py serve     # 预览 http://127.0.0.1:8001/
+.venv-zensical\Scripts\python.exe tools\notebook_build.py build     # 严格构建到 site-zensical/
+.venv-zensical\Scripts\python.exe tools\notebook_build.py prepare   # 只生成 .migration/docs 并打印统计
+.venv-zensical\Scripts\python.exe tools\test_notebook_build.py      # 预处理回归测试
 
 # Material 回退构建
 pip install -r requirements.txt
@@ -77,8 +83,11 @@ mkdocs serve
 mkdocs build
 ```
 
-`serve` 会监听 `docs/`、`includes/`、`hooks/toc.py`、`hooks/templates/toc.html`，
-变化后增量重新 prepare（保留暂存目录本身，避免目标引擎监听目录消失）。
+Linux/macOS 将 `.venv-zensical\Scripts\python.exe` 换成 `.venv-zensical/bin/python` 即可。
+
+`serve` 会监听 `docs/`、`includes/`、`hooks/toc.py`、`hooks/templates/toc.html` **以及 Git HEAD**，
+变化后增量重新 prepare（保留暂存目录本身，避免目标引擎监听目录消失）；单独 `git commit`
+也会触发刷新，日期与目录 `data-ts` 不会停留在旧值。
 
 ### 3.2 CI 发布
 
@@ -87,8 +96,9 @@ mkdocs build
 1. `actions/checkout@v7`（`fetch-depth: 0`）；
 2. `actions/setup-python@v7`（Python 3.13）；
 3. `pip install -r requirements-zensical.txt`；
-4. `python tools/notebook_build.py build`（`--strict`，任何警告使构建失败）；
-5. `ghp-import -n -p -f -r origin -b gh-pages site-zensical` 发布到 `gh-pages`。
+4. `python tools/test_notebook_build.py`（预处理回归测试）；
+5. `python tools/notebook_build.py build`（`--strict`，任何警告使构建失败）；
+6. `ghp-import -n -p -f -r origin -b gh-pages site-zensical` 发布到 `gh-pages`。
 
 Pages 来源保持 `legacy` + `gh-pages` 分支，未改动域名与 Pages 配置。
 
@@ -99,6 +109,7 @@ Pages 来源保持 `legacy` + `gh-pages` 分支，未改动域名与 Pages 配�
 | 分区索引目录 | `hooks/toc.py` | `tools/notebook_build.py` 复刻其纯逻辑（模板仍用 `hooks/templates/toc.html`），输出 8 组 27 条、`.index-item-wrapper` / `.item-actions[data-ts]` 等约定不变 |
 | 整站统计 | statistics 0.1.5 `on_files` | 复刻其算法（忽略 mermaid/math 围栏、图片正则等）→ 首页 65 页 / 63119 字 / 2056 行代码（图片 35） |
 | 页面统计 | statistics 0.1.5 `on_page_markdown` | 复刻其口径与插入位置（首个 H1 之后），20 个 `comments: true` 页面逐字一致 |
+| front matter | MkDocs `get_data` | 同时支持 `---` 与合法 `...` 结束标记；解析失败时保留完整原文并告警，绝不静默剥除元数据块 |
 | Git 创建/更新日期 | git-revision-date-localized 1.4.7 | 复刻作者时间 `%at`、`--diff-filter=Ar --follow` 创建、普通 `git log -n1` 更新、Asia/Shanghai、Babel zh long datetime、首页排除；64 页文本与 `title` 逐字一致 |
 | 友链头像 | MkDocs 相对路径处理 | 仅对 `links.md` 的 `../images/lemoon1206.jpg` 做单点适配，最终输出与 Material 一致 |
 | 评论 / Giscus | overrides/partials/comments.html | 原样保留，`data-mapping="pathname"` 与 `/notebook/` 前缀不变，20 页 loader 一致 |
@@ -146,23 +157,41 @@ Pages 来源保持 `legacy` + `gh-pages` 分支，未改动域名与 Pages 配�
 | A14 | 评论与反馈 | 通过（含口径变化） | 20 页 Giscus loader/属性一致，主题同步与软导航重建正常；GA search 事件见 §5 |
 | A15 | 灯箱 | 通过 | 本地 GLightbox 资产加载；打开/Escape 关闭/主题正常；无 unpkg glightbox 请求 |
 | A16 | 响应式与视觉 | 通过（含已知差异） | 390/768/960/1440/1920 无横向溢出；首页几何与基线一致；差异见 §5 |
-| A17 | 构建和写作 | 通过 | 固定依赖干净环境构建通过（与正式产物逐字节一致）；`serve` 监听原始源并增量刷新 |
-| A18 | 部署与回退 | 配置通过，发布结果见 §9 | 单 workflow 单发布者；`gh-pages` 发布与回退产物/步骤见 §7、§9 |
+| A17 | 构建和写作 | 通过（复审后补强） | 固定依赖干净环境构建通过（与正式产物逐字节一致）；`serve` 监听原始源、Git HEAD 并增量刷新；`tools/test_notebook_build.py` 覆盖持续预览日期刷新与 front matter 边界 |
+| A18 | 部署与回退 | 配置通过，发布结果见 §9 | 单 workflow 单发布者；回退 runbook 要求先暂停自动发布并清理进行中/排队运行（§7） |
 
 完整机器可读结果：`tools/verify_migration.py` / `tools/verify_runtime.py` 的输出（本地 `.migration/verify/`）。
 
 ## 7. 回退
 
 迁移前的 Material 产物、`gh-pages` 归档与详细步骤保存在仓库外
-`D:\Workplace\zensical-migration-rollback\`（见其中 `ROLLBACK.md`）。摘要：
+`D:\Workplace\zensical-migration-rollback\`（见其中 `ROLLBACK.md`）。
+
+**回退前必须先停止自动发布者**：本机 `ghp-import` 不受 GitHub workflow 的 `concurrency`
+约束，若 Deploy Docs 仍在运行/排队，或回退后 `main` 又有 push，Zensical 发布会覆盖刚恢复的
+Material 产物。
 
 ```powershell
+# 1) 暂停自动发布并取消进行中/排队的运行
+gh workflow disable "Deploy Docs"
+gh run list --workflow "Deploy Docs" --limit 20 --json databaseId,status,headBranch
+# 对 status 为 in_progress / queued / waiting 的运行：
+gh run cancel <run-id>
+# 复查直到没有进行中/排队的发布
+gh run list --workflow "Deploy Docs" --status in_progress
+gh run list --workflow "Deploy Docs" --status queued
+
+# 2) 发布已验收的 Material 产物（同一已知良好快照）
 pip install ghp-import==2.1.0
 ghp-import -n -p -f -r origin -b gh-pages D:\Workplace\zensical-migration-rollback\material-site
+
+# 3) 验证线上：首页、/math/ 分区目录、公式页、图表页、友链/评论区；确认 Pages 已服务恢复版本
 ```
 
-回退只恢复发布内容，不回滚笔记历史；`main` 上的笔记文件保持完整。CI 构建失败时不会更新
-`gh-pages`，生产站会自动停留在上一版本。
+重新启用条件：仅在决定继续使用 Zensical、且修复后的迁移分支重新通过完整验收并合并后，
+再执行 `gh workflow enable "Deploy Docs"`；若维持 Material，保持 workflow 暂停，并另立变更
+移除 Zensical 发布步骤。回退只恢复发布内容，不回滚笔记历史；`main` 上的笔记文件保持完整。
+CI 构建失败时不会更新 `gh-pages`，生产站会自动停留在上一版本。
 
 ## 8. 后续建议
 
@@ -185,4 +214,19 @@ ghp-import -n -p -f -r origin -b gh-pages D:\Workplace\zensical-migration-rollba
 
 > 说明：本文件自身的后续文档提交会再次触发 CI，重建内容与首次迁移发布一致（仅 `MIGRATION.md` 变化）。
 > 后续若要核对“当前线上发布对应的提交”，以 `gh-pages` 最新提交或其 CI 运行为准。
+
+## 10. 复审修复记录（2026-11-10，P2）
+
+首次发布后的独立实施审阅提出 4 项 P2 问题，已全部修复并补回归测试；修复重建后的站点产物与
+修复前**125 个文件逐字节一致**（仅构建工具/文档变化，不影响线上内容）。
+
+| 问题 | 修复 |
+| --- | --- |
+| 持续预览的 Git 日期缓存跨多次 prepare 不失效；单独提交不触发重新生成 | `prepare()` 每轮清空 `_GIT_TIMESTAMP_CACHE` / `_TOC_TIME_CACHE`；`serve` 监听快照纳入 Git HEAD（读取 `.git/HEAD` 及其引用，无子进程开销），提交后日期与目录 `data-ts` 自动刷新 |
+| front matter 不兼容 MkDocs 合法的 `...` 结束标记；YAML 解析失败会静默剥除元数据块 | 按 `mkdocs.utils.meta.get_data` 的 YAML 分支语义重写：同时接受 `---`/`...` 结束；解析失败时保留完整原文并告警；暂存内容统一以 `---` 重新序列化（Zensical 0.1.0 兼容解析只识别 `---`） |
+| Windows 本地构建说明安装到 venv 后仍调用全局 `python` | README 与 MIGRATION 的本地构建命令改为显式使用 `.venv-zensical\Scripts\python.exe`（Linux/macOS 为 `.venv-zensical/bin/python`），并说明脚本通过 `sys.executable` 启动 Zensical、必须使用同一解释器 |
+| 回退步骤未先停止自动发布者，运行中/后续 CI 可能覆盖手动恢复的 Material 产物 | MIGRATION §7 与仓库外 `ROLLBACK.md` 增加完整 runbook：`gh workflow disable` → 取消并复查进行中/排队运行 → 发布 Material 产物 → 验证；并说明重新启用自动发布的条件 |
+
+回归测试：`tools/test_notebook_build.py`（5 项）覆盖上述前两项逻辑与监听快照；CI 在构建前执行。
+
 
