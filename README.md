@@ -1,19 +1,59 @@
 # Vigilux 的笔记本 · Vigilux's Notebook
 
-个人学习笔记，基于 [MkDocs](https://www.mkdocs.org/) + [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) 构建。
+个人学习笔记，当前基于 [Zensical](https://zensical.org/)（Material for MkDocs 团队的继任静态站点生成器）构建；
+仓库保留了完整的 Material for MkDocs 回退构建能力，迁移决策与验收标准见调研报告。
 
 在线阅读 / Live site: <https://vigilux.top/notebook/>
 （镜像 / mirror: <https://vigilux418.github.io/notebook/>）
 
-## 本地构建 / Build
+## 构建器与版本
+
+| 用途 | 生成器 | 依赖 | 配置 |
+| --- | --- | --- | --- |
+| 生产（当前） | Zensical 0.1.0（UI 0.0.41） | `requirements-zensical.txt` | `mkdocs.zensical.yml` |
+| 回退 | MkDocs 1.6.1 + Material for MkDocs 9.7.7 | `requirements.txt` | `mkdocs.yml` |
+
+Zensical 不会执行 MkDocs 插件与 Hook。原站点依赖的分区索引目录（`hooks/toc.py`）、
+整站/页面统计（`mkdocs-statistics-plugin` 0.1.5）与 Git 创建/更新日期
+（`mkdocs-git-revision-date-localized-plugin` 1.4.7）由构建预处理层
+`tools/notebook_build.py` 按原口径复刻：它先生成暂存内容 `.migration/docs`，
+再交给 Zensical 构建。**`docs/` 仍是唯一人工编辑的笔记源**，原始笔记内容不因迁移而改动。
+
+## 本地构建 / Build（Zensical）
+
+```shell
+python -m venv .venv-zensical
+.venv-zensical/Scripts/pip install -r requirements-zensical.txt   # Windows
+# source .venv-zensical/bin/activate && pip install -r requirements-zensical.txt  # Linux/macOS
+
+python tools/notebook_build.py serve    # 预览（默认 http://127.0.0.1:8001/notebook/）
+python tools/notebook_build.py build    # 严格构建到 site-zensical/
+python tools/notebook_build.py prepare  # 只生成 .migration/docs 暂存内容并打印统计
+```
+
+`serve` 会在原始 `docs/`、`includes/`、`hooks/templates/toc.html` 变化后自动重新 prepare，
+再由 Zensical 刷新预览；生成的 `.migration/`、`site-zensical/`、`.venv-zensical/` 均不入库。
+
+## 回退构建 / Fallback（Material for MkDocs）
 
 ```shell
 pip install -r requirements.txt
-mkdocs serve      # 本地预览 http://127.0.0.1:8001/notebook/
+mkdocs serve      # http://127.0.0.1:8001/notebook/
 mkdocs build      # 生成静态站点到 site/
 ```
 
-推送到 `main` 后由 GitHub Actions 自动 `mkdocs gh-deploy` 部署到 `gh-pages`。
+## 部署 / Deploy
+
+推送到 `main` 后由 GitHub Actions 自动执行 `python tools/notebook_build.py build`，
+随后用 `ghp-import` 把 `site-zensical/` 发布到 `gh-pages` 分支（Pages 仍为 legacy + `gh-pages`）。
+
+回退发布：在同一源提交上重新用 Material 构建后，把已知良好产物发布到 `gh-pages`：
+
+```shell
+pip install -r requirements.txt ghp-import==2.1.0
+mkdocs build -d site-rollback
+ghp-import -n -p -f -r origin -b gh-pages site-rollback
+```
 
 ## Acknowledgement / 致谢
 
@@ -21,6 +61,12 @@ mkdocs build      # 生成静态站点到 site/
   [simeydotme/pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css/)，
   并经由 [TonyCrane/note-homepage-cards](https://github.com/TonyCrane/note-homepage-cards/) 适配到 MkDocs。
 - 主题与样式定制参考了 [@TonyCrane](https://github.com/TonyCrane/) 与 [@NoughtQ](https://github.com/noughtq)。
+- 分区索引目录的原始实现来自 [TonyCrane/note](https://github.com/TonyCrane/note)（CC BY 4.0），
+  本仓库在其基础上加固并适配 `navigation.instant`；迁移后由 `tools/notebook_build.py` 复用同一算法。
+- 灯箱使用 [GLightbox](https://github.com/biati-digital/glightbox)（MIT，© 2018 Biati Digital）。
+  Zensical 构建原先会在运行时从 unpkg CDN 拉取该库，本仓库将 MIT 许可的 `glightbox.min.js/.css`
+  收编到 `docs/javascripts/vendor/` 与 `docs/stylesheets/vendor/` 自维护（许可原文见
+  [`LICENSE.glightbox`](./LICENSE.glightbox)）。
 
 ## License / 许可
 

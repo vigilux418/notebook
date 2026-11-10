@@ -1,18 +1,42 @@
 name: Deploy Docs
+
+# 迁移说明（Material for MkDocs → Zensical）：
+#   * 构建入口统一为 tools/notebook_build.py：先生成 .migration/docs 暂存内容，
+#     再执行 `zensical build --clean --strict`，产物在 site-zensical/；
+#   * 发布仍走原有 `gh-pages` 分支（Pages source = legacy + gh-pages），使用
+#     ghp-import 发布，保留 Material 回退路径（requirements.txt 与 mkdocs.yml 未删除）；
+#   * 只有构建通过后才会进入发布步骤；同一 concurrency 组避免并发写 gh-pages。
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:  # 新增权限声明
-      contents: write  # 授予写入仓库的权限
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
-          fetch-depth: 0  # 拉取完整历史，供 git-revision-date-localized 插件生成准确的“最后更新”日期
+          fetch-depth: 0  # 完整 Git 历史：Git 日期与目录更新时间需要作者时间
+
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'  # 钉死版本，避免 runner 默认 Python 漂移破坏构建
-      - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force --strict  # strict：任何构建警告都会使 CI 失败，问题不过夜
+
+      - name: Install build dependencies
+        run: pip install -r requirements-zensical.txt
+
+      - name: Build site (prepare + zensical --strict)
+        run: python tools/notebook_build.py build
+
+      - name: Publish to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          ghp-import -n -p -f -r origin -b gh-pages site-zensical

@@ -1,0 +1,56 @@
+# Zensical 构建配置（迁移过渡期）
+#
+# 目标引擎：Zensical 0.1.0 + Zensical UI 0.0.41
+# 设计说明见迁移调研报告；本文件是迁移第一阶段的配置：
+#   * 继续以 YAML 为唯一配置格式，通过 INHERIT 复用原 mkdocs.yml 的
+#     nav、颜色、字体、图标、Markdown 扩展、extra 等设置；
+#   * docs_dir 指向 tools/notebook_build.py 生成的暂存目录（不含人工编辑内容）；
+#   * 原 mkdocs Hook 与统计/日期插件由预处理层等价实现，因此目标配置显式关闭
+#     hooks，并只保留 Zensical 原生兼容的插件。
+INHERIT: mkdocs.yml
+
+docs_dir: .migration/docs
+site_dir: site-zensical
+use_directory_urls: true
+
+# 原 mkdocs Hook 由构建预处理替代；目标引擎不执行 hooks，这里显式清空以避免误解。
+hooks: []
+
+theme:
+  # 采用与 Material 一致的经典外观；modern 是 Zensical 的新默认变体。
+  variant: classic
+
+# 列表选项在继承时整体替换父配置，因此这里完整保留父配置的 extra_css 列表，
+# 并追加仅在 Zensical 构建加载的兼容样式 zensical.css（不影响 Material 回退构建）。
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/custom.css
+  - stylesheets/status.css
+  - stylesheets/fold_toc.css
+  - stylesheets/links.css
+  - stylesheets/toc_index.css
+  - stylesheets/zensical.css
+  - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
+  - https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap
+
+# 列表选项在继承时整体替换父配置，因此 macros 的四个自定义分隔符必须完整保留。
+# 统计（statistics）、Git 日期（git-revision-date-localized）不在 Zensical 兼容实现中，
+# 由预处理层补齐。search 在 0.1.0 只接受 enabled/separator（config.py 会对未知选项
+# 直接抛 ConfigurationError），因此不要把父配置的 lang 合并回来；检索语言由
+# theme.language 决定。
+plugins:
+  - macros:
+      j2_block_start_string: '[[%'
+      j2_block_end_string: '%]]'
+      j2_variable_start_string: '[['
+      j2_variable_end_string: ']]'
+  - meta
+  - search:
+      separator: '[\s\u200b\-]'
+  - glightbox
+
+extra:
+  # 供 overrides/partials/copyright.html 区分构建器：Material 回退构建不设置该键，
+  # 仍显示 Material for MkDocs；Zensical 构建显示 Zensical。父配置的 extra
+  # （analytics/social 等）由 INHERIT 的映射合并保留。
+  build_engine: zensical

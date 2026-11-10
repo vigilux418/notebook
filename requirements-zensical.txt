@@ -1,0 +1,28 @@
+# Zensical 迁移后的生产构建依赖。
+#
+# 目标引擎：Zensical 0.1.0（UI 0.0.41 随包锁定）。迁移调研报告第 8.2 节要求：
+# 保留 requirements.txt 供 Material 回退构建使用；本文件仅服务 Zensical 构建。
+#
+# 说明：
+#   * Zensical 自身已依赖 jinja2 / pyyaml，这里显式钉版本，避免 CI 上游漂移
+#     导致预处理层的模板/输出格式发生变化；
+#   * Babel 用于复刻 git-revision-date-localized 1.4.7 的中文长日期格式；
+#   * tzdata 保证 Windows / 精简容器上 Asia/Shanghai 时区可用（Linux CI 自带系统 tz，
+#     但显式安装可消除平台差异）；
+#   * 传递依赖按 2026-11-10 干净环境解析结果一并锁定，使 CI 构建与本地验收一致。
+zensical==0.1.0
+zensical-ui==0.0.41
+Jinja2==3.1.6
+MarkupSafe==3.0.4
+PyYAML==6.0.3
+Babel==2.18.0
+tzdata==2026.6
+click==8.5.1
+markdown==3.11.3
+pathspec==1.1.1
+Pygments==2.21.0
+pymdown-extensions==13.0
+tomli==2.5.0
+# 发布工具：与 MkDocs 的 `mkdocs gh-deploy` 等价，把静态产物发布到 gh-pages 分支。
+ghp-import==2.1.0
+python-dateutil==4.0.0

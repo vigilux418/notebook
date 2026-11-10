@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
+{# 说明：Zensical 0.1.0 的 glightbox 兼容实现在运行时会从 unpkg CDN 动态加载
+   GLightbox@3 的 JS/CSS（见 zensical_ui bundle 的 Xp()/Zp()）。本仓库此前已把
+   小型前端资源收编进仓库自维护，故这里在 Zensical 构建中预先加载本地 GLightbox；
+   引擎检测到全局 GLightbox 后会自动跳过 CDN 请求。Material 回退构建由
+   mkdocs-glightbox 插件自行注入本地资产，不经过本分支，避免重复加载。 #}
+{% block libs %}
+  {{ super() }}
+  {% if config.extra.build_engine == "zensical" %}
+    <link rel="stylesheet" href="{{ 'stylesheets/vendor/glightbox.min.css' | url }}">
+    <script src="{{ 'javascripts/vendor/glightbox.min.js' | url }}"></script>
+  {% endif %}
+{% endblock %}
+
 {% block content%}
 {{ super() }}
 {% endblock %}

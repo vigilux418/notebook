@@ -7,9 +7,15 @@
   {% if not config.extra.generator == false %}
     <div>
     Made with
+    {% if config.extra.build_engine == "zensical" %}
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+    {% else %}
     <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
       Material for MkDocs
     </a>
+    {% endif %}
     {# custom #}
     modified by
     <a href="https://github.com/vigilux418" target="_blank" rel="noopener">

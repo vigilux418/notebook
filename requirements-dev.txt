@@ -1,0 +1,7 @@
+# 本地迁移验收工具依赖（不参与站点构建，CI 不需要安装）。
+#
+# tools/verify_migration.py 需要 beautifulsoup4；
+# tools/verify_runtime.py 需要 playwright + 本机 Chrome。
+# 安装后运行：python tools/verify_migration.py && python tools/verify_runtime.py
+beautifulsoup4==4.15.0
+playwright==1.65.0
