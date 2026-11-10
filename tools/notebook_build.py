@@ -49,7 +49,9 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import unquote
 
 import yaml
 from babel.dates import format_date, get_timezone
@@ -96,6 +98,30 @@ AVATAR_SOURCE_PATTERN = re.compile(
     r'(<img\s+class="ava"\s+src=")\.\./images/(lemoon1206\.jpg")'
 )
 AVATAR_REL_PATH = "links.md"
+
+#: 构建产物完整性门禁：Zensical 0.1.0 必须产出的 4 个主题样式（classic/modern × main/palette）。
+#: 复审曾在其 beta 构建中出现偶发漏写其中 1 个 CSS 且退出码为 0，因此构建后必须显式断言。
+THEME_CSS_PATTERNS = (
+    "assets/stylesheets/classic/main*.min.css",
+    "assets/stylesheets/classic/palette*.min.css",
+    "assets/stylesheets/modern/main*.min.css",
+    "assets/stylesheets/modern/palette*.min.css",
+)
+
+#: 站点部署前缀（与 mkdocs.yml 的 site_url 路径一致）：根路径引用需以该前缀开头。
+SITE_URL_PREFIX = "/notebook/"
+
+#: 本地引用检查时跳过的 URL 前缀（外部/特殊协议/纯锚点）。
+URL_SKIP_PREFIXES = (
+    "#",
+    "http://",
+    "https://",
+    "//",
+    "mailto:",
+    "javascript:",
+    "data:",
+    "tel:",
+)
 
 LOG = logging.getLogger("notebook_build")
 
@@ -798,13 +824,145 @@ def _zensical_cli() -> list[str]:
     return [sys.executable, "-m", "zensical"]
 
 
-def run_build(strict: bool = True) -> int:
-    prepare()
-    command = _zensical_cli() + ["build", "-f", str(CONFIG_FILE), "--clean"]
-    if strict:
-        command.append("--strict")
-    LOG.info("执行：%s", " ".join(command))
-    return subprocess.call(command, cwd=str(ROOT))
+class _LocalRefParser(HTMLParser):
+    """收集 HTML 起始标签中的 ``href`` / ``src`` 属性值。"""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.refs: list[tuple[str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        for name, value in attrs:
+            if name.lower() in ("href", "src") and value:
+                self.refs.append((name.lower(), value))
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+
+
+def _site_dir_from_config() -> Path:
+    """从 ``mkdocs.zensical.yml`` 读取 site_dir；异常时回退默认目录。"""
+    try:
+        config = yaml.safe_load(CONFIG_FILE.read_text(encoding="utf-8")) or {}
+        value = config.get("site_dir")
+        if isinstance(value, str) and value:
+            candidate = (ROOT / value).resolve()
+            if candidate.is_relative_to(ROOT):
+                return candidate
+    except (OSError, yaml.YAMLError):
+        pass
+    return ROOT / "site-zensical"
+
+
+def check_site_artifacts(site_dir: Path, expected_pages: int | None = None) -> list[str]:
+    """检查构建产物完整性，返回问题清单（空列表表示通过）。
+
+    复审建议（2026-11-10 第二轮）要求拦住“构建 exit 0 但产物缺失”的情况：
+
+    1. classic/modern 变体的 main/palette 主题 CSS 均存在；
+    2. 生成的页面数等于源 Markdown 页面数，且存在 404 页；
+    3. 所有生成 HTML 的本地 ``href``/``src`` 都能解析到 site 目录内的实际文件
+       （外部 URL、特殊协议与纯锚点跳过；根路径必须落在 ``/notebook/`` 前缀内）。
+    """
+    problems: list[str] = []
+    if not site_dir.is_dir():
+        return [f"站点目录不存在：{site_dir}"]
+    root = site_dir.resolve()
+
+    for pattern in THEME_CSS_PATTERNS:
+        if not list(root.glob(pattern)):
+            problems.append(f"缺少主题样式：{pattern}")
+
+    pages = sorted(path for path in root.rglob("index.html"))
+    if expected_pages is not None and len(pages) != expected_pages:
+        problems.append(
+            f"页面数量不符：生成 {len(pages)} 个 index.html，预期 {expected_pages} 个"
+        )
+    if not (root / "404.html").is_file():
+        problems.append("缺少 404.html")
+
+    missing: list[tuple[Path, str, str, str]] = []
+    for page in sorted(root.rglob("*.html")):
+        parser = _LocalRefParser()
+        try:
+            parser.feed(page.read_text(encoding="utf-8", errors="replace"))
+        except (OSError, ValueError):
+            problems.append(f"无法读取生成页：{page.relative_to(root).as_posix()}")
+            continue
+        for attr, raw in parser.refs:
+            value = raw.strip()
+            if not value or value.startswith(URL_SKIP_PREFIXES):
+                continue
+            path_part = value.split("#", 1)[0].split("?", 1)[0]
+            if not path_part:
+                continue
+            path_part = unquote(path_part)
+            if path_part.startswith("/"):
+                if not path_part.startswith(SITE_URL_PREFIX):
+                    missing.append(
+                        (page, attr, raw, "根路径不在站点前缀内")
+                    )
+                    continue
+                target = root / path_part[len(SITE_URL_PREFIX) :]
+            else:
+                target = page.parent / path_part
+            target = target.resolve()
+            if not target.is_relative_to(root):
+                missing.append((page, attr, raw, "解析到站点目录之外"))
+                continue
+            if not (target.is_file() or (target / "index.html").is_file()):
+                missing.append((page, attr, raw, "目标文件不存在"))
+
+    for page, attr, raw, reason in missing[:20]:
+        problems.append(
+            f"本地引用缺失：{page.relative_to(root).as_posix()} "
+            f'{attr}="{raw}"（{reason}）'
+        )
+    if len(missing) > 20:
+        problems.append(f"…其余 {len(missing) - 20} 条本地引用缺失未逐条列出")
+    return problems
+
+
+def _log_artifact_problems(problems: list[str]) -> None:
+    LOG.error("构建产物完整性检查失败（%d 项）：", len(problems))
+    for problem in problems:
+        LOG.error("  - %s", problem)
+
+
+def run_build(strict: bool = True, verify_artifacts: bool = True) -> int:
+    """prepare + 严格构建 + 产物完整性门禁。
+
+    Zensical 0.1.0（beta）曾出现偶发漏写单个主题 CSS 且退出码为 0 的情况，因此
+    构建成功后检查产物；若失败则重试一次干净构建，仍失败则返回非 0 阻止发布。
+    """
+    manifest = prepare()
+    attempts = 2 if verify_artifacts else 1
+    for attempt in range(1, attempts + 1):
+        command = _zensical_cli() + ["build", "-f", str(CONFIG_FILE), "--clean"]
+        if strict:
+            command.append("--strict")
+        LOG.info("执行构建（第 %d/%d 次）：%s", attempt, attempts, " ".join(command))
+        code = subprocess.call(command, cwd=str(ROOT))
+        if code != 0:
+            return code
+        if not verify_artifacts:
+            return 0
+        site_dir = _site_dir_from_config()
+        problems = check_site_artifacts(
+            site_dir, expected_pages=manifest.get("source_page_count")
+        )
+        if not problems:
+            LOG.info(
+                "构建产物完整性检查通过：%s 个站点文件，本地引用完整",
+                sum(1 for path in site_dir.rglob("*") if path.is_file()),
+            )
+            return 0
+        _log_artifact_problems(problems)
+        if attempt < attempts:
+            LOG.warning(
+                "Zensical 0.1.0 存在偶发缺资产的已知风险，自动重试一次干净构建…"
+            )
+    return 1
 
 
 def _git_head_signature() -> str:
@@ -900,9 +1058,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("prepare", help="生成 .migration/docs 暂存内容")
-    build_parser = subparsers.add_parser("build", help="prepare 后执行 zensical build")
+    build_parser = subparsers.add_parser(
+        "build", help="prepare 后执行 zensical build，并做产物完整性门禁"
+    )
     build_parser.add_argument(
         "--no-strict", action="store_true", help="关闭 zensical --strict（默认开启）"
+    )
+    build_parser.add_argument(
+        "--skip-artifact-check",
+        action="store_true",
+        help="跳过构建后产物完整性检查（仅用于排查问题，不建议在 CI 使用）",
     )
     subparsers.add_parser("serve", help="prepare 后启动 zensical serve 并监听源文件")
     args = parser.parse_args(argv)
@@ -915,7 +1080,10 @@ def main(argv: list[str] | None = None) -> int:
         prepare()
         return 0
     if args.command == "build":
-        return run_build(strict=not args.no_strict)
+        return run_build(
+            strict=not args.no_strict,
+            verify_artifacts=not args.skip_artifact_check,
+        )
     if args.command == "serve":
         return run_serve()
     parser.error(f"未知命令：{args.command}")

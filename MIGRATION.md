@@ -35,7 +35,7 @@ docs/（唯一人工编辑源）
 | 文件 | 作用 |
 | --- | --- |
 | `mkdocs.zensical.yml` | 目标配置：`INHERIT: mkdocs.yml`、`docs_dir: .migration/docs`、`site_dir: site-zensical`、`hooks: []`、`theme.variant: classic`、保留 macros/meta/search/glightbox 兼容插件；完整保留父配置的 `extra_css` 并追加 `zensical.css`；`extra.build_engine: zensical` 供模板区分构建器 |
-| `tools/notebook_build.py` | 构建入口：`prepare` / `build` / `serve`。等价实现目录、统计、Git 日期、头像适配；`serve` 监听原始 docs/includes/Hook 模板与 Git HEAD 并增量重建暂存内容；每轮 prepare 重置 Git 时间缓存 |
+| `tools/notebook_build.py` | 构建入口：`prepare` / `build` / `serve`。等价实现目录、统计、Git 日期、头像适配；`serve` 监听原始 docs/includes/Hook 模板与 Git HEAD 并增量重建暂存内容；每轮 prepare 重置 Git 时间缓存；`build` 在 Zensical 成功后执行产物完整性门禁（主题 CSS/页面数/本地引用），失败自动重试一次干净构建 |
 | `requirements-zensical.txt` | 固定版本：`zensical==0.1.0`（UI 0.0.41）、`Jinja2==3.1.6`、`PyYAML==6.0.3`、`Babel==2.18.0`、`tzdata==2026.6`、`ghp-import==2.1.0`，并锁定 2026-11-10 干净环境解析出的全部传递依赖 |
 | `requirements-dev.txt` | 本地验收工具依赖（BeautifulSoup/Playwright，不参与构建） |
 | `tools/verify_migration.py`、`tools/verify_runtime.py` | 可复跑的迁移验收脚本：Material 基线 vs Zensical 产物的静态对照与浏览器运行时探针 |
@@ -97,7 +97,8 @@ Linux/macOS 将 `.venv-zensical\Scripts\python.exe` 换成 `.venv-zensical/bin/p
 2. `actions/setup-python@v7`（Python 3.13）；
 3. `pip install -r requirements-zensical.txt`；
 4. `python tools/test_notebook_build.py`（预处理回归测试）；
-5. `python tools/notebook_build.py build`（`--strict`，任何警告使构建失败）；
+5. `python tools/notebook_build.py build`（`--strict`；构建后执行产物完整性门禁，
+   失败会重试一次干净构建，仍失败则非 0 退出；任何警告使构建失败）；
 6. `ghp-import -n -p -f -r origin -b gh-pages site-zensical` 发布到 `gh-pages`。
 
 Pages 来源保持 `legacy` + `gh-pages` 分支，未改动域名与 Pages 配置。
@@ -157,7 +158,7 @@ Pages 来源保持 `legacy` + `gh-pages` 分支，未改动域名与 Pages 配�
 | A14 | 评论与反馈 | 通过（含口径变化） | 20 页 Giscus loader/属性一致，主题同步与软导航重建正常；GA search 事件见 §5 |
 | A15 | 灯箱 | 通过 | 本地 GLightbox 资产加载；打开/Escape 关闭/主题正常；无 unpkg glightbox 请求 |
 | A16 | 响应式与视觉 | 通过（含已知差异） | 390/768/960/1440/1920 无横向溢出；首页几何与基线一致；差异见 §5 |
-| A17 | 构建和写作 | 通过（复审后补强） | 固定依赖干净环境构建通过（与正式产物逐字节一致）；`serve` 监听原始源、Git HEAD 并增量刷新；`tools/test_notebook_build.py` 覆盖持续预览日期刷新与 front matter 边界 |
+| A17 | 构建和写作 | 通过（复审后补强） | 固定依赖干净环境构建通过（与正式产物逐字节一致）；`serve` 监听原始源、Git HEAD 并增量刷新；`tools/test_notebook_build.py` 覆盖持续预览日期刷新、front matter 边界与构建产物完整性门禁 |
 | A18 | 部署与回退 | 配置通过，发布结果见 §9 | 单 workflow 单发布者；回退 runbook 要求先暂停自动发布并清理进行中/排队运行（§7） |
 
 完整机器可读结果：`tools/verify_migration.py` / `tools/verify_runtime.py` 的输出（本地 `.migration/verify/`）。
@@ -227,6 +228,29 @@ CI 构建失败时不会更新 `gh-pages`，生产站会自动停留在上一版
 | Windows 本地构建说明安装到 venv 后仍调用全局 `python` | README 与 MIGRATION 的本地构建命令改为显式使用 `.venv-zensical\Scripts\python.exe`（Linux/macOS 为 `.venv-zensical/bin/python`），并说明脚本通过 `sys.executable` 启动 Zensical、必须使用同一解释器 |
 | 回退步骤未先停止自动发布者，运行中/后续 CI 可能覆盖手动恢复的 Material 产物 | MIGRATION §7 与仓库外 `ROLLBACK.md` 增加完整 runbook：`gh workflow disable` → 取消并复查进行中/排队运行 → 发布 Material 产物 → 验证；并说明重新启用自动发布的条件 |
 
-回归测试：`tools/test_notebook_build.py`（5 项）覆盖上述前两项逻辑与监听快照；CI 在构建前执行。
+回归测试：`tools/test_notebook_build.py`（当前 10 项，含 §11 的产物完整性门禁用例）覆盖上述前两项逻辑与监听快照；CI 在构建前执行。
+
+## 11. 构建产物完整性门禁（2026-11-10 第二轮复审）
+
+第二轮复审在隔离复审工作区记录到两次“构建 exit 0 / `No issues found`，但产物各缺 1 个主题 CSS”
+（分别缺 `classic/palette` 与 `modern/main`）；干净副本 11 次重建、CI 与线上产物均完整，
+无法确认根因（疑与 Zensical 0.1.0 beta 构建期资产发布时序有关），记录为上游风险。
+
+**已落地缓解**（`tools/notebook_build.py` 的 `build` 子命令）：
+
+1. 构建成功后执行 `check_site_artifacts()`：
+   - `assets/stylesheets/{classic,modern}/{main,palette}*.min.css` 4 个主题 CSS 必须存在；
+   - 生成的 `index.html` 数量等于源 Markdown 页面数，且存在 `404.html`；
+   - 扫描全部生成 HTML 的本地 `href`/`src`，按页面相对路径与 `/notebook/` 前缀解析后，
+     目标必须存在于 `site-zensical/`（外部 URL、`mailto:`、`javascript:`、`data:`、纯锚点跳过）。
+2. 门禁失败时打印缺失清单并**自动重试一次** `--clean` 构建；仍失败则返回非 0，CI 不会发布。
+3. 回归测试补充 5 项（缺失主题 CSS、缺失本地引用、页面数不符、越出站点前缀、合法站点通过），
+   与既有 5 项合计 **10 项**；CI 在构建前执行。
+
+```shell
+# 仅排查上游问题时才跳过（CI 不使用）
+.venv-zensical\Scripts\python.exe tools\notebook_build.py build --skip-artifact-check
+```
+
 
 

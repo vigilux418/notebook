@@ -29,8 +29,8 @@ Zensical 不会执行 MkDocs 插件与 Hook。原站点依赖的分区索引目�
 python -m venv .venv-zensical
 .venv-zensical\Scripts\python.exe -m pip install -r requirements-zensical.txt
 
-.venv-zensical\Scripts\python.exe tools\notebook_build.py serve    # 预览 http://127.0.0.1:8001/
-.venv-zensical\Scripts\python.exe tools\notebook_build.py build    # 严格构建到 site-zensical/
+`.venv-zensical\Scripts\python.exe tools\notebook_build.py serve    # 预览 http://127.0.0.1:8001/
+.venv-zensical\Scripts\python.exe tools\notebook_build.py build    # 严格构建 + 产物完整性门禁
 .venv-zensical\Scripts\python.exe tools\notebook_build.py prepare  # 只生成 .migration/docs 暂存内容
 ```
 

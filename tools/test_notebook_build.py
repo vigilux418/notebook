@@ -35,6 +35,15 @@ def _timestamp(iso_date: str) -> int:
     return int(datetime.fromisoformat(iso_date).timestamp())
 
 
+def _load_repo_tool(name: str = "nb_repo_tool"):
+    """从仓库内加载构建脚本（用于纯函数级测试）。"""
+    spec = importlib.util.spec_from_file_location(name, TOOL_PATH)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class PrepareFixture:
     """最小可运行的笔记站项目夹具（独立 Git 仓库）。"""
 
@@ -228,6 +237,115 @@ class PrepareCacheRefreshTest(unittest.TestCase):
         module = self.fixture.load_build_module("nb_snapshot")
         snapshot = module._snapshot_sources()
         self.assertEqual(snapshot["__git_head__"], head)
+
+
+class SiteArtifactCheckTest(unittest.TestCase):
+    """构建产物完整性门禁：主题 CSS、页面数、本地 href/src 解析。"""
+
+    THEME_CSS = (
+        "assets/stylesheets/classic/main.abc.min.css",
+        "assets/stylesheets/classic/palette.abc.min.css",
+        "assets/stylesheets/modern/main.abc.min.css",
+        "assets/stylesheets/modern/palette.abc.min.css",
+    )
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.site = Path(self.tmp.name) / "site"
+        self.addCleanup(self.tmp.cleanup)
+        for rel in self.THEME_CSS:
+            self.write(rel, "/* css */")
+        self.write("images/a.png", "png")
+        self.write(
+            "index.html",
+            "<html><head>"
+            '<link rel="stylesheet" href="./assets/stylesheets/classic/main.abc.min.css">'
+            "</head><body>"
+            '<img src="images/a.png">'
+            '<a href="#anchor">a</a>'
+            '<a href="https://example.com/x">ext</a>'
+            '<a href="mailto:a@example.com">mail</a>'
+            '<a href="javascript:void(0)">js</a>'
+            "</body></html>",
+        )
+        self.write(
+            "sub/index.html",
+            "<html><body>"
+            '<img src="../images/a.png">'
+            '<link rel="stylesheet" href="/notebook/assets/stylesheets/classic/palette.abc.min.css">'
+            "</body></html>",
+        )
+        self.write("404.html", "<html><body>404</body></html>")
+        self.module = _load_repo_tool()
+
+    def write(self, rel_path: str, text: str) -> None:
+        path = self.site / rel_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+
+    def test_valid_site_passes(self) -> None:
+        self.assertEqual(self.module.check_site_artifacts(self.site, 2), [])
+
+    def test_missing_theme_css_is_detected(self) -> None:
+        (self.site / "assets/stylesheets/classic/palette.abc.min.css").unlink()
+        problems = self.module.check_site_artifacts(self.site, 2)
+        self.assertTrue(any("缺少主题样式" in item for item in problems), problems)
+
+    def test_missing_local_reference_is_detected(self) -> None:
+        (self.site / "images/a.png").unlink()
+        problems = self.module.check_site_artifacts(self.site, 2)
+        self.assertTrue(any("本地引用缺失" in item for item in problems), problems)
+
+    def test_page_count_mismatch_is_detected(self) -> None:
+        problems = self.module.check_site_artifacts(self.site, 3)
+        self.assertTrue(any("页面数量不符" in item for item in problems), problems)
+
+    def test_root_absolute_path_outside_site_prefix_is_detected(self) -> None:
+        self.write(
+            "extra.html",
+            '<html><body><link rel="stylesheet" href="/other/x.css"></body></html>',
+        )
+        problems = self.module.check_site_artifacts(self.site, 2)
+        self.assertTrue(any("根路径不在站点前缀内" in item for item in problems), problems)
+
+
+class BuildRetryGateTest(unittest.TestCase):
+    """run_build 在产物门禁失败时应重试一次，仍失败则非 0 退出。"""
+
+    def setUp(self) -> None:
+        self.module = _load_repo_tool("nb_retry_gate")
+
+    def _run_with_gate_results(self, gate_results: list[list[str]]) -> tuple[int, int]:
+        """让每次构建的产物检查依次返回 gate_results；返回 (exit, build 调用次数)。"""
+        calls: list[int] = []
+        gate_iter = iter(gate_results)
+
+        def fake_call(command, cwd=None):  # noqa: ANN001, ARG001
+            calls.append(1)
+            return 0
+
+        def fake_check(site_dir, expected_pages=None):  # noqa: ANN001, ARG001
+            return next(gate_iter, [])
+
+        originals = (self.module.prepare, self.module.subprocess.call)
+        self.module.prepare = lambda increment=False: {"source_page_count": 2}  # noqa: ARG005
+        self.module.subprocess.call = fake_call
+        self.module.check_site_artifacts = fake_check
+        try:
+            exit_code = self.module.run_build()
+        finally:
+            self.module.prepare, self.module.subprocess.call = originals
+        return exit_code, len(calls)
+
+    def test_retry_then_pass(self) -> None:
+        exit_code, builds = self._run_with_gate_results([["缺少主题样式"], []])
+        self.assertEqual((exit_code, builds), (0, 2))
+
+    def test_retry_then_still_fail(self) -> None:
+        exit_code, builds = self._run_with_gate_results(
+            [["缺少主题样式"], ["缺少主题样式"]]
+        )
+        self.assertEqual((exit_code, builds), (1, 2))
 
 
 if __name__ == "__main__":

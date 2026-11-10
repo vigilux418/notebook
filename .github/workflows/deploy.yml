@@ -35,7 +35,7 @@ jobs:
       - name: Run build helper tests
         run: python tools/test_notebook_build.py
 
-      - name: Build site (prepare + zensical --strict)
+      - name: Build site (prepare + zensical --strict + artifact gate)
         run: python tools/notebook_build.py build
 
       - name: Publish to gh-pages
